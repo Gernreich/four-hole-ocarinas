@@ -94,6 +94,41 @@ def solids(kind, parts, info):
             'cav': f'{W:g} × {D:g} × {info["Lc"]:.1f}mm'}
 
 
+def solid_solids(parts, info):
+    """A solid build's parts for the view: each places itself by p.m, moved
+    so the solid's mouth face sits at x = 0 like the box's, and comes apart
+    along its face's outward normal; the bird turns over as the box's does."""
+    faces = info['faces']
+    shift = -min(v[0] for f in faces for v in f.verts)
+    zmax = max(v[2] for f in faces for v in f.verts)
+    zmin = min(v[2] for f in faces for v in f.verts)
+    out = []
+    for p in parts:
+        m = [list(r) for r in p.m]
+        m[0][3] += shift
+        m[2][3] -= zmin
+        flip = False
+        if p.name == 'bird':
+            e, g, flip = [0, -1.6, 1.6], 'bird', True
+        elif p.name == 'chin layer':
+            e, g = [-1.6, 0, -0.6], 'bird'
+        else:
+            n = faces[p.face].n
+            e = [round(1.3 * x, 4) for x in n]
+            g = 'plate' if p.name in ('top plate', 'bottom') else 'wall'
+        holes = [{'p': [[round(x, 3), round(y, 3)] for x, y in c[1]]} if c[0] == 'rect'
+                 else {'c': [round(c[1], 3), round(c[2], 3), round(c[3], 3)]} for c in p.cuts]
+        zc = m[2][3] + m[2][2] * T / 2            # mid-thickness, for the flip
+        out.append({'o': [[round(x, 3), round(y, 3)] for x, y in p.outline],
+                    'h': holes, 'm': [[round(v, 4) for v in r] for r in m],
+                    'e': e, 'g': g, 'name': p.name,
+                    'f': [[[round(x, 3), round(y, 3)] for x, y in f] for f in p.fills],
+                    'flip': flip, 'zc': round(zc, 3)})
+    span = max(v[0] for f in faces for v in f.verts) + shift
+    return {'parts': out, 'len': round(span, 1), 'top': round(zmax - zmin, 2),
+            'cav': f'{info["V"] / 1000:.0f}cm³'}
+
+
 def plan_svg(info, diams, title):
     """The top plate from above, to scale, beak on the left: the bird's
     footprint dashed, the duct in blue, the window, the four holes with
@@ -165,7 +200,7 @@ def chart_svg(diams, title):
             f'Black is covered, white is open.</desc>\n' + '\n'.join(s) + '\n</svg>\n')
 
 
-MARKUP = '<section class="viewer" id="turn" aria-label="Turn it in 3D">\n  <div class="vbar" role="group" aria-label="Build">__BUTTONS__</div>\n  <div class="stage" id="stage"><canvas id="cv" aria-label="The selected build in 3D. Drag to turn, scroll or pinch to zoom."></canvas>\n    <p class="vinfo" id="vinfo"></p></div>\n  <div class="vctl">\n    <label for="explode">Explode</label><input id="explode" type="range" min="0" max="1" step="0.01" value="0">\n    <button type="button" id="vreset">Reset view</button>\n    <label class="chk"><input type="checkbox" id="xray"> See through the walls</label>\n  </div>\n  <details class="note vhow"><summary>How to use this view</summary><p>Drag to turn, scroll or pinch to zoom. The parts are the generator\'s own outlines before the kerf, so this is the ocarina as built: the box finger-jointed on all twelve edges, every finger flush to the outside; the stack\'s six frame layers round the cavity; the window and the four holes in the top; and the beak, the bird glued over it and the chin layer under it. The duct is drawn blue, and exploded, the bird comes out toward you and turns over so the duct faces up.</p></details>\n</section>'
+MARKUP = '<section class="viewer" id="turn" aria-label="Turn it in 3D">\n  <div class="vbar" role="group" aria-label="Build">__BUTTONS__</div>\n  <div class="stage" id="stage"><canvas id="cv" aria-label="The selected build in 3D. Drag to turn, scroll or pinch to zoom."></canvas>\n    <p class="vinfo" id="vinfo"></p></div>\n  <div class="vctl">\n    <label for="explode">Explode</label><input id="explode" type="range" min="0" max="1" step="0.01" value="0">\n    <button type="button" id="vreset">Reset view</button>\n    <label class="chk"><input type="checkbox" id="xray"> See through the walls</label>\n  </div>\n  <details class="note vhow"><summary>How to use this view</summary><p>Drag to turn, scroll or pinch to zoom. The parts are the generator\'s own outlines before the kerf, so this is the ocarina as built: the box finger-jointed on all twelve edges, every finger flush to the outside; the octagonal prism and the truncated cube jointed on every edge at their own angles; the stack\'s six frame layers round the cavity; the window and the four holes in the top; and the beak, the bird glued over it and the chin layer under it. The duct is drawn blue, and exploded, the bird comes out toward you and turns over so the duct faces up.</p></details>\n</section>'
 
 
 def viewer_js(three):
@@ -236,6 +271,10 @@ def main():
     V, kw, ratios, diams = M.design()
     three, infos = {}, {}
     for name in B.BUILDS:
+        if name in B.SOLIDS:
+            parts, info = B.build_solid(name, diams)
+            three[name] = solid_solids(parts, info)
+            continue
         parts, info = B.build(name, V, diams)
         three[name], infos[name] = solids(name, parts, info), info
     if vt or not a:
