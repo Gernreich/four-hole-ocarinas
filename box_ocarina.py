@@ -29,10 +29,14 @@ FROM THE MOUTH END, the same in both:
 
   beak     the top plate run on past the end, BEAK long and BEAK_W wide:
            what the lips close on
-  bird     three layers glued over the beak and on to the window's near
-           edge; the bottom one carries the duct as a fill engrave, the
+  bird     one layer glued over the beak and on to the window's near
+           edge, carrying the duct on its underside as a fill engrave, the
            window's width and about 1mm deep, from the beak's tip to the
            window
+  chin     one plain layer glued under the beak, so the mouthpiece is
+           three plies thick, 9mm, with the duct near its middle. Until
+           2026-10-17 the bird was three layers stacked on top, copied from
+           the square flute, and the beak had nothing under it
   window   the true sound hole, WINDOW_W x WINDOW_L, against the cavity's
            mouth-end wall, so the jet crosses it over the cavity
   holes    two rows across the plate: the index fingers' row ROW_1 past the
@@ -74,7 +78,6 @@ W_IN = 60.0          # the cavity across: room for two columns of holes
 D_IN = 18.0          # and deep: six 3mm frame layers in the stack
 SIDE = 6.0           # the stack's frame, all round
 BEAK, BEAK_W = 18.0, 24.0
-BIRD_LAYERS = 3
 ROW_1, ROW_2 = 30.0, 52.0    # hole rows, from the cavity's mouth-end wall
 COLUMNS = 36.0               # the two hands' columns, centre to centre
 D_MIN, D_MAX = 2.5, 13.0     # a hole that still speaks; one a finger covers
@@ -287,14 +290,13 @@ def build(kind, V, diams):
                      'the cavity cut out')
             p.slot(c0, SIDE, c0 + Lc, SIDE + W_IN)
             parts.append(p)
-    for k in range(BIRD_LAYERS):
-        p = Part('bird layer', next(num),
-                 rect(-BEAK, yc - BEAK_W / 2, c0, yc + BEAK_W / 2),
-                 'the duct fill-engraved in the bottom one, about 1mm deep'
-                 if k == 0 else 'glued on the one below')
-        if k == 0:
-            p.fills.append(rect(-BEAK, yc - M.WINDOW_W / 2, c0, yc + M.WINDOW_W / 2))
-        parts.append(p)
+    p = Part('bird', next(num), rect(-BEAK, yc - BEAK_W / 2, c0, yc + BEAK_W / 2),
+             'the duct fill-engraved in its underside, about 1mm deep')
+    p.fills.append(rect(-BEAK, yc - M.WINDOW_W / 2, c0, yc + M.WINDOW_W / 2))
+    parts.append(p)
+    # under the beak only: the body starts at x = 0
+    parts.append(Part('chin layer', next(num), rect(-BEAK, yc - BEAK_W / 2, 0, yc + BEAK_W / 2),
+                      'glued under the beak, its end against the body'))
     return parts, dict(total=total, PW=PW, c0=c0, Lc=Lc, places=places)
 
 
@@ -332,6 +334,11 @@ def checks(kind, parts, info, V, diams, worst):
     note(min(fx) == -BEAK and max(fx) == c0 == bird.x0 + bird.w,
          'the duct runs from the beak\'s tip to the window',
          f'{c0 + BEAK:g}mm long, {M.WINDOW_W:g}mm wide')
+    chin = [p for p in parts if p.name == 'chin layer']
+    note(len(chin) == 1 and chin[0].x0 == -BEAK and chin[0].x0 + chin[0].w == 0
+         and chin[0].h == BEAK_W,
+         'the chin layer fills the beak and stops at the body',
+         f'{BEAK:g} x {BEAK_W:g}mm; the mouthpiece {3 * T:g}mm thick')
     if kind == 'box':
         n = [joint_cells(L) for L in (Lc, W_IN, D_IN)]
         w = min(L / k for L, k in zip((Lc, W_IN, D_IN), n))

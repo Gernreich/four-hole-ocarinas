@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="572.45mm" height="158.26mm" viewBox="0 0 572.45 158.26">
+<svg xmlns="http://www.w3.org/2000/svg" width="594.58mm" height="158.26mm" viewBox="0 0 594.58 158.26">
 <title>Four-hole ocarina in G4, stack, sheet 1 of 1</title>
-<desc>1 user unit = 1mm. Four-hole ocarina in G4, English fingering, stack, sheet 1 of 1: bird layer, bottom layer, frame layer, top plate. 3mm ply, drawn for a 0.13mm kerf. Blue #0000ff engraves the duct, a fill engrave about 1mm deep -- set the depth on scrap first; orange #ff8000 cuts the window, the holes and the cavity; black #000000 frees the parts.</desc>
+<desc>1 user unit = 1mm. Four-hole ocarina in G4, English fingering, stack, sheet 1 of 1: bird, bottom layer, chin layer, frame layer, top plate. 3mm ply, drawn for a 0.13mm kerf. Blue #0000ff engraves the duct, a fill engrave about 1mm deep -- set the depth on scrap first; orange #ff8000 cuts the window, the holes and the cavity; black #000000 frees the parts.</desc>
   <g fill="#0000ff" stroke="none">
     <path d="M 334.134,88.195 L 358.134,88.195 L 358.134,98.195 L 334.134,98.195 Z"/>
   </g>
@@ -24,11 +24,10 @@
     <path d="M 242.379,5.000 L 348.069,5.000 L 348.069,77.130 L 242.379,77.130 Z"/>
     <path d="M 352.069,5.000 L 457.758,5.000 L 457.758,77.130 L 352.069,77.130 Z"/>
     <path d="M 461.758,5.000 L 567.448,5.000 L 567.448,77.130 L 461.758,77.130 Z"/>
+    <path d="M 571.448,5.000 L 589.578,5.000 L 589.578,29.130 L 571.448,29.130 Z"/>
     <path d="M 5.000,81.130 L 110.690,81.130 L 110.690,153.260 L 5.000,153.260 Z"/>
     <path d="M 114.690,81.130 L 220.379,81.130 L 220.379,153.260 L 114.690,153.260 Z"/>
     <path d="M 224.379,81.130 L 330.069,81.130 L 330.069,153.260 L 224.379,153.260 Z"/>
     <path d="M 334.069,81.130 L 358.199,81.130 L 358.199,105.260 L 334.069,105.260 Z"/>
-    <path d="M 362.199,81.130 L 386.329,81.130 L 386.329,105.260 L 362.199,105.260 Z"/>
-    <path d="M 390.329,81.130 L 414.459,81.130 L 414.459,105.260 L 390.329,105.260 Z"/>
   </g>
 </svg>

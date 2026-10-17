@@ -46,7 +46,7 @@ def solids(kind, parts, info):
     PW, D, W = info['PW'], B.D_IN, B.W_IN
     plate = lambda z0: [[1, 0, 0, 0], [0, 1, 0, -PW / 2], [0, 0, 1, z0]]
     out = []
-    k_bird = k_side = k_end = k_frame = 0
+    k_side = k_end = k_frame = 0
     for p in parts:
         holes = []
         for c in p.cuts:
@@ -76,16 +76,13 @@ def solids(kind, parts, info):
             g = 'wall'
         elif n == 'top plate':                     # the stack's
             m, e, g = plate(T + D), [0, 0, 1.2], 'plate'
-        elif n == 'bird layer':
-            m = plate(2 * T + D + k_bird * T)
-            e = [0, 0, 2.6 + 0.4 * k_bird]
-            k_bird += 1
-            g = 'bird'
-            if p.fills:
-                # the duct is on this layer's underside, hidden from above:
-                # exploded, it comes out toward the viewer and turns over,
-                # as the square flute's bird does
-                e, flip = [0, -1.6, 1.6], True
+        elif n == 'bird':
+            # the duct is on its underside, hidden from above: exploded, it
+            # comes out toward the viewer and turns over, as the square
+            # flute's bird does
+            m, e, g, flip = plate(2 * T + D), [0, -1.6, 1.6], 'bird', True
+        elif n == 'chin layer':                    # under the beak
+            m, e, g = plate(D), [-0.6, 0, -1.6], 'bird'
         else:
             raise ValueError(f'no place for a {n}')
         out.append({'o': [[round(x, 3), round(y, 3)] for x, y in p.outline],
@@ -167,7 +164,7 @@ def chart_svg(diams, title):
             f'Black is covered, white is open.</desc>\n' + '\n'.join(s) + '\n</svg>\n')
 
 
-MARKUP = '<section class="viewer" id="turn" aria-label="Turn it in 3D">\n  <div class="vbar" role="group" aria-label="Build">__BUTTONS__</div>\n  <div class="stage" id="stage"><canvas id="cv" aria-label="The selected build in 3D. Drag to turn, scroll or pinch to zoom."></canvas>\n    <p class="vinfo" id="vinfo"></p></div>\n  <div class="vctl">\n    <label for="explode">Explode</label><input id="explode" type="range" min="0" max="1" step="0.01" value="0">\n    <button type="button" id="vreset">Reset view</button>\n    <label class="chk"><input type="checkbox" id="xray"> See through the walls</label>\n  </div>\n  <details class="note vhow"><summary>How to use this view</summary><p>Drag to turn, scroll or pinch to zoom. The parts are the generator\'s own outlines before the kerf, so this is the ocarina as built: the box finger-jointed on all twelve edges, every finger flush to the outside; the stack\'s six frame layers round the cavity; the window and the four holes in the top; and the bird over the beak. The duct is drawn blue, and exploded, the bird\'s bottom layer comes out toward you and turns over so the duct faces up.</p></details>\n</section>'
+MARKUP = '<section class="viewer" id="turn" aria-label="Turn it in 3D">\n  <div class="vbar" role="group" aria-label="Build">__BUTTONS__</div>\n  <div class="stage" id="stage"><canvas id="cv" aria-label="The selected build in 3D. Drag to turn, scroll or pinch to zoom."></canvas>\n    <p class="vinfo" id="vinfo"></p></div>\n  <div class="vctl">\n    <label for="explode">Explode</label><input id="explode" type="range" min="0" max="1" step="0.01" value="0">\n    <button type="button" id="vreset">Reset view</button>\n    <label class="chk"><input type="checkbox" id="xray"> See through the walls</label>\n  </div>\n  <details class="note vhow"><summary>How to use this view</summary><p>Drag to turn, scroll or pinch to zoom. The parts are the generator\'s own outlines before the kerf, so this is the ocarina as built: the box finger-jointed on all twelve edges, every finger flush to the outside; the stack\'s six frame layers round the cavity; the window and the four holes in the top; and the beak, the bird glued over it and the chin layer under it. The duct is drawn blue, and exploded, the bird comes out toward you and turns over so the duct faces up.</p></details>\n</section>'
 
 
 def viewer_js(three):

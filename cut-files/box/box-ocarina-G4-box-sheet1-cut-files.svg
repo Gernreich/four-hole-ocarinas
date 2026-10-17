@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="579.02mm" height="104.26mm" viewBox="0 0 579.02 104.26">
 <title>Four-hole ocarina in G4, box, sheet 1 of 1</title>
-<desc>1 user unit = 1mm. Four-hole ocarina in G4, English fingering, box, sheet 1 of 1: bird layer, bottom plate, end wall, side wall, top plate. 3mm ply, drawn for a 0.13mm kerf. Blue #0000ff engraves the duct, a fill engrave about 1mm deep -- set the depth on scrap first; orange #ff8000 cuts the window, the holes; black #000000 frees the parts.</desc>
+<desc>1 user unit = 1mm. Four-hole ocarina in G4, English fingering, box, sheet 1 of 1: bird, bottom plate, chin layer, end wall, side wall, top plate. 3mm ply, drawn for a 0.13mm kerf. Blue #0000ff engraves the duct, a fill engrave about 1mm deep -- set the depth on scrap first; orange #ff8000 cuts the window, the holes; black #000000 frees the parts.</desc>
   <g fill="#0000ff" stroke="none">
     <path d="M 5.065,82.195 L 26.065,82.195 L 26.065,92.195 L 5.065,92.195 Z"/>
   </g>
@@ -20,7 +20,6 @@
     <path d="M 440.758,8.000 L 447.425,8.000 L 447.425,5.000 L 454.222,5.000 L 454.222,8.000 L 487.425,8.000 L 487.425,5.000 L 494.222,5.000 L 494.222,8.000 L 500.888,8.000 L 500.888,14.000 L 503.888,14.000 L 503.888,20.130 L 500.888,20.130 L 500.888,26.130 L 494.222,26.130 L 494.222,29.130 L 487.425,29.130 L 487.425,26.130 L 480.888,26.130 L 480.888,29.130 L 474.092,29.130 L 474.092,26.130 L 467.555,26.130 L 467.555,29.130 L 460.758,29.130 L 460.758,26.130 L 454.222,26.130 L 454.222,29.130 L 447.425,29.130 L 447.425,26.130 L 440.758,26.130 L 440.758,20.130 L 437.758,20.130 L 437.758,14.000 L 440.758,14.000 Z"/>
     <path d="M 510.888,8.000 L 517.555,8.000 L 517.555,5.000 L 524.352,5.000 L 524.352,8.000 L 530.888,8.000 L 530.888,5.000 L 537.685,5.000 L 537.685,8.000 L 544.222,8.000 L 544.222,5.000 L 551.018,5.000 L 551.018,8.000 L 557.555,8.000 L 557.555,5.000 L 564.352,5.000 L 564.352,8.000 L 571.018,8.000 L 571.018,14.000 L 574.018,14.000 L 574.018,20.130 L 571.018,20.130 L 571.018,26.130 L 564.352,26.130 L 564.352,29.130 L 557.555,29.130 L 557.555,26.130 L 551.018,26.130 L 551.018,29.130 L 544.222,29.130 L 544.222,26.130 L 537.685,26.130 L 537.685,29.130 L 530.888,29.130 L 530.888,26.130 L 524.352,26.130 L 524.352,29.130 L 517.555,29.130 L 517.555,26.130 L 510.888,26.130 L 510.888,20.130 L 507.888,20.130 L 507.888,14.000 L 510.888,14.000 Z"/>
     <path d="M 5.000,75.130 L 26.130,75.130 L 26.130,99.260 L 5.000,99.260 Z"/>
-    <path d="M 30.130,75.130 L 51.260,75.130 L 51.260,99.260 L 30.130,99.260 Z"/>
-    <path d="M 55.260,75.130 L 76.390,75.130 L 76.390,99.260 L 55.260,99.260 Z"/>
+    <path d="M 30.130,75.130 L 48.260,75.130 L 48.260,99.260 L 30.130,99.260 Z"/>
   </g>
 </svg>

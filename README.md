@@ -20,7 +20,7 @@ acoustic model whose window term is not measured, and the first one cut will set
 
 <table>
 <tr>
-<td align="center"><a href="cut-files/box/box-ocarina-G4-box-sheet1-cut-files.svg"><img src="previews/box/box-ocarina-G4-box-sheet1-cut-files.svg" alt="One sheet of parts: a top plate with a short beak at one end, a small rectangular window beside the beak and four round holes of four sizes, every edge notched for finger joints; a matching bottom plate without the beak; two side walls and two end walls with fingers on all four edges, one end wall plain along part of its top edge where the beak goes; and three small bird layers, one with a blue band across it for the duct" width="100%"></a></td>
+<td align="center"><a href="cut-files/box/box-ocarina-G4-box-sheet1-cut-files.svg"><img src="previews/box/box-ocarina-G4-box-sheet1-cut-files.svg" alt="One sheet of parts: a top plate with a short beak at one end, a small rectangular window beside the beak and four round holes of four sizes, every edge notched for finger joints; a matching bottom plate without the beak; two side walls and two end walls with fingers on all four edges, one end wall plain along part of its top edge where the beak goes; and two small squares for the mouthpiece, one with a blue band across it for the duct" width="100%"></a></td>
 </tr>
 <tr>
 <td align="center"><sub>box · the whole ocarina on one 579 × 104mm sheet</sub></td>
@@ -41,11 +41,11 @@ identical; only the walls round the cavity differ.
 
 | Build | Construction | Cavity | Body | Parts | Sheets | Joints |
 |---|---|---|---|---|---|---|
-| `box` | finger-jointed on all twelve edges | 60 × 18 × 93.6mm | 99.6 × 66.0 × 24mm | 9 | 1 | the bird's layers glued, the rest press-fit |
-| `stack` | laminated stack | 60 × 18 × 93.6mm | 105.6 × 72.0 × 24mm | 11 | 1 | every layer and the bird glued |
+| `box` | finger-jointed on all twelve edges | 60 × 18 × 93.6mm | 99.6 × 66.0 × 24mm | 8 | 1 | the bird and the chin layer glued, the rest press-fit |
+| `stack` | laminated stack | 60 × 18 × 93.6mm | 105.6 × 72.0 × 24mm | 10 | 1 | every layer, the bird and the chin layer glued |
 
-The body is length × width × depth; the beak runs 18mm past it at the mouth end, and
-the bird stands 9mm on the top over the beak.
+The body is length × width × depth; the beak runs 18mm past it at the mouth end, the
+bird stands 3mm on the top over it, and the chin layer hangs 3mm under it.
 
 - **The box** is six plates finger-jointed on all twelve edges, every finger flush to
   the outside faces. Each edge carries as many fingers as fit at the square flute's
@@ -60,9 +60,11 @@ Neither has anything to slide, so both are tuned at the window and the holes. Th
 had a press-fit end plug to tune with until it was jointed on every edge.
 
 Both carry the same mouthpiece: the top plate runs on past the body as a beak 24mm
-wide, and three bird layers are glued over it. The duct is a fill engrave in the
-underside of the bottom bird layer, 10mm wide and about 1mm deep, from the beak's tip
-to the window.
+wide. One layer, the bird, is glued over it and one, the chin layer, under it, so the
+mouthpiece is three plies, 9mm thick, with the duct near its middle. The duct is a
+fill engrave in the bird's underside, 10mm wide and about 1mm deep, from the beak's
+tip to the window. Only the bird is needed for the sound; the chin layer gives the
+lips a thicker mouthpiece and stiffens the beak.
 
 ## Turn it in 3D
 
@@ -179,8 +181,8 @@ held in the fingers.
 **Cut it in 3mm Baltic birch plywood**, at a 0.13mm kerf. The fingers are the square
 flute's size or a little over: each edge is split into equal cells, 6.24mm along the
 box, 6.67mm across it and 6.00mm up the corners, with no play, so the fit comes from
-the kerf compensation alone. Glue the bird's layers together and to the top, and
-every layer of the stack. Press-fit
+the kerf compensation alone. Glue the bird on the top, the chin layer under the
+beak, and every layer of the stack. Press-fit
 the box, then seal every seam with shellac, inside where you can reach and outside
 everywhere: a Helmholtz resonator leaks its note out of any gap.
 
@@ -191,7 +193,8 @@ are not numbered: the 3D view shows where each one goes.
 ## Tuning
 
 1. File the splitting edge, then glue the bird on, its end flush with the window's
-   near edge so the duct opens straight on to it.
+   near edge so the duct opens straight on to it, and the chin layer under the beak,
+   its end against the body.
 2. Press the box together, or glue up the stack.
 3. With every hole closed, play G4. If it is out by more than breath will bend, run
    `--heard` and note the `--mouth` for the next cut.
@@ -228,6 +231,7 @@ writing anything:
 - ply left between neighbouring holes
 - the window opens into the cavity at its mouth-end wall
 - the duct runs from the beak's tip to the window
+- the chin layer fills the beak's underside and stops at the body
 - in the box, every edge is finger-jointed with as many 6mm cells as fit, and the
   six plates fill every cell of all twelve edges and all eight corners exactly once:
   337 points sampled, each found in one plate
@@ -249,10 +253,10 @@ The top plate, from outside and to scale, beak on the left:
 
 Each picture is a display rendering; click it for the cut file.
 
-**`box`** · finger-jointed on all twelve edges, cavity 60 × 18 × 93.6mm · 9 parts on 1 sheet
+**`box`** · finger-jointed on all twelve edges, cavity 60 × 18 × 93.6mm · 8 parts on 1 sheet
 
 [![box, sheet 1 of 1: the parts laid out for the laser, the window and holes in orange, outlines in black, the duct in blue](previews/box/box-ocarina-G4-box-sheet1-cut-files.svg)](cut-files/box/box-ocarina-G4-box-sheet1-cut-files.svg)
 
-**`stack`** · laminated stack, cavity 60 × 18 × 93.6mm · 11 parts on 1 sheet
+**`stack`** · laminated stack, cavity 60 × 18 × 93.6mm · 10 parts on 1 sheet
 
 [![stack, sheet 1 of 1: the parts laid out for the laser, the window, holes and six cavity cut-outs in orange, outlines in black, the duct in blue](previews/stack/box-ocarina-G4-stack-sheet1-cut-files.svg)](cut-files/stack/box-ocarina-G4-stack-sheet1-cut-files.svg)
