@@ -93,6 +93,7 @@ BUILDS = {
     'stack': 'laminated stack',
     'octagon': 'regular octagonal prism, finger-jointed',
     'truncated-cube': 'regular truncated cube, finger-jointed',
+    'snub-square-antiprism': 'snub square antiprism (Johnson solid J85), finger-jointed',
 }
 # The second and third sets, since 2026-10-17: solids, built by polyhedron.py,
 # whose cavity is what their shape holds and whose key follows from it. The
@@ -104,7 +105,16 @@ BUILDS = {
 #                   triangle edges seven 6mm fingers exactly
 OCT_FLATS, OCT_HEIGHT = 110.0, 36.0
 TC_EDGE = 42.0
-SOLIDS = ('octagon', 'truncated-cube')
+# The fourth set, the same day: the snub square antiprism, Johnson solid J85,
+# every edge SSA_EDGE long -- seven 6mm fingers again, and triangles big enough
+# for the 12.2mm hole. Its top square is too small for four holes, so each
+# hole has a triangle of its own: the index fingers' the two either side of
+# the top, the middle fingers' the next ones round, away from the beak. Five
+# plates meet at every corner, and each is nipped SSA_NIP back from it, square
+# to its bisector, so that those sharing only the corner stay apart.
+SSA_EDGE = 42.0
+SSA_NIP = 3.5
+SOLIDS = ('octagon', 'truncated-cube', 'snub-square-antiprism')
 
 
 def cavity_length(V):
@@ -498,18 +508,24 @@ def build_solid(kind, diams):
     hole face on top, the mouth face looking down -x, so the beak runs out
     along -x from the middle of the top's mouth edge. Each part carries its
     frame as p.m, the matrix from its own (u, v, inward) to the world."""
-    faces = (P.octagonal_prism(OCT_FLATS, OCT_HEIGHT) if kind == 'octagon'
-             else P.truncated_cube(TC_EDGE))
+    faces = {'octagon': lambda: P.octagonal_prism(OCT_FLATS, OCT_HEIGHT),
+             'truncated-cube': lambda: P.truncated_cube(TC_EDGE),
+             'snub-square-antiprism': lambda: P.snub_square_antiprism(SSA_EDGE)}[kind]()
     ft = next(i for i, f in enumerate(faces) if f.name == 'top')
     fm = next(i for i, f in enumerate(faces) if f.name.startswith('mouth'))
     top, mouth = faces[ft], faces[fm]
-    x_edge = -mouth.off                        # the mouth face's plane, x = -off
+    x_edge = min(v[0] for v in top.verts)      # the top's edge with the mouth face
     z_top = top.off
+    nip = SSA_NIP if kind == 'snub-square-antiprism' else 0.0
 
     def owner_at(v):
         """The face that owns a corner: the prism's top or bottom, the
-        cube's triangle."""
+        cube's triangle; on J85 the square where there is one, and elsewhere
+        the first triangle, the nip doing the rest."""
         on = [i for i, f in enumerate(faces) if abs(P.dot(v, f.n) - f.off) < 1e-6]
+        if kind == 'snub-square-antiprism':
+            sq = [i for i in on if faces[i].name in ('top', 'bottom')]
+            return (sq or on)[0]
         mine = ('triangle',) if kind == 'truncated-cube' else ('top', 'bottom')
         pick = [i for i in on if faces[i].name in mine]
         assert len(pick) == 1, f'corner {v} has {len(pick)} owners'
@@ -528,8 +544,10 @@ def build_solid(kind, diams):
     parts = []
     num = iter(range(1, 100))
     fr_top = P.frame(top, U=(1.0, 0.0, 0.0), O=(x_edge, 0.0, z_top))
+    frames = []
     for i, f in enumerate(faces):
         fr = fr_top if i == ft else P.frame(f)
+        frames.append(fr)
         beak = None
         if i == ft:
             # the top's mouth edge, and the beak's span along it
@@ -540,12 +558,27 @@ def build_solid(kind, diams):
             sy = (B[1] - A[1]) / P.dist(A, B)
             b0, b1 = sorted(((-BEAK_W / 2 - A[1]) / sy, (BEAK_W / 2 - A[1]) / sy))
             beak = (b0, b1, BEAK, j)
-        o = P.outline(i, f, fr, es, cellmap, beak)
+        if i == fm and mouth.n[2] > 1e-9:
+            # a mouth face that slopes away under the beak stops short of it
+            # by T / sin of the slope, so its edge clears the beak's
+            # underside, where an upright one stops T short like any other
+            k = len(f.verts)
+            j = next(j for j in range(k) if abs(f.verts[j][0] - x_edge) < 1e-6
+                     and abs(f.verts[(j + 1) % k][0] - x_edge) < 1e-6
+                     and abs(f.verts[j][2] - z_top) < 1e-6
+                     and abs(f.verts[(j + 1) % k][2] - z_top) < 1e-6)
+            A, B = f.verts[j], f.verts[(j + 1) % k]
+            sy = (B[1] - A[1]) / P.dist(A, B)
+            b0, b1 = sorted(((-BEAK_W / 2 - A[1]) / sy, (BEAK_W / 2 - A[1]) / sy))
+            beak = (b0, b1, -T / math.sqrt(1 - mouth.n[2] ** 2), j)
+        o = P.outline(i, f, fr, es, cellmap, beak, nip)
         if i == ft:
             o = rounded(o, 0.0)
-        note = {'top': 'the window and the four holes; file the window\'s far edge to '
-                       'a 30 degree bevel on the outside face before the bird goes on',
-                'triangle': 'a truncated corner, fingers on all three edges'}.get(
+        note = {'top': 'the window' + ('' if nip else ' and the four holes')
+                       + '; file the window\'s far edge to a 30 degree bevel on the '
+                       'outside face before the bird goes on',
+                'triangle': ('fingers on all three edges, the corners nipped' if nip
+                             else 'a truncated corner, fingers on all three edges')}.get(
                     f.name, 'fingers on every edge')
         p = Part(f.name if f.name != 'top' else 'top plate', next(num), o, note)
         p.m = P.matrix(fr)
@@ -557,23 +590,58 @@ def build_solid(kind, diams):
     # is up (-x), so right = forward x up = -y. On the sheet, drawn from
     # outside with v = -y, the right hand's holes are at v > 0
     tp.slot(T, -M.WINDOW_W / 2, T + M.WINDOW_L, M.WINDOW_W / 2)
-    places = {'R2': (T + ROW_2, COLUMNS / 2), 'R1': (T + ROW_1, COLUMNS / 2),
-              'L1': (T + ROW_1, -COLUMNS / 2), 'L2': (T + ROW_2, -COLUMNS / 2)}
+    vol, polys = P.inner(faces)
+    if kind == 'snub-square-antiprism':
+        # each hole where it is furthest from every wall of its face's
+        # inside; left hand +y, right -y
+        up = [i for i, f in enumerate(faces) if f.name == 'triangle' and f.n[2] > 0]
+        places = {}
+        for hand, sgn in (('L', 1), ('R', -1)):
+            ix = next(i for i in up if abs(faces[i].centre[0]) < 1
+                      and faces[i].centre[1] * sgn > 0)
+            mid = min((i for i in up if faces[i].centre[0] > 1 and faces[i].centre[1] * sgn > 0),
+                      key=lambda i: P.dist(faces[i].centre, faces[ix].centre))
+            for h, i in ((hand + '1', ix), (hand + '2', mid)):
+                places[h] = (i, deepest([P.to2d(frames[i], c) for c in polys[i]]))
+    else:
+        places = {h: (ft, xy) for h, xy in
+                  {'R2': (T + ROW_2, COLUMNS / 2), 'R1': (T + ROW_1, COLUMNS / 2),
+                   'L1': (T + ROW_1, -COLUMNS / 2), 'L2': (T + ROW_2, -COLUMNS / 2)}.items()}
     for h, d in zip(M.HOLES, diams):
-        tp.hole(*places[h], d)
+        i, xy = places[h]
+        parts[i].hole(*xy, d)
     O, U, V, W = fr_top
+    # the chin layer stops where it would run into a sloping mouth face: its
+    # lower inside corner just touching the mouth face's outside
+    n = mouth.n
+    back = max(0.0, (mouth.off - P.dot(n, (x_edge, 0.0, z_top - 2 * T))) / -n[0])
     bird = Part('bird', next(num), mouthpiece(T, 0.0),
                 'the duct fill-engraved in its underside, about 1mm deep')
     bird.fills.append(duct(T, 0.0))
     bird.m = P.matrix((P.add(O, (0, 0, T)), U, V, W))
-    chin = Part('chin layer', next(num), mouthpiece(0, 0.0),
+    chin = Part('chin layer', next(num), mouthpiece(-back, 0.0),
                 'glued under the beak, its end against the mouth face')
     chin.m = P.matrix((P.sub(O, (0, 0, T)), U, V, W))
     parts += [bird, chin]
-    vol, polys = P.inner(faces)
     return parts, dict(kind=kind, faces=faces, edges=es, cellmap=cellmap, ft=ft, fm=fm,
-                       V=vol, inner_top=[P.to2d(fr_top, q) for q in polys[ft]],
-                       places=places, fr_top=fr_top, inner_pts=[q for pl in polys for q in pl])
+                       V=vol, inner=[[P.to2d(fr, q) for q in pl] for fr, pl in zip(frames, polys)],
+                       places=places, fr_top=fr_top, frames=frames, back=back, nip=nip,
+                       inner_pts=[q for pl in polys for q in pl])
+
+
+def deepest(poly):
+    """The point inside a convex polygon furthest from all its sides, found
+    by a grid search that narrows round the best point so far."""
+    x0, x1 = min(x for x, _ in poly), max(x for x, _ in poly)
+    y0, y1 = min(y for _, y in poly), max(y for _, y in poly)
+    best = ((x0 + x1) / 2, (y0 + y1) / 2)
+    h = max(x1 - x0, y1 - y0) / 2
+    while h > 1e-4:
+        best = max(((best[0] + i * h / 4, best[1] + j * h / 4)
+                    for i in range(-4, 5) for j in range(-4, 5)),
+                   key=lambda c: in_poly_margin(c, 0, poly))
+        h /= 2
+    return (round(best[0], 3), round(best[1], 3))
 
 
 def in_poly_margin(c, r, poly):
@@ -605,24 +673,27 @@ def solid_checks(kind, parts, info, V0, kw, diams, worst):
     note(span < lam / 4, 'the cavity is small against the wavelength',
          f'{V / 1000:.1f}cm^3, sounding {f0:.1f}Hz; {span:.0f}mm across, '
          f'a quarter wave {lam / 4:.0f}mm')
-    poly = info['inner_top']
-    web = min(in_poly_margin(xy, d / 2, poly) for xy, d in zip(info['places'].values(), diams))
+    poly = info['inner'][info['ft']]
+    web = min(in_poly_margin(xy, d / 2, info['inner'][i])
+              for (i, xy), d in zip(info['places'].values(), diams))
     win = [(T, -M.WINDOW_W / 2), (T + M.WINDOW_L, -M.WINDOW_W / 2),
            (T + M.WINDOW_L, M.WINDOW_W / 2), (T, M.WINDOW_W / 2)]
     wweb = min(in_poly_margin(c, 0, poly) for c in win[1:3])
     note(web >= MIN_WEB and wweb >= 0, 'every hole and the window open into the cavity',
          f'nearest hole {web:.1f}mm from a wall')
-    pl = list(zip(info['places'].values(), diams))
-    gap = min(math.hypot(a[0] - b[0], a[1] - b[1]) - (da + db) / 2
+    def world(i, xy):
+        O, U, V_, W = info['frames'][i]
+        return P.add(O, P.add(P.mul(U, xy[0]), P.mul(V_, xy[1])))
+    pl = [(world(*ixy), d) for ixy, d in zip(info['places'].values(), diams)]
+    gap = min(P.dist(a, b) - (da + db) / 2
               for i, (a, da) in enumerate(pl) for b, db in pl[i + 1:])
     note(gap >= HOLE_GAP, 'ply left between neighbouring holes', f'narrowest {gap:.1f}mm')
     # the hands, from the geometry rather than the names: right = forward x up
-    O, U, V_, W = info['fr_top']
     fwd = info['faces'][info['ft']].n
     up = (-1.0, 0.0, 0.0)
     right = P.cross(fwd, up)
-    ok = all((P.dot(P.add(O, P.add(P.mul(U, x), P.mul(V_, y))), right) > 0) == h.startswith('R')
-             for h, (x, y) in info['places'].items())
+    ok = all((P.dot(world(*ixy), right) > 0) == h.startswith('R')
+             for h, ixy in info['places'].items())
     note(ok, 'each hand\'s holes lie under that hand', 'held holes forward, beak up')
     bird = [p for p in parts if p.fills][0]
     fx = [q[0] for q in bird.fills[0]]
@@ -635,7 +706,7 @@ def solid_checks(kind, parts, info, V0, kw, diams, worst):
         key = (round(E['theta'], 2), round(E['L'], 2))
         kinds.setdefault(key, set()).add(len(cm[id(E)]))
     widths = [E['L'] / len(cm[id(E)]) for E in es]
-    note(min(widths) >= FINGER, 'every edge is finger-jointed, as many as fit',
+    note(min(widths) >= FINGER - 1e-9, 'every edge is finger-jointed, as many as fit',
          f'{len(es)} edges: ' + '; '.join(f'{L:g}mm at {th:g} deg, {"/".join(map(str, sorted(n)))} cells'
                                          for (th, L), n in sorted(kinds.items()))
          + f'; narrowest {min(widths):.2f}mm')
@@ -655,6 +726,15 @@ def solid_checks(kind, parts, info, V0, kw, diams, worst):
     note(far <= 2 * T, 'every joint closes, but within a finger of a corner',
          f'{n - len(void)} of {n} points in a plate; the rest at corners, '
          f'at most {far:.1f}mm from one: shellac fills them')
+    n, two, void = corner_scan(parts, info)
+    note(not two, 'no two plates in the same place, round every corner',
+         f'{n} points within {CORNER_R:g}mm of the {len(verts)} corners, in the walls'
+         + (f', {two} in two plates' if two else f', each in one plate or none'
+            + (f'; corners nipped {info["nip"]:g}mm' if info['nip'] else '')))
+    n, two = mouthpiece_scan(parts)
+    note(not two, 'the beak, the bird and the chin layer clear the body',
+         f'{n} points through them, none in a second part' if not two
+         else f'{two} of {n} points in a second part')
     sheets = pack(parts)
     note(all(s['w'] <= BED[0] and s['h'] <= BED[1] for s in sheets), 'every sheet fits the bed',
          f'{len(sheets)} sheet(s), largest {max(s["w"] for s in sheets):.0f} x '
@@ -662,6 +742,60 @@ def solid_checks(kind, parts, info, V0, kw, diams, worst):
     placed = sum(len(s['parts']) for s in sheets)
     note(placed == len(parts), 'every part is on a sheet', f'{placed} of {len(parts)}')
     return out, sheets, f0
+
+
+CORNER_R, CORNER_STEP = 5.0, 0.4
+
+
+def corner_scan(parts, info):
+    """Every point of a grid round each corner that lies in the walls --
+    inside the solid, within T of its outside -- and how many of them lie in
+    two plates or in none. The joint check samples along the edges; this one
+    finds plates that share only a corner, which meet nowhere else. The grid
+    is set off a little so no point lands on a cell's boundary."""
+    faces = info['faces']
+    verts = {tuple(round(x, 6) for x in v) for f in faces for v in f.verts}
+    k = int(CORNER_R / CORNER_STEP)
+    n = two = void = 0
+    for v in sorted(verts):
+        for i in range(-k, k + 1):
+            for j in range(-k, k + 1):
+                for m in range(-k, k + 1):
+                    q = (v[0] + i * CORNER_STEP + 0.0137, v[1] + j * CORNER_STEP + 0.0291,
+                         v[2] + m * CORNER_STEP + 0.0173)
+                    depth = [f.off - P.dot(f.n, q) for f in faces]
+                    if min(depth) < 0 or min(depth) > T:
+                        continue
+                    n += 1
+                    o = len(owners(parts, q))
+                    two += o > 1
+                    void += o == 0
+    return n, two, void
+
+
+def mouthpiece_scan(parts, step=0.5):
+    """A grid through the mouthpiece -- the bird, the chin layer and the top
+    plate's beak, out past the body -- at the middle of their thickness and a
+    little inside each face: how many points are also in another part."""
+    n = two = 0
+    for p in parts:
+        if p.name not in ('bird', 'chin layer', 'top plate'):
+            continue
+        xs = [x for x, _ in p.outline]
+        ys = [y for _, y in p.outline]
+        m = p.m
+        for w in (0.1, T / 2, T - 0.1):
+            u = min(xs) + 0.013
+            while u < max(xs):
+                v = min(ys) + 0.029
+                while v < max(ys):
+                    if inside((u, v), p.outline) and (u < 0 or p.name != 'top plate'):
+                        q = [m[i][0] * u + m[i][1] * v + m[i][2] * w + m[i][3] for i in range(3)]
+                        n += 1
+                        two += len(owners(parts, q)) > 1
+                    v += step
+                u += step
+    return n, two
 
 
 

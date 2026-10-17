@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Convex solids finger-jointed on every edge, at any angle the faces meet:
-the octagonal prism and the truncated cube that box_ocarina.py builds.
+the octagonal prism, the truncated cube and the snub square antiprism (J85)
+that box_ocarina.py builds.
 
 The box in box_ocarina.py has right angles only, and its joint is drawn as
 cells and corner cubes. Here a solid is any convex polyhedron, given as its
@@ -22,10 +23,13 @@ so the joint closes on a line, and a V-shaped notch shows outside, which the
 shellac fills. Every angle here is 90 or more, where no finger pokes out of
 the outside surface.
 
-THE CORNERS. Three faces meet at every vertex of both solids. One of them
-owns the vertex -- the octagonal prism's top or bottom, the truncated cube's
-triangle -- and the cells at that end of its two edges are its own. The
-third edge, between the other two, takes no part in that choice.
+THE CORNERS. One face owns each vertex -- the octagonal prism's top or
+bottom, the truncated cube's triangle, J85's square where it has one -- and
+the cells at that end of its two edges are its own. The other edges there
+take no part in that choice. Where three faces meet, every pair shares an
+edge, and that is all. Where five meet, as on J85, plates that share only
+the corner run into each other just inside it, so outline() can nip every
+corner off, square to its bisector.
 
 HOW MANY CELLS. As many as fit with none under FINGER, the square flute's
 6mm, and of the parity the corners need: odd when both ends belong to the
@@ -134,6 +138,94 @@ def truncated_cube(edge):
     return solid(planes, verts)
 
 
+def snub_square_antiprism(edge):
+    """The snub square antiprism, Johnson solid J85, every edge `edge` long,
+    outside, centred on the origin: two squares, top and bottom, and 24
+    equilateral triangles, five faces at every corner. A square's corners
+    are at radius r1 = e / sqrt 2, height z1; the other eight zigzag round
+    the middle at radius r2, heights +-z2, one under each square corner and
+    one under each of the other square's. The three unknowns are fixed by
+    three edges being e long -- square corner to the zigzag above-and-beside
+    it and to the one below it, and one zigzag step -- and found by Newton's
+    method. Turned so that a square's edge faces -x, for the beak."""
+    r1 = 1 / math.sqrt(2)
+    c45 = math.cos(math.pi / 4)
+
+    def eqs(z1, r2, z2):
+        A, B, C = (r1, 0, z1), (r2 * c45, r2 * c45, z2), (r2, 0, -z2)
+        return [dist(A, B) - 1, dist(A, C) - 1, dist(B, C) - 1]
+    x = [0.68, 1.21, 0.19]
+    for _ in range(50):
+        f = eqs(*x)
+        J = []
+        for k in range(3):
+            y = list(x)
+            y[k] += 1e-7
+            J.append([(a - b) / 1e-7 for a, b in zip(eqs(*y), f)])
+        J = [list(r) for r in zip(*J)]          # rows: equations
+        x = [a - b for a, b in zip(x, solve3(J, f))]
+    assert max(abs(v) for v in eqs(*x)) < 1e-12
+    z1, r2, z2 = x
+    ring = lambda r, deg, z: (edge * r * math.cos(math.radians(deg + 45)),
+                              edge * r * math.sin(math.radians(deg + 45)), edge * z)
+    verts = ([ring(r1, 90 * k, z1) for k in range(4)]
+             + [ring(r1, 45 + 90 * k, -z1) for k in range(4)]
+             + [ring(r2, 45 + 45 * k, z2 * (-1) ** k) for k in range(8)])
+    planes = []
+    for n, off in hull(verts):
+        if n[2] > 1 - 1e-9:
+            name = 'top'
+        elif n[2] < -1 + 1e-9:
+            name = 'bottom'
+        else:
+            name = 'triangle'
+        planes.append((name, n, off))
+    faces = solid(planes, verts)
+    top = next(f for f in faces if f.name == 'top')
+    xe = min(v[0] for v in top.verts)
+    for f in faces:
+        on = [v for v in f.verts if abs(v[0] - xe) < 1e-6 and abs(v[2] - top.off) < 1e-6]
+        if f.name == 'triangle' and len(on) == 2:
+            f.name = 'mouth triangle'
+    return faces
+
+
+def solve3(A, b):
+    """A x = b for three unknowns, by Cramer's rule."""
+    det = lambda m: (m[0][0] * (m[1][1] * m[2][2] - m[1][2] * m[2][1])
+                     - m[0][1] * (m[1][0] * m[2][2] - m[1][2] * m[2][0])
+                     + m[0][2] * (m[1][0] * m[2][1] - m[1][1] * m[2][0]))
+    D = det(A)
+    out = []
+    for k in range(3):
+        m = [list(r) for r in A]
+        for i in range(3):
+            m[i][k] = b[i]
+        out.append(det(m) / D)
+    return out
+
+
+def hull(verts):
+    """The planes of the convex hull of verts, as (outward unit normal,
+    offset): every plane through three corners with all the others on its
+    inner side, each once."""
+    out = []
+    for p, q, r in itertools.combinations(verts, 3):
+        n = cross(sub(q, p), sub(r, p))
+        if dot(n, n) < 1e-12:
+            continue
+        n = unit(n)
+        off = dot(n, p)
+        side = [dot(n, v) - off for v in verts]
+        if max(side) > 1e-6:
+            if min(side) < -1e-6:
+                continue
+            n, off = mul(n, -1), -off
+        if not any(dot(n, m) > 1 - 1e-9 for m, _ in out):
+            out.append((n, off))
+    return out
+
+
 def edges(faces):
     """Every edge: the two faces, its ends P and Q in the walking order of
     the first face, and the dihedral angle inside the solid."""
@@ -169,7 +261,7 @@ def cells(E, owner_at, force=None):
     a, b, L = E['a'], E['b'], E['L']
     ends = [owner_at(E['P']), owner_at(E['Q'])]
     ends = [o if o in (a, b) else None for o in ends]
-    n = int(L // FINGER)
+    n = int(L / FINGER + 1e-9)          # 42 / 6 is 6.999... from the corners
     if ends[0] is not None and ends[1] is not None:
         want = 1 if ends[0] == ends[1] else 0          # odd, or even
     elif ends[0] is None and ends[1] is None:
@@ -220,12 +312,16 @@ def matrix(fr):
     return [[U[i], V[i], W[i], O[i]] for i in range(3)]
 
 
-def outline(fi, face, fr, all_edges, cellmap, beak=None):
+def outline(fi, face, fr, all_edges, cellmap, beak=None, nip=0.0):
     """The plate's outline in its frame: each edge walked from corner to
     corner, at depth 0 in its own cells and clear(theta) inside them in its
     neighbour's; corners where two edges meet set back to where the two set
-    lines cross. `beak`, (s0, s1, depth, edge index), pushes a span of one
-    edge out past it."""
+    lines cross. `beak`, (s0, s1, depth, edge index), moves a span of one
+    edge to -depth: out past it for the top's beak, in from it for the face
+    under the beak. `nip` cuts every corner off square to its bisector,
+    that far in from the solid's corner: where more than three plates meet,
+    the ones that share only the corner would otherwise run into each other
+    just inside it."""
     k = len(face.verts)
     P2 = [to2d(fr, v) for v in face.verts]
     c2 = (sum(p[0] for p in P2) / k, sum(p[1] for p in P2) / k)
@@ -272,7 +368,37 @@ def outline(fi, face, fr, all_edges, cellmap, beak=None):
         pp, pd, pn, psegs = runs[j - 1]
         X = cross2(pp, pd, pn, psegs[-1][2], p, dv, nv, segs[0][2])
         pts += [X] + line[1:-1]
+    if nip:
+        for j in range(k):
+            pts = clip(pts, P2[j], P2[j - 1], P2[(j + 1) % k], c2, nip)
     return simplify(pts)
+
+
+def clip(pts, corner, prev, nxt, centre, d):
+    """The polygon pts with its corner cut off: everything nearer `corner`
+    than d, measured along the line to the centre, and inside the corner's
+    own two edges -- so a beak running out past an edge is left alone.
+    Sutherland-Hodgman against the cutting line."""
+    L = math.hypot(centre[0] - corner[0], centre[1] - corner[1])
+    n = ((centre[0] - corner[0]) / L, (centre[1] - corner[1]) / L)
+
+    def within(p, q):
+        """Is p on the centre's side of the line from corner to q?"""
+        side = lambda r: ((q[0] - corner[0]) * (r[1] - corner[1])
+                          - (q[1] - corner[1]) * (r[0] - corner[0]))
+        return side(p) * side(centre) >= -1e-6 * L * L
+    keep = lambda p: (p[0] - corner[0]) * n[0] + (p[1] - corner[1]) * n[1] - d
+    cut = lambda p: keep(p) < 0 and within(p, prev) and within(p, nxt)
+    out = []
+    for i in range(len(pts)):
+        p, q = pts[i - 1], pts[i]
+        if cut(p) != cut(q):
+            kp, kq = keep(p), keep(q)
+            t = kp / (kp - kq)
+            out.append((p[0] + t * (q[0] - p[0]), p[1] + t * (q[1] - p[1])))
+        if not cut(q):
+            out.append(q)
+    return out
 
 
 def cross2(p1, d1, n1, dp1, p2, d2, n2, dp2):
