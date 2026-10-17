@@ -46,7 +46,7 @@ def solids(kind, parts, info):
     PW, D, W = info['PW'], B.D_IN, B.W_IN
     plate = lambda z0: [[1, 0, 0, 0], [0, 1, 0, -PW / 2], [0, 0, 1, z0]]
     out = []
-    k_plug = k_bird = k_side = k_frame = 0
+    k_bird = k_side = k_end = k_frame = 0
     for p in parts:
         holes = []
         for c in p.cuts:
@@ -56,23 +56,17 @@ def solids(kind, parts, info):
                 holes.append({'c': [round(c[1], 3), round(c[2], 3), round(c[3], 3)]})
         n = p.name
         flip = False
-        if n == 'side wall':
-            yo = W / 2 if k_side == 0 else -W / 2 - T
-            m = [[1, 0, 0, 0], [0, 0, 1, yo], [0, -1, 0, T + D]]
-            e = [0, 1 if k_side == 0 else -1, 0]
-            k_side += 1
-            g = 'wall'
-        elif n == 'plug disc':
-            # the first pair closes the mouth end, the second the far end,
-            # TUNE in from the tube's end; each pair comes out its own way
-            mouth = k_plug < B.PLUG_DISCS
-            x = (k_plug * T if mouth
-                 else info['c0'] + info['Lc'] + (k_plug - B.PLUG_DISCS) * T)
-            m = [[0, 0, 1, x], [1, 0, 0, -(W + B.INTERF_ACROSS) / 2], [0, 1, 0, T]]
-            e = [-1.2 - 0.25 * (B.PLUG_DISCS - 1 - k_plug), 0, 0] if mouth else \
-                [1.2 + 0.25 * (k_plug - B.PLUG_DISCS), 0, 0]
-            k_plug += 1
-            g = 'plug'
+        if getattr(p, 'm', None):
+            # a box plate places itself; the view centres y on the box
+            m = [list(r) for r in p.m]
+            m[1][3] -= PW / 2
+            out_dir = {'top plate': [0, 0, 1.2], 'bottom plate': [0, 0, -1],
+                       'side wall': [0, 1 if k_side else -1, 0],
+                       'end wall': [-1.4 if k_end == 0 else 1.4, 0, 0]}[n]
+            e = out_dir
+            k_side += n == 'side wall'
+            k_end += n == 'end wall'
+            g = 'plate' if n.endswith('plate') else 'wall'
         elif n in ('bottom plate', 'bottom layer'):
             m, e, g = plate(0), [0, 0, -1], 'plate'
         elif n == 'frame layer':
@@ -80,7 +74,7 @@ def solids(kind, parts, info):
             e = [0, 0, -0.75 + 0.25 * k_frame]
             k_frame += 1
             g = 'wall'
-        elif n == 'top plate':
+        elif n == 'top plate':                     # the stack's
             m, e, g = plate(T + D), [0, 0, 1.2], 'plate'
         elif n == 'bird layer':
             m = plate(2 * T + D + k_bird * T)
@@ -173,7 +167,7 @@ def chart_svg(diams, title):
             f'Black is covered, white is open.</desc>\n' + '\n'.join(s) + '\n</svg>\n')
 
 
-MARKUP = '<section class="viewer" id="turn" aria-label="Turn it in 3D">\n  <div class="vbar" role="group" aria-label="Build">__BUTTONS__</div>\n  <div class="stage" id="stage"><canvas id="cv" aria-label="The selected build in 3D. Drag to turn, scroll or pinch to zoom."></canvas>\n    <p class="vinfo" id="vinfo"></p></div>\n  <div class="vctl">\n    <label for="explode">Explode</label><input id="explode" type="range" min="0" max="1" step="0.01" value="0">\n    <button type="button" id="vreset">Reset view</button>\n    <label class="chk"><input type="checkbox" id="xray"> See through the walls</label>\n  </div>\n  <details class="note vhow"><summary>How to use this view</summary><p>Drag to turn, scroll or pinch to zoom. The parts are the generator\'s own outlines before the kerf, so this is the ocarina as built: the box\'s fingers in their notches, flush to the outside, and its two end plugs, the far one set in from the end to tune; the stack\'s six frame layers round the cavity; the window and the four holes in the top; and the bird over the beak. The duct is drawn blue, and exploded, the bird\'s bottom layer comes out toward you and turns over so the duct faces up.</p></details>\n</section>'
+MARKUP = '<section class="viewer" id="turn" aria-label="Turn it in 3D">\n  <div class="vbar" role="group" aria-label="Build">__BUTTONS__</div>\n  <div class="stage" id="stage"><canvas id="cv" aria-label="The selected build in 3D. Drag to turn, scroll or pinch to zoom."></canvas>\n    <p class="vinfo" id="vinfo"></p></div>\n  <div class="vctl">\n    <label for="explode">Explode</label><input id="explode" type="range" min="0" max="1" step="0.01" value="0">\n    <button type="button" id="vreset">Reset view</button>\n    <label class="chk"><input type="checkbox" id="xray"> See through the walls</label>\n  </div>\n  <details class="note vhow"><summary>How to use this view</summary><p>Drag to turn, scroll or pinch to zoom. The parts are the generator\'s own outlines before the kerf, so this is the ocarina as built: the box finger-jointed on all twelve edges, every finger flush to the outside; the stack\'s six frame layers round the cavity; the window and the four holes in the top; and the bird over the beak. The duct is drawn blue, and exploded, the bird\'s bottom layer comes out toward you and turns over so the duct faces up.</p></details>\n</section>'
 
 
 def viewer_js(three):

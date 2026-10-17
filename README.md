@@ -20,10 +20,10 @@ acoustic model whose window term is not measured, and the first one cut will set
 
 <table>
 <tr>
-<td align="center"><a href="cut-files/box/box-ocarina-G4-box-sheet1-cut-files.svg"><img src="previews/box/box-ocarina-G4-box-sheet1-cut-files.svg" alt="One sheet of parts: a top plate with a short beak at one end, a small rectangular window beside the beak and four round holes of four sizes, its long edges notched for finger joints; a matching bottom plate without the beak; two side walls with fingers along both edges; four plain rectangular plug discs; and three small square bird layers, one with a blue band across it for the duct" width="100%"></a></td>
+<td align="center"><a href="cut-files/box/box-ocarina-G4-box-sheet1-cut-files.svg"><img src="previews/box/box-ocarina-G4-box-sheet1-cut-files.svg" alt="One sheet of parts: a top plate with a short beak at one end, a small rectangular window beside the beak and four round holes of four sizes, every edge notched for finger joints; a matching bottom plate without the beak; two side walls and two end walls with fingers on all four edges, one end wall plain along part of its top edge where the beak goes; and three small bird layers, one with a blue band across it for the duct" width="100%"></a></td>
 </tr>
 <tr>
-<td align="center"><sub>box · the whole ocarina on one 595 × 127mm sheet</sub></td>
+<td align="center"><sub>box · the whole ocarina on one 579 × 104mm sheet</sub></td>
 </tr>
 </table>
 
@@ -41,19 +41,23 @@ identical; only the walls round the cavity differ.
 
 | Build | Construction | Cavity | Body | Parts | Sheets | Joints |
 |---|---|---|---|---|---|---|
-| `box` | finger-jointed box | 60 × 18 × 93.6mm | 108.6 × 66.0 × 24mm | 11 | 1 | the bird's layers glued, the rest press-fit |
+| `box` | finger-jointed on all twelve edges | 60 × 18 × 93.6mm | 99.6 × 66.0 × 24mm | 9 | 1 | the bird's layers glued, the rest press-fit |
 | `stack` | laminated stack | 60 × 18 × 93.6mm | 105.6 × 72.0 × 24mm | 11 | 1 | every layer and the bird glued |
 
 The body is length × width × depth; the beak runs 18mm past it at the mouth end, and
 the bird stands 9mm on the top over the beak.
 
-- **The box** is four plates with the square flute's finger joint: the side walls'
-  fingers fill notches in the top and the bottom and run flush to the outside faces.
-  Each end is closed by a plug of two discs pressed into the tube. The far plug sits
-  3mm in from the end, so it can be pushed in or drawn out to tune before the
-  shellac fixes it.
+- **The box** is six plates finger-jointed on all twelve edges, every finger flush to
+  the outside faces. Each edge carries as many fingers as fit at the square flute's
+  6mm: 15 cells along the box, 9 across it and 3 up each corner, alternating between
+  the two plates that meet there. The corner cubes belong to the side walls. The one
+  gap in the pattern is under the beak: the mouth-end wall sends no fingers up into
+  the top there, so the beak runs on from solid ply and the duct crosses no seam.
 - **The stack** is a bottom layer, six frame layers with the cavity cut out of them,
-  and the top, all glued. It has nothing to slide, so it is tuned at the window.
+  and the top, all glued.
+
+Neither has anything to slide, so both are tuned at the window and the holes. The box
+had a press-fit end plug to tune with until it was jointed on every edge.
 
 Both carry the same mouthpiece: the top plate runs on past the body as a beak 24mm
 wide, and three bird layers are glued over it. The duct is a fill engrave in the
@@ -157,11 +161,6 @@ python3 ocarina_model.py --heard=380   # the pitch you heard, in Hz
 prints the `--mouth` that explains it, and the command to redraw both builds with
 it. A first build that sounds 50 cents flat is not a failure; it is the measurement.
 
-**The box tunes itself, within limits.** Pushing the far plug 1mm further in makes the
-cavity 1mm shorter and the ocarina 9.3 cents sharper. It sits 3mm in, so drawn out
-it has 28 cents of flattening before it is flush with the tube's end; pushed in, it
-can sharpen as far as you need. The stack has no plug to slide.
-
 **The holes can only go up.** A hole that plays flat can be opened with a file. A hole
 that plays sharp cannot be closed up, so file in small steps.
 
@@ -177,11 +176,11 @@ is a power setting, so find it on scrap first.
 one most likely to come out ragged or choked with char. Clear it with a 3mm drill
 held in the fingers.
 
-**Cut it in 3mm Baltic birch plywood**, at a 0.13mm kerf. The finger joints are the
-square flute's, 6mm fingers and 6mm spaces with no play, so the fit comes from the
-kerf compensation alone. The plug discs are drawn 0.12mm over the cavity's section,
-the mallet fit used on the [lyre-harp](https://github.com/Gernreich/lyre-harp). Glue
-the bird's layers together and to the top, and every layer of the stack. Press-fit
+**Cut it in 3mm Baltic birch plywood**, at a 0.13mm kerf. The fingers are the square
+flute's size or a little over: each edge is split into equal cells, 6.24mm along the
+box, 6.67mm across it and 6.00mm up the corners, with no play, so the fit comes from
+the kerf compensation alone. Glue the bird's layers together and to the top, and
+every layer of the stack. Press-fit
 the box, then seal every seam with shellac, inside where you can reach and outside
 everywhere: a Helmholtz resonator leaks its note out of any gap.
 
@@ -193,10 +192,8 @@ are not numbered: the 3D view shows where each one goes.
 
 1. File the splitting edge, then glue the bird on, its end flush with the window's
    near edge so the duct opens straight on to it.
-2. Close the box with the mouth plug flush and the far plug 3mm in, or glue up the
-   stack.
-3. With every hole closed, play G4. Slide the box's far plug to bring it in. If the
-   stack, or a box at the end of its plug's travel, is out by more than that, run
+2. Press the box together, or glue up the stack.
+3. With every hole closed, play G4. If it is out by more than breath will bend, run
    `--heard` and note the `--mouth` for the next cut.
 4. Open each hole alone, smallest first, and file it up to the model's pitch for
    it: `R2` alone 436.9Hz, `R1` 490.4Hz, `L1` 555.8Hz and `L2` 646.1Hz. The
@@ -231,10 +228,12 @@ writing anything:
 - ply left between neighbouring holes
 - the window opens into the cavity at its mouth-end wall
 - the duct runs from the beak's tip to the window
-- in the box, the fingers run to the outside faces, and the side walls have them
+- in the box, every edge is finger-jointed with as many 6mm cells as fit, and the
+  six plates fill every cell of all twelve edges and all eight corners exactly once:
+  337 points sampled, each found in one plate
 - every sheet fits the bed, and every part is on a sheet
 
-It borrows the finger joint, the plates and the sheet packer from
+It borrows the finger size, the plate class and the sheet packer from
 [`square_flute.py`](https://github.com/Gernreich/square-flute/blob/main/square_flute.py),
 and the SVG path writer from
 [`ribbon_bore.py`](https://github.com/Gernreich/swept-curve/blob/main/ribbon_bore.py)
@@ -250,7 +249,7 @@ The top plate, from outside and to scale, beak on the left:
 
 Each picture is a display rendering; click it for the cut file.
 
-**`box`** · finger-jointed box, cavity 60 × 18 × 93.6mm · 11 parts on 1 sheet
+**`box`** · finger-jointed on all twelve edges, cavity 60 × 18 × 93.6mm · 9 parts on 1 sheet
 
 [![box, sheet 1 of 1: the parts laid out for the laser, the window and holes in orange, outlines in black, the duct in blue](previews/box/box-ocarina-G4-box-sheet1-cut-files.svg)](cut-files/box/box-ocarina-G4-box-sheet1-cut-files.svg)
 
