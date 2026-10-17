@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="572.45mm" height="158.26mm" viewBox="0 0 572.45 158.26">
+<!-- DISPLAY ONLY - not a cut file.
+     The stroke is thickened, a light ground painted in, and the lightest inks
+     darkened: green, cyan and orange sit below the 3:1 graphics minimum against any
+     light background, so the cut order cannot be read from a faithful rendering. Hue
+     and sequence are unchanged. Geometry and sheet position are untouched, and the
+     CUT FILE keeps the exact values your laser keys on.
+     Cut the file in the repository root, not this one. -->
+  <rect x="0.0" y="0.0" width="572.45" height="158.26" fill="#ffffff"/>
+<title>Four-hole ocarina in G4, stack, sheet 1 of 1</title>
+<desc>1 user unit = 1mm. Four-hole ocarina in G4, English fingering, stack, sheet 1 of 1: bird layer, bottom layer, frame layer, top plate. 3mm ply, drawn for a 0.13mm kerf. Blue #0000ff engraves the duct, a fill engrave about 1mm deep -- set the depth on scrap first; orange #ff8000 cuts the window, the holes and the cavity; black #000000 frees the parts.</desc>
+  <g fill="#0000ff" stroke="none">
+    <path d="M 334.134,88.195 L 358.134,88.195 L 358.134,98.195 L 334.134,98.195 Z"/>
+  </g>
+  <g fill="none" stroke="#a85800" stroke-width="1.145">
+    <path d="M 29.130,36.130 L 34.000,36.130 L 34.000,46.000 L 29.130,46.000 Z"/>
+    <circle cx="81.065" cy="59.065" r="1.408"/>
+    <circle cx="59.065" cy="59.065" r="2.552"/>
+    <circle cx="59.065" cy="23.065" r="3.955"/>
+    <circle cx="81.065" cy="23.065" r="6.051"/>
+    <path d="M 248.509,11.130 L 341.939,11.130 L 341.939,71.000 L 248.509,71.000 Z"/>
+    <path d="M 358.199,11.130 L 451.628,11.130 L 451.628,71.000 L 358.199,71.000 Z"/>
+    <path d="M 467.888,11.130 L 561.318,11.130 L 561.318,71.000 L 467.888,71.000 Z"/>
+    <path d="M 11.130,87.260 L 104.560,87.260 L 104.560,147.130 L 11.130,147.130 Z"/>
+    <path d="M 120.820,87.260 L 214.249,87.260 L 214.249,147.130 L 120.820,147.130 Z"/>
+    <path d="M 230.509,87.260 L 323.939,87.260 L 323.939,147.130 L 230.509,147.130 Z"/>
+  </g>
+  <g fill="none" stroke="#000000" stroke-width="1.145">
+    <path d="M 23.000,5.000 L 128.690,5.000 L 128.690,77.130 L 23.000,77.130 L 23.000,53.130 L 5.000,53.130 L 5.000,29.000 L 23.000,29.000 Z"/>
+    <path d="M 132.690,5.000 L 238.379,5.000 L 238.379,77.130 L 132.690,77.130 Z"/>
+    <path d="M 242.379,5.000 L 348.069,5.000 L 348.069,77.130 L 242.379,77.130 Z"/>
+    <path d="M 352.069,5.000 L 457.758,5.000 L 457.758,77.130 L 352.069,77.130 Z"/>
+    <path d="M 461.758,5.000 L 567.448,5.000 L 567.448,77.130 L 461.758,77.130 Z"/>
+    <path d="M 5.000,81.130 L 110.690,81.130 L 110.690,153.260 L 5.000,153.260 Z"/>
+    <path d="M 114.690,81.130 L 220.379,81.130 L 220.379,153.260 L 114.690,153.260 Z"/>
+    <path d="M 224.379,81.130 L 330.069,81.130 L 330.069,153.260 L 224.379,153.260 Z"/>
+    <path d="M 334.069,81.130 L 358.199,81.130 L 358.199,105.260 L 334.069,105.260 Z"/>
+    <path d="M 362.199,81.130 L 386.329,81.130 L 386.329,105.260 L 362.199,105.260 Z"/>
+    <path d="M 390.329,81.130 L 414.459,81.130 L 414.459,105.260 L 390.329,105.260 Z"/>
+  </g>
+</svg>

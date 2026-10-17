@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Box ocarina</title>
+<style>
+:root{--bg:#fbfbfa;--fg:#1a1c1e;--mut:#5b6067;--line:#e2e4e7;--card:#fff;--accent:#1d4ed8;
+--codebg:#f4f5f7;--thbg:#f0f1f3;--mark:#fff8c4}
+@media (prefers-color-scheme:dark){:root{--bg:#15171a;--fg:#e6e8ea;--mut:#9aa1a9;--line:#2b2f34;
+--card:#1b1e22;--accent:#7aa2f7;--codebg:#22262b;--thbg:#23272c;--mark:#4a411c}}
+:root[data-theme=dark]{--bg:#15171a;--fg:#e6e8ea;--mut:#9aa1a9;--line:#2b2f34;--card:#1b1e22;
+--accent:#7aa2f7;--codebg:#22262b;--thbg:#23272c;--mark:#4a411c}
+:root[data-theme=light]{--bg:#fbfbfa;--fg:#1a1c1e;--mut:#5b6067;--line:#e2e4e7;--card:#fff;
+--accent:#1d4ed8;--codebg:#f4f5f7;--thbg:#f0f1f3;--mark:#fff8c4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);
+font:16px/1.62 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+-webkit-text-size-adjust:100%}
+.wrap{display:grid;grid-template-columns:250px minmax(0,1fr);gap:44px;max-width:1180px;
+margin:0 auto;padding:40px 28px 96px}
+nav{position:sticky;top:28px;align-self:start;max-height:calc(100vh - 56px);overflow:auto;
+border-right:1px solid var(--line);padding-right:16px;font-size:13.5px;line-height:1.45}
+nav b{display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mut);
+margin:0 0 12px}
+nav a{display:block;color:var(--mut);text-decoration:none;padding:3px 0;border-radius:4px}
+nav a:hover{color:var(--accent)}
+nav a.l1{color:var(--fg);font-weight:640;margin-top:11px}
+nav a.l2{padding-left:12px}
+main{min-width:0}
+h1{font-size:1.62rem;line-height:1.25;letter-spacing:-.015em;margin:2.4em 0 .5em;
+padding-bottom:.32em;border-bottom:2px solid var(--line)}
+main>h1:first-child{margin-top:0;border-bottom:none;font-size:1.95rem}
+h2{font-size:1.34rem;font-weight:680;margin:2.1em 0 .6em;letter-spacing:-.012em;
+padding:.1em 0 .1em .6em;border-left:4px solid var(--accent)}
+h3{font-size:1.02rem;font-weight:650;margin:1.7em 0 .45em}
+p{margin:.85em 0}
+ul,ol{margin:.85em 0;padding-left:1.35em}
+li{margin:.3em 0}
+/* A list with blank lines between its items is "loose", and pandoc wraps each item
+   in a <p> as GitHub does. These pages were set tight before pandoc, so they stay so. */
+li>p{margin:0}
+hr{border:0;border-top:1px solid var(--line);margin:2.6em 0}
+figure{margin:1.6em 0}
+/* A paragraph holding two or more images is a gallery. Left to inline layout they
+   wrap at whatever fits, which put three bells on one row and the fourth alone
+   underneath - directly above the caption, so it read as the caption for that one
+   picture rather than for the set. Flex lets them share the row instead. */
+p:has(img + img){display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;
+justify-content:center}
+p:has(img + img) img{flex:1 1 140px;min-width:0;width:auto;max-width:100%;height:auto;
+border:1px solid var(--line);border-radius:10px}
+figure svg,figure img{display:block;width:100%;max-width:100%;height:auto;
+border:1px solid var(--line);border-radius:10px}
+/* Any other image -- one inside a link, which is not a figure -- is held to the
+   column too. A cut-sheet preview linked to its cut file drew at its own size,
+   595mm wide, and ran off the page (square-flute, 2026-10-13). */
+img{max-width:100%;height:auto}
+a{color:var(--accent)}
+code{font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+background:var(--codebg);padding:.1em .32em;border-radius:4px;
+border:1px solid color-mix(in srgb,var(--line) 70%,transparent)}
+pre{background:var(--codebg);border:1px solid var(--line);border-radius:9px;
+padding:14px 16px;overflow-x:auto;margin:1.1em 0}
+pre code{background:none;border:0;padding:0;font-size:12.8px;line-height:1.62;white-space:pre}
+blockquote{margin:1.15em 0;padding:.7em 1.1em;border-left:4px solid var(--accent);
+background:var(--codebg);border-radius:0 7px 7px 0}
+blockquote p{margin:0}
+.tw{overflow-x:auto;margin:1.15em 0;border:1px solid var(--line);border-radius:9px;
+background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:8px 13px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+/* honour align="center" on gallery cells: a presentation attribute loses to any
+   CSS rule, so the line above would silently left-align every thumbnail caption */
+td[align=center],th[align=center]{text-align:center}
+th{background:var(--thbg);font-weight:630;white-space:nowrap;font-size:13px;
+letter-spacing:.01em}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:color-mix(in srgb,var(--thbg) 45%,transparent)}
+td code,th code{white-space:nowrap}
+/* A walk inside a link is one token: breaking it mid-walk put "N" at the end of one
+   line and "N5 U" at the start of the next, which reads as two things. */
+a code{white-space:nowrap}
+.tog{position:fixed;top:14px;right:14px;z-index:9;background:var(--card);color:var(--mut);
+border:1px solid var(--line);border-radius:7px;padding:6px 11px;font-size:12.5px;cursor:pointer}
+.tog:hover{color:var(--accent)}
+/* Below 900px the contents list moves to the top of the page, and the fixed theme
+   button sat on top of its first lines. There it scrolls away with the page instead,
+   in a strip of padding kept free for it; fixed, it would ride over the text as the
+   page scrolls, since a narrow screen has no margin for it to sit in. */
+@media (max-width:900px){.wrap{grid-template-columns:1fr;gap:20px;padding:62px 18px 72px}
+.tog{position:absolute}
+nav{position:static;max-height:none;border-right:0;border-bottom:1px solid var(--line);
+padding:0 0 16px;columns:2;column-gap:20px}}
+@media print{nav,.tog{display:none}.wrap{display:block;max-width:none;padding:0}
+pre,.tw{break-inside:avoid}h1{break-after:avoid}}
+</style>
+</head>
+<body>
+<button class="tog" type="button">theme</button>
+<div class="wrap">
+<nav><b>Contents</b><a class="l1" href="#box-ocarina">Box ocarina</a><a class="l2" href="#the-builds">The builds</a><a class="l2" href="#turn-it-in-3d">Turn it in 3D</a><a class="l2" href="#fingering">Fingering</a><a class="l2" href="#what-the-model-says">What the model says</a><a class="l2" href="#before-you-cut">Before you cut</a><a class="l2" href="#tuning">Tuning</a><a class="l2" href="#regenerating-it">Regenerating it</a><a class="l2" href="#every-cut-sheet">Every cut sheet</a></nav>
+<main>
+<h1 id="box-ocarina">Box ocarina</h1>
+<p><strong><a href="https://github.com/Gernreich/box-ocarina">Read the README</a></strong></p>
+<p>A four-hole ocarina in G4, in 3mm plywood: a rectangular box with a beak to blow into, four finger holes in its top, and the English fingering, which gets a whole octave out of four holes. All closed it sounds G4; the fingerings below give the G major scale up to G5, and five more notes besides.</p>
+<p>Output is millimetre-true — <code>1 user unit = 1mm</code> with a physical <code>width</code>/<code>height</code> — so it prints and cuts at real size.</p>
+<p><strong>Neither build has been cut or played yet.</strong> The cavity and the holes come from an acoustic model whose window term is not measured, and the first one cut will set it. <a href="#before-you-cut">Before you cut</a> says what that means for the first build.</p>
+<table>
+<tr>
+<td align="center"><a href="cut-files/box/box-ocarina-G4-box-sheet1-cut-files.svg"><img src="previews/box/box-ocarina-G4-box-sheet1-cut-files.svg" alt="One sheet of parts: a top plate with a short beak at one end, a small rectangular window beside the beak and four round holes of four sizes, its long edges notched for finger joints; a matching bottom plate without the beak; two side walls with fingers along both edges; four plain rectangular plug discs; and three small square bird layers, one with a blue band across it for the duct" width="100%"></a></td>
+</tr>
+<tr>
+<td align="center"><sub>box · the whole ocarina on one 595 × 127mm sheet</sub></td>
+</tr>
+</table>
+
+<p>Built for <strong><a href="https://www.youtube.com/@LaserMadeMusic">LaserMadeMusic</a></strong>.</p>
+<p><strong><a href="https://gernreich.github.io/">The rest of the build files</a></strong> — every instrument, generator and tool, indexed.</p>
+<p><strong><a href="https://github.com/Gernreich/box-ocarina/archive/refs/heads/main.zip">Download everything as a ZIP</a></strong></p>
+<h2 id="the-builds">The builds</h2>
+<p>Two ways to build the same ocarina. The cavity, the window and the four holes are identical; only the walls round the cavity differ.</p>
+<div class="tw">
+<table>
+<thead>
+<tr>
+<th>Build</th>
+<th>Construction</th>
+<th>Cavity</th>
+<th>Body</th>
+<th>Parts</th>
+<th>Sheets</th>
+<th>Joints</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>box</code></td>
+<td>finger-jointed box</td>
+<td>60 × 18 × 93.6mm</td>
+<td>108.6 × 66.0 × 24mm</td>
+<td>11</td>
+<td>1</td>
+<td>the bird's layers glued, the rest press-fit</td>
+</tr>
+<tr>
+<td><code>stack</code></td>
+<td>laminated stack</td>
+<td>60 × 18 × 93.6mm</td>
+<td>105.6 × 72.0 × 24mm</td>
+<td>11</td>
+<td>1</td>
+<td>every layer and the bird glued</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The body is length × width × depth; the beak runs 18mm past it at the mouth end, and the bird stands 9mm on the top over the beak.</p>
+<ul>
+<li><strong>The box</strong> is four plates with the square flute's finger joint: the side walls' fingers fill notches in the top and the bottom and run flush to the outside faces. Each end is closed by a plug of two discs pressed into the tube. The far plug sits 3mm in from the end, so it can be pushed in or drawn out to tune before the shellac fixes it.</li>
+<li><strong>The stack</strong> is a bottom layer, six frame layers with the cavity cut out of them, and the top, all glued. It has nothing to slide, so it is tuned at the window.</li>
+</ul>
+<p>Both carry the same mouthpiece: the top plate runs on past the body as a beak 24mm wide, and three bird layers are glued over it. The duct is a fill engrave in the underside of the bottom bird layer, 10mm wide and about 1mm deep, from the beak's tip to the window.</p>
+<h2 id="turn-it-in-3d">Turn it in 3D</h2>
+<div id="turn3d"></div><script src="viewer.js"></script>
+
+<h2 id="fingering">Fingering</h2>
+<p>Black is covered, white is open. The chart shows the holes as your hands meet them: beak up, left hand on the left, index fingers on the row nearer the beak.</p>
+<figure><svg aria-label="Fingering chart for the G major scale from G4 to G5: eight small drawings of the ocarina&#x27;s hole face, beak up, each showing which of the four holes are covered in black and which are open in white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 272 46">
+<title>Fingering chart, G4 to G5</title>
+<desc>Display drawing. The G major scale from G4 to G5, one cell per note: the four holes as the player's hands meet them, beak up, left hand on the left, index fingers' holes on the upper row, each drawn in proportion to its size. Black is covered, white is open.</desc>
+<rect x="0" y="0" width="272" height="46" fill="#ffffff"/>
+<rect x="4.0" y="4.0" width="26" height="28" rx="3" fill="#e7dcc4" stroke="#1d232b" stroke-width=".4"/>
+<rect x="14.0" y="1.0" width="6" height="3" fill="#b8925c" stroke="#1d232b" stroke-width=".3"/>
+<circle cx="25.0" cy="26.0" r="1.00" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="25.0" cy="14.0" r="1.44" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="9.0" cy="14.0" r="2.21" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="9.0" cy="26.0" r="3.36" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<text x="17.0" y="43.0" font-size="6.5" fill="#1d232b" font-family="Helvetica, Arial, sans-serif" text-anchor="middle">G4</text>
+<rect x="38.0" y="4.0" width="26" height="28" rx="3" fill="#e7dcc4" stroke="#1d232b" stroke-width=".4"/>
+<rect x="48.0" y="1.0" width="6" height="3" fill="#b8925c" stroke="#1d232b" stroke-width=".3"/>
+<circle cx="59.0" cy="26.0" r="1.00" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="59.0" cy="14.0" r="1.44" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="43.0" cy="14.0" r="2.21" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="43.0" cy="26.0" r="3.36" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<text x="51.0" y="43.0" font-size="6.5" fill="#1d232b" font-family="Helvetica, Arial, sans-serif" text-anchor="middle">A4</text>
+<rect x="72.0" y="4.0" width="26" height="28" rx="3" fill="#e7dcc4" stroke="#1d232b" stroke-width=".4"/>
+<rect x="82.0" y="1.0" width="6" height="3" fill="#b8925c" stroke="#1d232b" stroke-width=".3"/>
+<circle cx="93.0" cy="26.0" r="1.00" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="93.0" cy="14.0" r="1.44" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="77.0" cy="14.0" r="2.21" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="77.0" cy="26.0" r="3.36" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<text x="85.0" y="43.0" font-size="6.5" fill="#1d232b" font-family="Helvetica, Arial, sans-serif" text-anchor="middle">B4</text>
+<rect x="106.0" y="4.0" width="26" height="28" rx="3" fill="#e7dcc4" stroke="#1d232b" stroke-width=".4"/>
+<rect x="116.0" y="1.0" width="6" height="3" fill="#b8925c" stroke="#1d232b" stroke-width=".3"/>
+<circle cx="127.0" cy="26.0" r="1.00" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="127.0" cy="14.0" r="1.44" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="111.0" cy="14.0" r="2.21" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="111.0" cy="26.0" r="3.36" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<text x="119.0" y="43.0" font-size="6.5" fill="#1d232b" font-family="Helvetica, Arial, sans-serif" text-anchor="middle">C5</text>
+<rect x="140.0" y="4.0" width="26" height="28" rx="3" fill="#e7dcc4" stroke="#1d232b" stroke-width=".4"/>
+<rect x="150.0" y="1.0" width="6" height="3" fill="#b8925c" stroke="#1d232b" stroke-width=".3"/>
+<circle cx="161.0" cy="26.0" r="1.00" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="161.0" cy="14.0" r="1.44" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="145.0" cy="14.0" r="2.21" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="145.0" cy="26.0" r="3.36" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<text x="153.0" y="43.0" font-size="6.5" fill="#1d232b" font-family="Helvetica, Arial, sans-serif" text-anchor="middle">D5</text>
+<rect x="174.0" y="4.0" width="26" height="28" rx="3" fill="#e7dcc4" stroke="#1d232b" stroke-width=".4"/>
+<rect x="184.0" y="1.0" width="6" height="3" fill="#b8925c" stroke="#1d232b" stroke-width=".3"/>
+<circle cx="195.0" cy="26.0" r="1.00" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="195.0" cy="14.0" r="1.44" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="179.0" cy="14.0" r="2.21" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="179.0" cy="26.0" r="3.36" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<text x="187.0" y="43.0" font-size="6.5" fill="#1d232b" font-family="Helvetica, Arial, sans-serif" text-anchor="middle">E5</text>
+<rect x="208.0" y="4.0" width="26" height="28" rx="3" fill="#e7dcc4" stroke="#1d232b" stroke-width=".4"/>
+<rect x="218.0" y="1.0" width="6" height="3" fill="#b8925c" stroke="#1d232b" stroke-width=".3"/>
+<circle cx="229.0" cy="26.0" r="1.00" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="229.0" cy="14.0" r="1.44" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="213.0" cy="14.0" r="2.21" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="213.0" cy="26.0" r="3.36" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<text x="221.0" y="43.0" font-size="6.5" fill="#1d232b" font-family="Helvetica, Arial, sans-serif" text-anchor="middle">F♯5</text>
+<rect x="242.0" y="4.0" width="26" height="28" rx="3" fill="#e7dcc4" stroke="#1d232b" stroke-width=".4"/>
+<rect x="252.0" y="1.0" width="6" height="3" fill="#b8925c" stroke="#1d232b" stroke-width=".3"/>
+<circle cx="263.0" cy="26.0" r="1.00" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="263.0" cy="14.0" r="1.44" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="247.0" cy="14.0" r="2.21" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="247.0" cy="26.0" r="3.36" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<text x="255.0" y="43.0" font-size="6.5" fill="#1d232b" font-family="Helvetica, Arial, sans-serif" text-anchor="middle">G5</text>
+</svg></figure>
+<p>Hold it with the holes facing away from you and your lips on the beak, thumbs on the bottom. Each hole is named for the finger that covers it: <code>L1</code> is the left index, <code>L2</code> the left middle, <code>R1</code> the right index, <code>R2</code> the right middle.</p>
+<div class="tw">
+<table>
+<thead>
+<tr>
+<th>Note</th>
+<th>Open</th>
+<th>Model</th>
+<th>From equal temperament</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>G4</td>
+<td>none</td>
+<td>392.0Hz</td>
+<td>0</td>
+</tr>
+<tr>
+<td>A4</td>
+<td>R2</td>
+<td>436.9Hz</td>
+<td>−12.3c</td>
+</tr>
+<tr>
+<td>B4</td>
+<td>R1</td>
+<td>490.4Hz</td>
+<td>−12.3c</td>
+</tr>
+<tr>
+<td>C5</td>
+<td>R2 R1</td>
+<td>527.0Hz</td>
+<td>+12.3c</td>
+</tr>
+<tr>
+<td>D5</td>
+<td>R2 L1</td>
+<td>588.3Hz</td>
+<td>+2.8c</td>
+</tr>
+<tr>
+<td>E5</td>
+<td>R2 R1 L1</td>
+<td>658.0Hz</td>
+<td>−3.4c</td>
+</tr>
+<tr>
+<td>F♯5</td>
+<td>R2 R1 L2</td>
+<td>735.8Hz</td>
+<td>−9.8c</td>
+</tr>
+<tr>
+<td>G5</td>
+<td>R2 L1 L2</td>
+<td>780.9Hz</td>
+<td>−6.9c</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The other eight fingerings are not in the scale, and three of them are close enough to use. With every hole open it sounds G♯5, a semitone over the octave.</p>
+<div class="tw">
+<table>
+<thead>
+<tr>
+<th>Open</th>
+<th>Model</th>
+<th>Nearest</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L1</td>
+<td>555.8Hz</td>
+<td>C♯5</td>
+<td>+4.3c</td>
+</tr>
+<tr>
+<td>R1 L1</td>
+<td>629.0Hz</td>
+<td>D♯5</td>
+<td>+18.8c</td>
+</tr>
+<tr>
+<td>L2</td>
+<td>646.1Hz</td>
+<td>E5</td>
+<td>−35.0c</td>
+</tr>
+<tr>
+<td>R2 L2</td>
+<td>674.2Hz</td>
+<td>E5</td>
+<td>+38.9c</td>
+</tr>
+<tr>
+<td>R1 L2</td>
+<td>710.1Hz</td>
+<td>F5</td>
+<td>+28.6c</td>
+</tr>
+<tr>
+<td>L1 L2</td>
+<td>756.7Hz</td>
+<td>F♯5</td>
+<td>+38.6c</td>
+</tr>
+<tr>
+<td>R1 L1 L2</td>
+<td>812.0Hz</td>
+<td>G♯5</td>
+<td>−39.1c</td>
+</tr>
+<tr>
+<td>all four</td>
+<td>834.6Hz</td>
+<td>G♯5</td>
+<td>+8.4c</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="what-the-model-says">What the model says</h2>
+<p><strong>An ocarina is a vessel, not a tube.</strong> Its cavity is about 100mm across and the wavelength at G4 is 880mm, so the air inside acts as one spring and the air in each opening as a mass on it: a Helmholtz resonator. The pitch depends on the cavity's volume and on how much air each opening lets through, its conductance, and <strong>not at all on where a hole is</strong>. That is why the holes sit wherever the fingers fall.</p>
+<p>Each opening's conductance is its area over its effective length: the 3mm plate it goes through, plus Rayleigh's end correction for a flanged end, once inside and once out. Open holes add to the window's in parallel, so every note asks for a sum:</p>
+<div class="tw">
+<table>
+<thead>
+<tr>
+<th>Hole</th>
+<th>Finger</th>
+<th>Conductance</th>
+<th>Diameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>R2</code></td>
+<td>right middle</td>
+<td>0.242 × the window's</td>
+<td>2.95mm</td>
+</tr>
+<tr>
+<td><code>R1</code></td>
+<td>right index</td>
+<td>0.565 ×</td>
+<td>5.23mm</td>
+</tr>
+<tr>
+<td><code>L1</code></td>
+<td>left index</td>
+<td>1.010 ×</td>
+<td>8.04mm</td>
+</tr>
+<tr>
+<td><code>L2</code></td>
+<td>left middle</td>
+<td>1.716 ×</td>
+<td>12.23mm</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The window is 10 × 5mm, with a conductance of 5.12mm. G4 from that window asks for a cavity of 101.0cm³, which is the 60 × 18 × 93.6mm both builds have.</p>
+<p><strong>No four holes play a perfect scale.</strong> Two holes opened together always add their conductances, and the scale's steps do not add that way. Here C5 opens the A4 hole and the B4 hole together, and the two give more than C5 wants. So the model shares the error out: A4 and B4 sit 12.3 cents flat and C5 12.3 sharp, and nothing else is out by more than 10. Of the 53 fingering patterns <code>ocarina_model.py --search</code> finds, none does better than 12.3 cents. Breath bends an ocarina by more than that: blow a little harder for A4 and B4, a little softer for C5.</p>
+<p><strong>The fingering is found, not copied.</strong> John Taylor's English system of 1964 is the standard four-hole fingering, and no published source found for this gives its hole sizes. So the pattern here is the tightest one a search over all four conductances found, and of those, the one with the fewest finger changes up the scale. It may not match a commercial English pendant's chart note for note.</p>
+<h2 id="before-you-cut">Before you cut</h2>
+<p><strong>The window's end correction is not measured.</strong> The jet blowing across the window lengthens it, by an amount found only in simulation so far: a 2009 simulation of an ocarina (<a href="https://arxiv.org/abs/0911.3567">Kobayashi and others</a>) put it well above the textbook figure. It is the one term every other number rests on: the cavity is sized to the window, and every hole is sized against it. With every hole closed, blow the cut ocarina and read its pitch. Then</p>
+<pre class="sh"><code>python3 ocarina_model.py --heard=380   # the pitch you heard, in Hz</code></pre>
+<p>prints the <code>--mouth</code> that explains it, and the command to redraw both builds with it. A first build that sounds 50 cents flat is not a failure; it is the measurement.</p>
+<p><strong>The box tunes itself, within limits.</strong> Pushing the far plug 1mm further in makes the cavity 1mm shorter and the ocarina 9.3 cents sharper. It sits 3mm in, so drawn out it has 28 cents of flattening before it is flush with the tube's end; pushed in, it can sharpen as far as you need. The stack has no plug to slide.</p>
+<p><strong>The holes can only go up.</strong> A hole that plays flat can be opened with a file. A hole that plays sharp cannot be closed up, so file in small steps.</p>
+<p><strong>File the splitting edge by hand.</strong> The window's far edge, the one away from the beak, is where the air splits, and it needs a clean bevel of about 30° that a laser cannot cut. File it on the outside face, the face the bird sits on, while the top is still a flat plate on the bench.</p>
+<p><strong>The duct is a fill engrave</strong>, about 1mm deep and the window's 10mm width. The depth is a power setting, so find it on scrap first.</p>
+<p><strong>The smallest hole is 2.95mm.</strong> It is right for the note, but at the kerf it is the one most likely to come out ragged or choked with char. Clear it with a 3mm drill held in the fingers.</p>
+<p><strong>Cut it in 3mm Baltic birch plywood</strong>, at a 0.13mm kerf. The finger joints are the square flute's, 6mm fingers and 6mm spaces with no play, so the fit comes from the kerf compensation alone. The plug discs are drawn 0.12mm over the cavity's section, the mallet fit used on the <a href="https://github.com/Gernreich/lyre-harp">lyre-harp</a>. Glue the bird's layers together and to the top, and every layer of the stack. Press-fit the box, then seal every seam with shellac, inside where you can reach and outside everywhere: a Helmholtz resonator leaks its note out of any gap.</p>
+<p>Run the colours <strong>blue, orange, black</strong>: blue engraves the duct, orange cuts the window and the holes (and the stack's cavity), and black frees the parts. The parts are not numbered: the 3D view shows where each one goes.</p>
+<h2 id="tuning">Tuning</h2>
+<ol type="1">
+<li>File the splitting edge, then glue the bird on, its end flush with the window's near edge so the duct opens straight on to it.</li>
+<li>Close the box with the mouth plug flush and the far plug 3mm in, or glue up the stack.</li>
+<li>With every hole closed, play G4. Slide the box's far plug to bring it in. If the stack, or a box at the end of its plug's travel, is out by more than that, run <code>--heard</code> and note the <code>--mouth</code> for the next cut.</li>
+<li>Open each hole alone, smallest first, and file it up to the model's pitch for it: <code>R2</code> alone 436.9Hz, <code>R1</code> 490.4Hz, <code>L1</code> 555.8Hz and <code>L2</code> 646.1Hz. The scale's other notes are sums of these four and follow from them.</li>
+<li>Seal with shellac once it plays in tune.</li>
+</ol>
+<h2 id="regenerating-it">Regenerating it</h2>
+<pre class="sh"><code>python3 ocarina_model.py                       # the design and all sixteen fingerings
+python3 ocarina_model.py --mouth=1.2           # with a different window correction
+python3 ocarina_model.py --heard=380           # the correction a cut ocarina implies
+python3 ocarina_model.py --search              # the fingering patterns, ranked
+python3 box_ocarina.py --no-write              # the generator&#39;s checks, writing nothing
+python3 box_ocarina.py --out=cut-files         # both builds
+python3 page_assets.py                         # viewer.js, turn.html and the two plans</code></pre>
+<p><code>ocarina_model.py</code> is the Helmholtz model above. For a fingering pattern it finds the four conductances by a pattern search that minimises the worst note's error in cents. <code>--search</code> asks which pattern, from 400 random starts: it found 53 that give eight different fingerings, and the one used here heads the list, at 12.3 cents and 11 finger moves up the scale.</p>
+<p><code>box_ocarina.py</code> builds both from what the model asks for and checks them before writing anything:</p>
+<ul>
+<li>the model holds the scale within 12.5 cents</li>
+<li>the cavity is the volume the model asks for</li>
+<li>every hole speaks and a finger covers it: from 2.5 to 13mm across</li>
+<li>every hole opens into the cavity, clear of its walls and the window</li>
+<li>ply left between neighbouring holes</li>
+<li>the window opens into the cavity at its mouth-end wall</li>
+<li>the duct runs from the beak's tip to the window</li>
+<li>in the box, the fingers run to the outside faces, and the side walls have them</li>
+<li>every sheet fits the bed, and every part is on a sheet</li>
+</ul>
+<p>It borrows the finger joint, the plates and the sheet packer from <a href="https://github.com/Gernreich/square-flute/blob/main/square_flute.py"><code>square_flute.py</code></a>, and the SVG path writer from <a href="https://github.com/Gernreich/swept-curve/blob/main/ribbon_bore.py"><code>ribbon_bore.py</code></a> in swept-curve, so it expects both repositories cloned beside this one.</p>
+<p><code>.repro</code> holds the exact command for every generated file here.</p>
+<p>The top plate, from outside and to scale, beak on the left:</p>
+<figure><svg aria-label="The box&#x27;s top plate from outside, to scale: the beak on the left with the bird&#x27;s footprint dashed over it and the duct in blue, the small rectangular window at the start of the cavity, whose walls are dotted beneath the plate, and the four round holes, L1 of 8.0mm and L2 of 12.2mm on the upper side, R1 of 5.2mm and R2 of 2.9mm on the lower" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 137 78">
+<title>The box's top plate from outside, to scale</title>
+<desc>Display drawing, not a cut file. The top plate from outside, to scale, beak on the left: the bird's footprint dashed, the duct under it in blue, the window, the four finger holes named for their fingers with their diameters, and the cavity's walls dotted beneath. The right hand's holes are at the bottom of the drawing: the player sees the other face.</desc>
+<rect x="0" y="0" width="136.6" height="78.0" fill="#ffffff"/>
+<path d="M 22.00,6.00 L 130.56,6.00 L 130.56,72.00 L 22.00,72.00 L 22.00,51.00 L 4.00,51.00 L 4.00,27.00 L 22.00,27.00 Z" fill="#e7dcc4" stroke="#1d232b" stroke-width=".4"/>
+<rect x="28.00" y="9.00" width="93.56" height="60" fill="none" stroke="#8a7350" stroke-width=".5" stroke-dasharray="1 1"/>
+<rect x="4.00" y="27.00" width="24" height="24" fill="none" stroke="#1d232b" stroke-width=".5" stroke-dasharray="2 1.5"/>
+<rect x="4.00" y="34.00" width="24" height="10" fill="#0000ff" fill-opacity=".45"/>
+<rect x="28.00" y="34.00" width="5" height="10" fill="#ffffff" stroke="#a85800" stroke-width=".6"/>
+<circle cx="80.00" cy="57.00" r="1.47" fill="#ffffff" stroke="#a85800" stroke-width=".6"/>
+<text x="80.00" y="64.47" font-size="4.5" fill="#1d232b" font-family="Helvetica, Arial, sans-serif" text-anchor="middle">R2 ø2.9</text>
+<circle cx="58.00" cy="57.00" r="2.62" fill="#ffffff" stroke="#a85800" stroke-width=".6"/>
+<text x="58.00" y="65.62" font-size="4.5" fill="#1d232b" font-family="Helvetica, Arial, sans-serif" text-anchor="middle">R1 ø5.2</text>
+<circle cx="58.00" cy="21.00" r="4.02" fill="#ffffff" stroke="#a85800" stroke-width=".6"/>
+<text x="58.00" y="14.48" font-size="4.5" fill="#1d232b" font-family="Helvetica, Arial, sans-serif" text-anchor="middle">L1 ø8.0</text>
+<circle cx="80.00" cy="21.00" r="6.12" fill="#ffffff" stroke="#a85800" stroke-width=".6"/>
+<text x="80.00" y="12.38" font-size="4.5" fill="#1d232b" font-family="Helvetica, Arial, sans-serif" text-anchor="middle">L2 ø12.2</text>
+</svg></figure>
+<h2 id="every-cut-sheet">Every cut sheet</h2>
+<p>Each picture is a display rendering; click it for the cut file.</p>
+<p><strong><code>box</code></strong> · finger-jointed box, cavity 60 × 18 × 93.6mm · 11 parts on 1 sheet</p>
+<p><a href="cut-files/box/box-ocarina-G4-box-sheet1-cut-files.svg"><img src="previews/box/box-ocarina-G4-box-sheet1-cut-files.svg" alt="box, sheet 1 of 1: the parts laid out for the laser, the window and holes in orange, outlines in black, the duct in blue" /></a></p>
+<p><strong><code>stack</code></strong> · laminated stack, cavity 60 × 18 × 93.6mm · 11 parts on 1 sheet</p>
+<p><a href="cut-files/stack/box-ocarina-G4-stack-sheet1-cut-files.svg"><img src="previews/stack/box-ocarina-G4-stack-sheet1-cut-files.svg" alt="stack, sheet 1 of 1: the parts laid out for the laser, the window, holes and six cavity cut-outs in orange, outlines in black, the duct in blue" /></a></p>
+</main>
+</div>
+<script>
+var r=document.documentElement,b=document.querySelector('.tog');
+function set(t){r.setAttribute('data-theme',t);try{localStorage.setItem('ctg-theme',t)}catch(e){}
+b.textContent=t==='dark'?'\u2600 light':'\u263e dark';}
+var saved=null;try{saved=localStorage.getItem('ctg-theme')}catch(e){}
+set(saved||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));
+b.addEventListener('click',function(){set(r.getAttribute('data-theme')==='dark'?'light':'dark')});
+</script>
+</body>
+</html>

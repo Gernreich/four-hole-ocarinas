@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 272 46">
+<title>Fingering chart, G4 to G5</title>
+<desc>Display drawing. The G major scale from G4 to G5, one cell per note: the four holes as the player's hands meet them, beak up, left hand on the left, index fingers' holes on the upper row, each drawn in proportion to its size. Black is covered, white is open.</desc>
+<rect x="0" y="0" width="272" height="46" fill="#ffffff"/>
+<rect x="4.0" y="4.0" width="26" height="28" rx="3" fill="#e7dcc4" stroke="#1d232b" stroke-width=".4"/>
+<rect x="14.0" y="1.0" width="6" height="3" fill="#b8925c" stroke="#1d232b" stroke-width=".3"/>
+<circle cx="25.0" cy="26.0" r="1.00" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="25.0" cy="14.0" r="1.44" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="9.0" cy="14.0" r="2.21" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="9.0" cy="26.0" r="3.36" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<text x="17.0" y="43.0" font-size="6.5" fill="#1d232b" font-family="Helvetica, Arial, sans-serif" text-anchor="middle">G4</text>
+<rect x="38.0" y="4.0" width="26" height="28" rx="3" fill="#e7dcc4" stroke="#1d232b" stroke-width=".4"/>
+<rect x="48.0" y="1.0" width="6" height="3" fill="#b8925c" stroke="#1d232b" stroke-width=".3"/>
+<circle cx="59.0" cy="26.0" r="1.00" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="59.0" cy="14.0" r="1.44" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="43.0" cy="14.0" r="2.21" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="43.0" cy="26.0" r="3.36" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<text x="51.0" y="43.0" font-size="6.5" fill="#1d232b" font-family="Helvetica, Arial, sans-serif" text-anchor="middle">A4</text>
+<rect x="72.0" y="4.0" width="26" height="28" rx="3" fill="#e7dcc4" stroke="#1d232b" stroke-width=".4"/>
+<rect x="82.0" y="1.0" width="6" height="3" fill="#b8925c" stroke="#1d232b" stroke-width=".3"/>
+<circle cx="93.0" cy="26.0" r="1.00" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="93.0" cy="14.0" r="1.44" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="77.0" cy="14.0" r="2.21" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="77.0" cy="26.0" r="3.36" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<text x="85.0" y="43.0" font-size="6.5" fill="#1d232b" font-family="Helvetica, Arial, sans-serif" text-anchor="middle">B4</text>
+<rect x="106.0" y="4.0" width="26" height="28" rx="3" fill="#e7dcc4" stroke="#1d232b" stroke-width=".4"/>
+<rect x="116.0" y="1.0" width="6" height="3" fill="#b8925c" stroke="#1d232b" stroke-width=".3"/>
+<circle cx="127.0" cy="26.0" r="1.00" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="127.0" cy="14.0" r="1.44" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="111.0" cy="14.0" r="2.21" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="111.0" cy="26.0" r="3.36" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<text x="119.0" y="43.0" font-size="6.5" fill="#1d232b" font-family="Helvetica, Arial, sans-serif" text-anchor="middle">C5</text>
+<rect x="140.0" y="4.0" width="26" height="28" rx="3" fill="#e7dcc4" stroke="#1d232b" stroke-width=".4"/>
+<rect x="150.0" y="1.0" width="6" height="3" fill="#b8925c" stroke="#1d232b" stroke-width=".3"/>
+<circle cx="161.0" cy="26.0" r="1.00" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="161.0" cy="14.0" r="1.44" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="145.0" cy="14.0" r="2.21" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="145.0" cy="26.0" r="3.36" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<text x="153.0" y="43.0" font-size="6.5" fill="#1d232b" font-family="Helvetica, Arial, sans-serif" text-anchor="middle">D5</text>
+<rect x="174.0" y="4.0" width="26" height="28" rx="3" fill="#e7dcc4" stroke="#1d232b" stroke-width=".4"/>
+<rect x="184.0" y="1.0" width="6" height="3" fill="#b8925c" stroke="#1d232b" stroke-width=".3"/>
+<circle cx="195.0" cy="26.0" r="1.00" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="195.0" cy="14.0" r="1.44" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="179.0" cy="14.0" r="2.21" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="179.0" cy="26.0" r="3.36" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<text x="187.0" y="43.0" font-size="6.5" fill="#1d232b" font-family="Helvetica, Arial, sans-serif" text-anchor="middle">E5</text>
+<rect x="208.0" y="4.0" width="26" height="28" rx="3" fill="#e7dcc4" stroke="#1d232b" stroke-width=".4"/>
+<rect x="218.0" y="1.0" width="6" height="3" fill="#b8925c" stroke="#1d232b" stroke-width=".3"/>
+<circle cx="229.0" cy="26.0" r="1.00" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="229.0" cy="14.0" r="1.44" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="213.0" cy="14.0" r="2.21" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="213.0" cy="26.0" r="3.36" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<text x="221.0" y="43.0" font-size="6.5" fill="#1d232b" font-family="Helvetica, Arial, sans-serif" text-anchor="middle">F♯5</text>
+<rect x="242.0" y="4.0" width="26" height="28" rx="3" fill="#e7dcc4" stroke="#1d232b" stroke-width=".4"/>
+<rect x="252.0" y="1.0" width="6" height="3" fill="#b8925c" stroke="#1d232b" stroke-width=".3"/>
+<circle cx="263.0" cy="26.0" r="1.00" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="263.0" cy="14.0" r="1.44" fill="#1d232b" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="247.0" cy="14.0" r="2.21" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<circle cx="247.0" cy="26.0" r="3.36" fill="#ffffff" stroke="#1d232b" stroke-width=".4"/>
+<text x="255.0" y="43.0" font-size="6.5" fill="#1d232b" font-family="Helvetica, Arial, sans-serif" text-anchor="middle">G5</text>
+</svg>
