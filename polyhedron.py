@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Convex solids finger-jointed on every edge, at any angle the faces meet:
-the octagonal prism, the truncated cube and the snub square antiprism (J85)
-that box_ocarina.py builds.
+the octagonal prism, the truncated cube, the snub square antiprism (J85)
+and the snub cube that box_ocarina.py builds.
 
 The box in box_ocarina.py has right angles only, and its joint is drawn as
 cells and corner cubes. Here a solid is any convex polyhedron, given as its
@@ -24,10 +24,10 @@ shellac fills. Every angle here is 90 or more, where no finger pokes out of
 the outside surface.
 
 THE CORNERS. One face owns each vertex -- the octagonal prism's top or
-bottom, the truncated cube's triangle, J85's square where it has one -- and
+bottom, the truncated cube's triangle, the square where the snubs have one -- and
 the cells at that end of its two edges are its own. The other edges there
 take no part in that choice. Where three faces meet, every pair shares an
-edge, and that is all. Where five meet, as on J85, plates that share only
+edge, and that is all. Where five meet, as on both snubs, plates that share only
 the corner run into each other just inside it, so outline() can nip every
 corner off, square to its bisector.
 
@@ -181,6 +181,51 @@ def snub_square_antiprism(edge):
             name = 'triangle'
         planes.append((name, n, off))
     faces = solid(planes, verts)
+    top = next(f for f in faces if f.name == 'top')
+    xe = min(v[0] for v in top.verts)
+    for f in faces:
+        on = [v for v in f.verts if abs(v[0] - xe) < 1e-6 and abs(v[2] - top.off) < 1e-6]
+        if f.name == 'triangle' and len(on) == 2:
+            f.name = 'mouth triangle'
+    return faces
+
+
+def snub_cube(edge):
+    """The snub cube, every edge `edge` long, outside, centred on the origin:
+    six squares on the axes and 32 equilateral triangles, five faces at every
+    corner, one of them a square. Its corners are the even permutations of
+    (1, 1/t, t) with an even number of minus signs and the odd permutations
+    with an odd number, t being the tribonacci constant; that is one of its
+    two mirror-image forms. Turned about z so that the top square's edge
+    faces -x, for the beak."""
+    t = (1 + (19 + 3 * 33 ** .5) ** (1 / 3) + (19 - 3 * 33 ** .5) ** (1 / 3)) / 3
+    base = (1, 1 / t, t)
+    verts = []
+    for perms, minus in (([(0, 1, 2), (1, 2, 0), (2, 0, 1)], 0),
+                         ([(0, 2, 1), (2, 1, 0), (1, 0, 2)], 1)):
+        for pm in perms:
+            for sg in itertools.product((1, -1), repeat=3):
+                if sg.count(-1) % 2 == minus:
+                    verts.append(tuple(base[pm[i]] * sg[i] for i in range(3)))
+    e0 = min(dist(a, b) for a, b in itertools.combinations(verts, 2))
+    verts = [mul(v, edge / e0) for v in verts]
+    # turn about z: the top square's edge midpoint nearest -x onto the x axis
+    top = [v for v in verts if abs(v[2] - max(w[2] for w in verts)) < 1e-6]
+    c = mul(tuple(map(sum, zip(*top))), 1 / 4)
+    top.sort(key=lambda p: math.atan2(p[1] - c[1], p[0] - c[0]))
+    mids = [mul(add(top[i], top[(i + 1) % 4]), 0.5) for i in range(4)]
+    m = min(mids, key=lambda p: p[0])
+    a = math.pi - math.atan2(m[1], m[0])
+    ca, sa = math.cos(a), math.sin(a)
+    verts = [(round(x * ca - y * sa, 12), round(x * sa + y * ca, 12), z) for x, y, z in verts]
+    planes = []
+    for n, off in hull(verts):
+        name = 'top' if n[2] > 1 - 1e-9 else 'bottom' if n[2] < -1 + 1e-9 else 'triangle'
+        planes.append((name, n, off))
+    faces = solid(planes, verts)
+    for f in faces:
+        if f.name == 'triangle' and len(f.verts) == 4:
+            f.name = 'square'
     top = next(f for f in faces if f.name == 'top')
     xe = min(v[0] for v in top.verts)
     for f in faces:

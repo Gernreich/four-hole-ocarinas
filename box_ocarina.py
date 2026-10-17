@@ -94,6 +94,7 @@ BUILDS = {
     'octagon': 'regular octagonal prism, finger-jointed',
     'truncated-cube': 'regular truncated cube, finger-jointed',
     'snub-square-antiprism': 'snub square antiprism (Johnson solid J85), finger-jointed',
+    'snub-cube': 'snub cube, finger-jointed',
 }
 # The second and third sets, since 2026-10-17: solids, built by polyhedron.py,
 # whose cavity is what their shape holds and whose key follows from it. The
@@ -114,7 +115,13 @@ TC_EDGE = 42.0
 # to its bisector, so that those sharing only the corner stay apart.
 SSA_EDGE = 42.0
 SSA_NIP = 3.5
-SOLIDS = ('octagon', 'truncated-cube', 'snub-square-antiprism')
+# The fifth set: the snub cube, Archimedean, six squares and 32 triangles,
+# built as J85 is -- the window on the top square, a triangle for each hole,
+# every corner nipped -- at the same 42mm edge.
+SC_EDGE = 42.0
+SC_NIP = 2.5
+SOLIDS = ('octagon', 'truncated-cube', 'snub-square-antiprism', 'snub-cube')
+SNUBS = ('snub-square-antiprism', 'snub-cube')
 
 
 def cavity_length(V):
@@ -510,21 +517,22 @@ def build_solid(kind, diams):
     frame as p.m, the matrix from its own (u, v, inward) to the world."""
     faces = {'octagon': lambda: P.octagonal_prism(OCT_FLATS, OCT_HEIGHT),
              'truncated-cube': lambda: P.truncated_cube(TC_EDGE),
-             'snub-square-antiprism': lambda: P.snub_square_antiprism(SSA_EDGE)}[kind]()
+             'snub-square-antiprism': lambda: P.snub_square_antiprism(SSA_EDGE),
+             'snub-cube': lambda: P.snub_cube(SC_EDGE)}[kind]()
     ft = next(i for i, f in enumerate(faces) if f.name == 'top')
     fm = next(i for i, f in enumerate(faces) if f.name.startswith('mouth'))
     top, mouth = faces[ft], faces[fm]
     x_edge = min(v[0] for v in top.verts)      # the top's edge with the mouth face
     z_top = top.off
-    nip = SSA_NIP if kind == 'snub-square-antiprism' else 0.0
+    nip = {'snub-square-antiprism': SSA_NIP, 'snub-cube': SC_NIP}.get(kind, 0.0)
 
     def owner_at(v):
         """The face that owns a corner: the prism's top or bottom, the
-        cube's triangle; on J85 the square where there is one, and elsewhere
+        cube's triangle; on the snubs the square where there is one, and elsewhere
         the first triangle, the nip doing the rest."""
         on = [i for i, f in enumerate(faces) if abs(P.dot(v, f.n) - f.off) < 1e-6]
-        if kind == 'snub-square-antiprism':
-            sq = [i for i in on if faces[i].name in ('top', 'bottom')]
+        if kind in SNUBS:
+            sq = [i for i in on if faces[i].name in ('top', 'bottom', 'square')]
             return (sq or on)[0]
         mine = ('triangle',) if kind == 'truncated-cube' else ('top', 'bottom')
         pick = [i for i in on if faces[i].name in mine]
@@ -591,7 +599,7 @@ def build_solid(kind, diams):
     # outside with v = -y, the right hand's holes are at v > 0
     tp.slot(T, -M.WINDOW_W / 2, T + M.WINDOW_L, M.WINDOW_W / 2)
     vol, polys = P.inner(faces)
-    if kind == 'snub-square-antiprism':
+    if kind in SNUBS:
         # each hole where it is furthest from every wall of its face's
         # inside; left hand +y, right -y
         up = [i for i, f in enumerate(faces) if f.name == 'triangle' and f.n[2] > 0]
