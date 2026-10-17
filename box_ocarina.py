@@ -66,7 +66,7 @@ import ocarina_model as M                                      # noqa: E402
 # the square flute's box: its finger joint, plates, discs and packer, imported
 # so the two instruments are cut with one joint
 import square_flute as SF                                      # noqa: E402
-from square_flute import Part, rect, offset, pack             # noqa: E402
+from square_flute import Part, rect, pack                     # noqa: E402
 from ribbon_bore import path                                   # noqa: E402
 
 T, KERF, FINGER = SF.T, SF.KERF, SF.FINGER
@@ -78,6 +78,10 @@ W_IN = 60.0          # the cavity across: room for two columns of holes
 D_IN = 18.0          # and deep: six 3mm frame layers in the stack
 SIDE = 6.0           # the stack's frame, all round
 BEAK, BEAK_W = 18.0, 24.0
+# the beak's front, where the lips go: a half-ellipse across its whole width
+# and TIP_ROUND deep, on the top plate, the bird and the chin layer alike,
+# so the three plies round off as one (the author, 2026-10-17)
+TIP_ROUND, TIP_STEPS = 8.0, 32
 ROW_1, ROW_2 = 30.0, 52.0    # hole rows, from the cavity's mouth-end wall
 COLUMNS = 36.0               # the two hands' columns, centre to centre
 D_MIN, D_MAX = 2.5, 13.0     # a hole that still speaks; one a finger covers
@@ -100,6 +104,61 @@ def hole_places(PW):
     yc = PW / 2
     return {'R2': (ROW_2, yc + COLUMNS / 2), 'R1': (ROW_1, yc + COLUMNS / 2),
             'L1': (ROW_1, yc - COLUMNS / 2), 'L2': (ROW_2, yc - COLUMNS / 2)}
+
+
+def rounded(poly, yc):
+    """A polygon with its two corners at the beak's tip, x = -BEAK, swapped
+    for the half-ellipse there: the tip's TIP_ROUND deep and BEAK_W/2 across
+    from the centre line, sampled TIP_STEPS times over the half. A corner
+    inside the beak's width -- the duct's -- lands on the curve where its
+    own y meets it, so the duct's mouth follows the tip's."""
+    ix = [i for i, (x, y) in enumerate(poly) if x == -BEAK]
+    assert len(ix) == 2 and (ix[1] - ix[0]) % len(poly) in (1, len(poly) - 1), \
+        'the beak\'s tip must be one edge of the polygon'
+    if ix[1] - ix[0] != 1:              # the tip edge wraps round the end
+        ix = ix[::-1]
+    i, j = ix
+    b = BEAK_W / 2
+    t0, t1 = (math.asin((poly[k][1] - yc) / b) for k in (i, j))
+    arc = [(-BEAK + TIP_ROUND * (1 - math.cos(t)), yc + b * math.sin(t))
+           for t in [t0 + (t1 - t0) * k / TIP_STEPS for k in range(TIP_STEPS + 1)]]
+    if j == 0:                          # the curve closes the polygon
+        return poly[1:i] + arc
+    return poly[:i] + arc + poly[j + 1:]
+
+
+def offset(poly, d):
+    """Any simple polygon grown by d on every side (shrunk if d < 0): each
+    vertex moves along its two edges' outward normals, mitred, so both edges
+    move d. The square flute's offset() adds the normals, which is the same
+    at a right angle and wrong at any other, and the beak's tip has no right
+    angles."""
+    s = 1 if sum(x0 * y1 - x1 * y0 for (x0, y0), (x1, y1)
+                 in zip(poly, poly[1:] + poly[:1])) > 0 else -1
+    n = len(poly)
+    out = []
+    for i in range(n):
+        p0, p1, p2 = poly[i - 1], poly[i], poly[(i + 1) % n]
+
+        def normal(a, b):
+            dx, dy = b[0] - a[0], b[1] - a[1]
+            L = math.hypot(dx, dy)
+            return (s * dy / L, -s * dx / L)
+        na, nb = normal(p0, p1), normal(p1, p2)
+        k = d / (1 + na[0] * nb[0] + na[1] * nb[1])
+        out.append((p1[0] + k * (na[0] + nb[0]), p1[1] + k * (na[1] + nb[1])))
+    return out
+
+
+def mouthpiece(x1, yc):
+    """The bird's or the chin layer's outline: the beak's width, from its
+    rounded tip back to x1."""
+    return rounded(rect(-BEAK, yc - BEAK_W / 2, x1, yc + BEAK_W / 2), yc)
+
+
+def duct(c0, yc):
+    """The duct, from the rounded tip to the window's near edge at c0."""
+    return rounded(rect(-BEAK, yc - M.WINDOW_W / 2, c0, yc + M.WINDOW_W / 2), yc)
 
 
 def beaked(outline, x0, PW):
@@ -269,7 +328,7 @@ def build(kind, V, diams):
     num = iter(range(1, 100))
 
     def top_plate(outline):
-        p = Part('top plate', next(num), outline,
+        p = Part('top plate', next(num), rounded(outline, yc),
                  'the window and the four holes; file the window\'s far edge to a '
                  '30 degree bevel on the outside face before the bird goes on')
         p.slot(c0, yc - M.WINDOW_W / 2, c0 + M.WINDOW_L, yc + M.WINDOW_W / 2)
@@ -290,12 +349,12 @@ def build(kind, V, diams):
                      'the cavity cut out')
             p.slot(c0, SIDE, c0 + Lc, SIDE + W_IN)
             parts.append(p)
-    p = Part('bird', next(num), rect(-BEAK, yc - BEAK_W / 2, c0, yc + BEAK_W / 2),
+    p = Part('bird', next(num), mouthpiece(c0, yc),
              'the duct fill-engraved in its underside, about 1mm deep')
-    p.fills.append(rect(-BEAK, yc - M.WINDOW_W / 2, c0, yc + M.WINDOW_W / 2))
+    p.fills.append(duct(c0, yc))
     parts.append(p)
     # under the beak only: the body starts at x = 0
-    parts.append(Part('chin layer', next(num), rect(-BEAK, yc - BEAK_W / 2, 0, yc + BEAK_W / 2),
+    parts.append(Part('chin layer', next(num), mouthpiece(0, yc),
                       'glued under the beak, its end against the body'))
     return parts, dict(total=total, PW=PW, c0=c0, Lc=Lc, places=places)
 

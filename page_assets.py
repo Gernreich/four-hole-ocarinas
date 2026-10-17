@@ -103,16 +103,17 @@ def plan_svg(info, diams, title):
     yc, y0, x0 = PW / 2, 6.0, B.BEAK + 4
     X = lambda x: x + x0
     Y = lambda y: y + y0
-    o = [(X(x), Y(y)) for x, y in B.beaked([(0, 0), (total, 0), (total, PW), (0, PW)], 0, PW)]
+    o = [(X(x), Y(y)) for x, y in
+         B.rounded(B.beaked([(0, 0), (total, 0), (total, PW), (0, PW)], 0, PW), yc)]
+    d = lambda pts: 'M ' + ' L '.join(f'{X(x):.2f},{Y(y):.2f}' for x, y in pts) + ' Z'
     s = [f'<rect x="0" y="0" width="{X(total) + 6:.1f}" height="{Y(PW) + 6:.1f}" fill="#ffffff"/>',
          '<path d="M ' + ' L '.join(f'{x:.2f},{y:.2f}' for x, y in o)
          + ' Z" fill="#e7dcc4" stroke="#1d232b" stroke-width=".4"/>',
          f'<rect x="{X(c0):.2f}" y="{Y(yc - B.W_IN / 2):.2f}" width="{Lc:.2f}" height="{B.W_IN:g}" '
          f'fill="none" stroke="#8a7350" stroke-width=".5" stroke-dasharray="1 1"/>',
-         f'<rect x="{X(-B.BEAK):.2f}" y="{Y(yc - B.BEAK_W / 2):.2f}" width="{B.BEAK + c0:g}" '
-         f'height="{B.BEAK_W:g}" fill="none" stroke="#1d232b" stroke-width=".5" stroke-dasharray="2 1.5"/>',
-         f'<rect x="{X(-B.BEAK):.2f}" y="{Y(yc - M.WINDOW_W / 2):.2f}" width="{B.BEAK + c0:g}" '
-         f'height="{M.WINDOW_W:g}" fill="#0000ff" fill-opacity=".45"/>',
+         f'<path d="{d(B.mouthpiece(c0, yc))}" fill="none" stroke="#1d232b" stroke-width=".5" '
+         f'stroke-dasharray="2 1.5"/>',
+         f'<path d="{d(B.duct(c0, yc))}" fill="#0000ff" fill-opacity=".45"/>',
          f'<rect x="{X(c0):.2f}" y="{Y(yc - M.WINDOW_W / 2):.2f}" width="{M.WINDOW_L:g}" '
          f'height="{M.WINDOW_W:g}" fill="#ffffff" stroke="#a85800" stroke-width=".6"/>']
     t = f'{FONT} text-anchor="middle"'

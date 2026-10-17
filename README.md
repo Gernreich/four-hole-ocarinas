@@ -20,7 +20,7 @@ acoustic model whose window term is not measured, and the first one cut will set
 
 <table>
 <tr>
-<td align="center"><a href="cut-files/box/box-ocarina-G4-box-sheet1-cut-files.svg"><img src="previews/box/box-ocarina-G4-box-sheet1-cut-files.svg" alt="One sheet of parts: a top plate with a short beak at one end, a small rectangular window beside the beak and four round holes of four sizes, every edge notched for finger joints; a matching bottom plate without the beak; two side walls and two end walls with fingers on all four edges, one end wall plain along part of its top edge where the beak goes; and two small squares for the mouthpiece, one with a blue band across it for the duct" width="100%"></a></td>
+<td align="center"><a href="cut-files/box/box-ocarina-G4-box-sheet1-cut-files.svg"><img src="previews/box/box-ocarina-G4-box-sheet1-cut-files.svg" alt="One sheet of parts: a top plate with a short beak at one end, its tip rounded, a small rectangular window beside the beak and four round holes of four sizes, every edge notched for finger joints; a matching bottom plate without the beak; two side walls and two end walls with fingers on all four edges, one end wall plain along part of its top edge where the beak goes; and two small pieces for the mouthpiece, rounded at one end like the beak, one with a blue band across it for the duct" width="100%"></a></td>
 </tr>
 <tr>
 <td align="center"><sub>box · the whole ocarina on one 579 × 104mm sheet</sub></td>
@@ -64,7 +64,9 @@ wide. One layer, the bird, is glued over it and one, the chin layer, under it, s
 mouthpiece is three plies, 9mm thick, with the duct near its middle. The duct is a
 fill engrave in the bird's underside, 10mm wide and about 1mm deep, from the beak's
 tip to the window. Only the bird is needed for the sound; the chin layer gives the
-lips a thicker mouthpiece and stiffens the beak.
+lips a thicker mouthpiece and stiffens the beak. The tip, where the lips close, is a
+half-ellipse across the beak's full 24mm and 8mm deep, cut the same on all three plies
+so they round off as one, and the duct's mouth follows the curve.
 
 ## Turn it in 3D
 
