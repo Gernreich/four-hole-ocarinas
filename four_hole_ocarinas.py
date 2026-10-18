@@ -636,7 +636,10 @@ def build_solid(kind, diams):
     bird = Part('bird', next(num), mouthpiece(T, 0.0),
                 'the duct fill-engraved in its underside, about 1mm deep')
     bird.fills.append(duct(T, 0.0))
-    bird.m = P.matrix((P.add(O, (0, 0, T)), U, V, W))
+    # the bird faces down, as the box's does: its own w = 0, the face the
+    # duct is engraved in, lies on the top plate, so it is turned over
+    # about U, which its outline and duct, both symmetric across, allow
+    bird.m = P.matrix((O, U, P.mul(V, -1), P.mul(W, -1)))
     chin = Part('chin layer', next(num), mouthpiece(-back, 0.0),
                 'glued under the beak, its end against the mouth face')
     chin.m = P.matrix((P.sub(O, (0, 0, T)), U, V, W))
