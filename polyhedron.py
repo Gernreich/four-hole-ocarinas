@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Convex solids finger-jointed on every edge, at any angle the faces meet:
-the octagonal prism, the snub square antiprism (J85) and the snub cube
-that box_ocarina.py builds.
+the octagonal prism, the cube, the square antiprism, the octahedron and the
+dodecahedron that box_ocarina.py builds.
 
 The box in box_ocarina.py has right angles only, and its joint is drawn as
 cells and corner cubes. Here a solid is any convex polyhedron, given as its
@@ -21,14 +21,16 @@ is T, the ordinary finger joint. At 135, the octagon's walls, it is 2.12mm:
 the end of the short plate then touches the inner corner of the long one,
 so the joint closes on a line, and a V-shaped notch shows outside, which the
 shellac fills. Every angle here is 90 or more, where no finger pokes out of
-the outside surface.
+the outside surface. Boxes' Platonic generator, by contrast, cuts every
+finger a full T deep, as at 90 degrees, whatever the angle.
 
-THE CORNERS. One face owns each vertex -- the octagonal prism's top or
-bottom, the square where the snubs have one -- and the cells at that end of
-its two edges are its own. The other edges there take no part in that
-choice. Where three faces meet, every pair shares an edge, and that is all.
-Where five meet, as on both snubs, plates that share only the corner run into each other just inside it, so outline() can nip every
-corner off, square to its bisector.
+THE CORNERS. One face owns each vertex -- the top or the bottom where the
+vertex is on one, and elsewhere the first face found -- and the cells at
+that end of its two edges are its own. The other edges there take no part
+in that choice. Where three faces meet, every pair shares an edge, and that
+is all. Where four meet, as on the square antiprism and the octahedron,
+the two plates that share only the corner run into each other just inside
+it, so outline() can nip every corner off, square to its bisector.
 
 HOW MANY CELLS. As many as fit with none under FINGER, the square flute's
 6mm, and of the parity the corners need: odd when both ends belong to the
@@ -112,116 +114,77 @@ def octagonal_prism(flats, height):
     return solid(planes, verts)
 
 
-def snub_square_antiprism(edge):
-    """The snub square antiprism, Johnson solid J85, every edge `edge` long,
-    outside, centred on the origin: two squares, top and bottom, and 24
-    equilateral triangles, five faces at every corner. A square's corners
-    are at radius r1 = e / sqrt 2, height z1; the other eight zigzag round
-    the middle at radius r2, heights +-z2, one under each square corner and
-    one under each of the other square's. The three unknowns are fixed by
-    three edges being e long -- square corner to the zigzag above-and-beside
-    it and to the one below it, and one zigzag step -- and found by Newton's
-    method. Turned so that a square's edge faces -x, for the beak."""
-    r1 = 1 / math.sqrt(2)
-    c45 = math.cos(math.pi / 4)
-
-    def eqs(z1, r2, z2):
-        A, B, C = (r1, 0, z1), (r2 * c45, r2 * c45, z2), (r2, 0, -z2)
-        return [dist(A, B) - 1, dist(A, C) - 1, dist(B, C) - 1]
-    x = [0.68, 1.21, 0.19]
-    for _ in range(50):
-        f = eqs(*x)
-        J = []
-        for k in range(3):
-            y = list(x)
-            y[k] += 1e-7
-            J.append([(a - b) / 1e-7 for a, b in zip(eqs(*y), f)])
-        J = [list(r) for r in zip(*J)]          # rows: equations
-        x = [a - b for a, b in zip(x, solve3(J, f))]
-    assert max(abs(v) for v in eqs(*x)) < 1e-12
-    z1, r2, z2 = x
-    ring = lambda r, deg, z: (edge * r * math.cos(math.radians(deg + 45)),
-                              edge * r * math.sin(math.radians(deg + 45)), edge * z)
-    verts = ([ring(r1, 90 * k, z1) for k in range(4)]
-             + [ring(r1, 45 + 90 * k, -z1) for k in range(4)]
-             + [ring(r2, 45 + 45 * k, z2 * (-1) ** k) for k in range(8)])
-    planes = []
-    for n, off in hull(verts):
-        if n[2] > 1 - 1e-9:
-            name = 'top'
-        elif n[2] < -1 + 1e-9:
-            name = 'bottom'
-        else:
-            name = 'triangle'
-        planes.append((name, n, off))
-    faces = solid(planes, verts)
-    top = next(f for f in faces if f.name == 'top')
-    xe = min(v[0] for v in top.verts)
-    for f in faces:
-        on = [v for v in f.verts if abs(v[0] - xe) < 1e-6 and abs(v[2] - top.off) < 1e-6]
-        if f.name == 'triangle' and len(on) == 2:
-            f.name = 'mouth triangle'
-    return faces
-
-
-def snub_cube(edge):
-    """The snub cube, every edge `edge` long, outside, centred on the origin:
-    six squares on the axes and 32 equilateral triangles, five faces at every
-    corner, one of them a square. Its corners are the even permutations of
-    (1, 1/t, t) with an even number of minus signs and the odd permutations
-    with an odd number, t being the tribonacci constant; that is one of its
-    two mirror-image forms. Turned about z so that the top square's edge
-    faces -x, for the beak."""
-    t = (1 + (19 + 3 * 33 ** .5) ** (1 / 3) + (19 - 3 * 33 ** .5) ** (1 / 3)) / 3
-    base = (1, 1 / t, t)
-    verts = []
-    for perms, minus in (([(0, 1, 2), (1, 2, 0), (2, 0, 1)], 0),
-                         ([(0, 2, 1), (2, 1, 0), (1, 0, 2)], 1)):
-        for pm in perms:
-            for sg in itertools.product((1, -1), repeat=3):
-                if sg.count(-1) % 2 == minus:
-                    verts.append(tuple(base[pm[i]] * sg[i] for i in range(3)))
+def stand(verts, edge, name):
+    """A solid from its corners, scaled so every edge is `edge` long, then
+    turned so that the face nearest +z lies flat on top and its edge
+    nearest -x faces -x squarely, for the beak. Faces are named top, bottom
+    if there is one, `name` for the rest, and 'mouth ' + name for the one
+    under the beak."""
     e0 = min(dist(a, b) for a, b in itertools.combinations(verts, 2))
     verts = [mul(v, edge / e0) for v in verts]
-    # turn about z: the top square's edge midpoint nearest -x onto the x axis
-    top = [v for v in verts if abs(v[2] - max(w[2] for w in verts)) < 1e-6]
-    c = mul(tuple(map(sum, zip(*top))), 1 / 4)
+    n, _ = max(hull(verts), key=lambda p: (round(p[0][2], 9), -p[0][0], -p[0][1]))
+    # the top face's normal onto +z, then the edge midpoint nearest -x onto -x
+    ex = unit(cross((0.0, 1.0, 0.0), n)) if abs(n[1]) < 0.9 else unit(cross(n, (1.0, 0.0, 0.0)))
+    ey = cross(n, ex)
+    verts = [(dot(v, ex), dot(v, ey), dot(v, n)) for v in verts]
+    zt = max(v[2] for v in verts)
+    top = [v for v in verts if abs(v[2] - zt) < 1e-6]
+    c = mul(tuple(map(sum, zip(*top))), 1 / len(top))
     top.sort(key=lambda p: math.atan2(p[1] - c[1], p[0] - c[0]))
-    mids = [mul(add(top[i], top[(i + 1) % 4]), 0.5) for i in range(4)]
-    m = min(mids, key=lambda p: p[0])
-    a = math.pi - math.atan2(m[1], m[0])
+    mids = [mul(add(top[i], top[(i + 1) % len(top)]), 0.5) for i in range(len(top))]
+    m = min(mids, key=lambda p: math.atan2(p[1] - c[1], -(p[0] - c[0])) ** 2)
+    a = math.pi - math.atan2(m[1] - c[1], m[0] - c[0])
     ca, sa = math.cos(a), math.sin(a)
-    verts = [(round(x * ca - y * sa, 12), round(x * sa + y * ca, 12), z) for x, y, z in verts]
+    verts = [(round(x * ca - y * sa, 12), round(x * sa + y * ca, 12), round(z, 12))
+             for x, y, z in verts]
     planes = []
     for n, off in hull(verts):
-        name = 'top' if n[2] > 1 - 1e-9 else 'bottom' if n[2] < -1 + 1e-9 else 'triangle'
-        planes.append((name, n, off))
+        planes.append(('top' if n[2] > 1 - 1e-9 else 'bottom' if n[2] < -1 + 1e-9
+                       else name, n, off))
     faces = solid(planes, verts)
-    for f in faces:
-        if f.name == 'triangle' and len(f.verts) == 4:
-            f.name = 'square'
     top = next(f for f in faces if f.name == 'top')
     xe = min(v[0] for v in top.verts)
     for f in faces:
         on = [v for v in f.verts if abs(v[0] - xe) < 1e-6 and abs(v[2] - top.off) < 1e-6]
-        if f.name == 'triangle' and len(on) == 2:
-            f.name = 'mouth triangle'
+        if f.name == name and len(on) == 2:
+            f.name = 'mouth ' + name
     return faces
 
 
-def solve3(A, b):
-    """A x = b for three unknowns, by Cramer's rule."""
-    det = lambda m: (m[0][0] * (m[1][1] * m[2][2] - m[1][2] * m[2][1])
-                     - m[0][1] * (m[1][0] * m[2][2] - m[1][2] * m[2][0])
-                     + m[0][2] * (m[1][0] * m[2][1] - m[1][1] * m[2][0]))
-    D = det(A)
-    out = []
-    for k in range(3):
-        m = [list(r) for r in A]
-        for i in range(3):
-            m[i][k] = b[i]
-        out.append(det(m) / D)
-    return out
+def cube(edge):
+    """The cube, every edge `edge` long, centred on the origin."""
+    return stand(list(itertools.product((1, -1), repeat=3)), edge, 'side')
+
+
+def square_antiprism(edge):
+    """The square antiprism, every edge `edge` long: two squares, top and
+    bottom, a quarter turn apart, and eight equilateral triangles between
+    them. Its height is edge / 2**(1/4), which makes the slanting edges
+    as long as the squares'."""
+    r, h = 1 / math.sqrt(2), 2 ** -0.25
+    verts = [(r * math.cos(k * math.pi / 2 + s * math.pi / 4),
+              r * math.sin(k * math.pi / 2 + s * math.pi / 4), (h if s else -h) / 2)
+             for k in range(4) for s in (0, 1)]
+    return stand(verts, edge, 'triangle')
+
+
+def octahedron(edge):
+    """The regular octahedron, every edge `edge` long, standing on a face:
+    eight equilateral triangles, four to a corner."""
+    verts = [tuple(s if i == ax else 0 for i in range(3))
+             for ax in range(3) for s in (1, -1)]
+    return stand(verts, edge, 'triangle')
+
+
+def dodecahedron(edge):
+    """The regular dodecahedron, every edge `edge` long, standing on a face:
+    twelve regular pentagons, three to a corner. Its corners are the cube's
+    (+-1, +-1, +-1) and the cyclic permutations of (0, +-1/phi, +-phi)."""
+    p = (1 + math.sqrt(5)) / 2
+    verts = list(itertools.product((1, -1), repeat=3))
+    for a, b in itertools.product((1 / p, -1 / p), (p, -p)):
+        verts += [(0, a, b), (a, b, 0), (b, 0, a)]
+    return stand(verts, edge, 'pentagon')
 
 
 def hull(verts):

@@ -92,8 +92,10 @@ BUILDS = {
     'box': 'finger-jointed box',
     'stack': 'laminated stack',
     'octagon': 'regular octagonal prism, finger-jointed',
-    'snub-square-antiprism': 'snub square antiprism (Johnson solid J85), finger-jointed',
-    'snub-cube': 'snub cube, finger-jointed',
+    'cube': 'cube, finger-jointed',
+    'square-antiprism': 'square antiprism, finger-jointed',
+    'octahedron': 'regular octahedron, finger-jointed',
+    'dodecahedron': 'regular dodecahedron, finger-jointed',
 }
 # The second set, since 2026-10-17, and those after it: solids, built by polyhedron.py,
 # whose cavity is what their shape holds and whose key follows from it. The
@@ -102,22 +104,27 @@ BUILDS = {
 #   octagon         flats across and height, outside: bigger than the box on
 #                   all three axes, at the author's asking
 OCT_FLATS, OCT_HEIGHT = 110.0, 36.0
-# The third set, the same day: the snub square antiprism, Johnson solid J85,
-# every edge SSA_EDGE long -- seven 6mm fingers to an edge, and triangles big enough
-# for the 12.2mm hole. Its top square is too small for four holes, so each
-# hole has a triangle of its own: the index fingers' the two either side of
-# the top, the middle fingers' the next ones round, away from the beak. Five
-# plates meet at every corner, and each is nipped SSA_NIP back from it, square
-# to its bisector, so that those sharing only the corner stay apart.
-SSA_EDGE = 42.0
-SSA_NIP = 3.5
-# The fourth set: the snub cube, Archimedean, six squares and 32 triangles,
-# built as J85 is -- the window on the top square, a triangle for each hole,
-# every corner nipped -- at the same 42mm edge.
-SC_EDGE = 42.0
-SC_NIP = 2.5
-SOLIDS = ('octagon', 'snub-square-antiprism', 'snub-cube')
-SNUBS = ('snub-square-antiprism', 'snub-cube')
+# The other solids, the same day, every edge a whole number of 6mm fingers:
+#   cube, square-antiprism  72mm, so the top square takes the window and
+#                   the four holes on the octagon's grid; the antiprism's
+#                   square is a quarter turn from the one below it, with
+#                   eight triangles between
+#   octahedron      standing on a triangle, every edge OCTA_EDGE; the top is
+#                   too small for four holes, so each hand has a triangle of
+#                   its own, the index finger's hole nearer the beak
+#   dodecahedron    standing on a pentagon, every edge DODECA_EDGE; each hole
+#                   has a pentagon of its own, the index fingers' the two
+#                   either side of the mouth, the middle fingers' the next
+# Four plates meet at the antiprism's and the octahedron's corners, and
+# NIP cuts each corner back that far, square to its bisector, so that the
+# two sharing only the corner stay apart.
+CUBE_EDGE = 72.0
+SAP_EDGE = 72.0
+OCTA_EDGE = 72.0
+DODECA_EDGE = 36.0
+NIP = {'square-antiprism': 4.25, 'octahedron': 4.75}
+SOLIDS = ('octagon', 'cube', 'square-antiprism', 'octahedron', 'dodecahedron')
+FACE_HOLES = ('octahedron', 'dodecahedron')
 
 
 def cavity_length(V):
@@ -504,7 +511,7 @@ def tiling(parts, info):
     return bad, len(pts)
 
 
-# --- the solids: the octagonal prism and the two snubs ----------------------
+# --- the solids ----------------------------------------------------------------
 
 def build_solid(kind, diams):
     """Every part of a solid build. The world is the solid's own: z up, the
@@ -512,26 +519,25 @@ def build_solid(kind, diams):
     along -x from the middle of the top's mouth edge. Each part carries its
     frame as p.m, the matrix from its own (u, v, inward) to the world."""
     faces = {'octagon': lambda: P.octagonal_prism(OCT_FLATS, OCT_HEIGHT),
-             'snub-square-antiprism': lambda: P.snub_square_antiprism(SSA_EDGE),
-             'snub-cube': lambda: P.snub_cube(SC_EDGE)}[kind]()
+             'cube': lambda: P.cube(CUBE_EDGE),
+             'square-antiprism': lambda: P.square_antiprism(SAP_EDGE),
+             'octahedron': lambda: P.octahedron(OCTA_EDGE),
+             'dodecahedron': lambda: P.dodecahedron(DODECA_EDGE)}[kind]()
     ft = next(i for i, f in enumerate(faces) if f.name == 'top')
     fm = next(i for i, f in enumerate(faces) if f.name.startswith('mouth'))
     top, mouth = faces[ft], faces[fm]
     x_edge = min(v[0] for v in top.verts)      # the top's edge with the mouth face
     z_top = top.off
-    nip = {'snub-square-antiprism': SSA_NIP, 'snub-cube': SC_NIP}.get(kind, 0.0)
+    nip = NIP.get(kind, 0.0)
 
     def owner_at(v):
-        """The face that owns a corner: the prism's top or bottom; on the
-        snubs the square where there is one, and elsewhere
-        the first triangle, the nip doing the rest."""
+        """The face that owns a corner: the top or the bottom where the corner
+        is on one, as every corner is but the dodecahedron's middle ten, and
+        there the first face found."""
         on = [i for i, f in enumerate(faces) if abs(P.dot(v, f.n) - f.off) < 1e-6]
-        if kind in SNUBS:
-            sq = [i for i in on if faces[i].name in ('top', 'bottom', 'square')]
-            return (sq or on)[0]
         pick = [i for i in on if faces[i].name in ('top', 'bottom')]
-        assert len(pick) == 1, f'corner {v} has {len(pick)} owners'
-        return pick[0]
+        assert len(pick) <= 1, f'corner {v} has {len(pick)} owners'
+        return (pick or on)[0]
 
     def force(E, s0, s1, o):
         """Under the beak the top keeps every cell, so the beak runs on from
@@ -576,11 +582,10 @@ def build_solid(kind, diams):
         o = P.outline(i, f, fr, es, cellmap, beak, nip)
         if i == ft:
             o = rounded(o, 0.0)
-        note = {'top': 'the window' + ('' if nip else ' and the four holes')
+        note = {'top': 'the window' + ('' if kind in FACE_HOLES else ' and the four holes')
                        + '; file the window\'s far edge to a 30 degree bevel on the '
-                       'outside face before the bird goes on',
-                'triangle': 'fingers on all three edges, the corners nipped'}.get(
-                    f.name, 'fingers on every edge')
+                       'outside face before the bird goes on'}.get(
+                    f.name, 'fingers on every edge') + (', the corners nipped' if nip else '')
         p = Part(f.name if f.name != 'top' else 'top plate', next(num), o, note)
         p.m = P.matrix(fr)
         p.face = i
@@ -592,18 +597,30 @@ def build_solid(kind, diams):
     # outside with v = -y, the right hand's holes are at v > 0
     tp.slot(T, -M.WINDOW_W / 2, T + M.WINDOW_L, M.WINDOW_W / 2)
     vol, polys = P.inner(faces)
-    if kind in SNUBS:
-        # each hole where it is furthest from every wall of its face's
-        # inside; left hand +y, right -y
-        up = [i for i, f in enumerate(faces) if f.name == 'triangle' and f.n[2] > 0]
+    if kind in FACE_HOLES:
+        # the faces round the top on either side of it, left hand +y, right
+        # -y, nearest the beak first: the index finger's hole on the first
+        # and the middle finger's on the next, each where it is furthest from
+        # every wall of its face's inside, or both on one face where a hand
+        # has only one
+        up = [i for i, f in enumerate(faces) if f.n[2] > 1e-9 and f.name != 'top'
+              and not f.name.startswith('mouth')]
+        dia = dict(zip(M.HOLES, diams))
         places = {}
         for hand, sgn in (('L', 1), ('R', -1)):
-            ix = next(i for i in up if abs(faces[i].centre[0]) < 1
-                      and faces[i].centre[1] * sgn > 0)
-            mid = min((i for i in up if faces[i].centre[0] > 1 and faces[i].centre[1] * sgn > 0),
-                      key=lambda i: P.dist(faces[i].centre, faces[ix].centre))
-            for h, i in ((hand + '1', ix), (hand + '2', mid)):
-                places[h] = (i, deepest([P.to2d(frames[i], c) for c in polys[i]]))
+            mine = sorted((i for i in up if faces[i].centre[1] * sgn > 1),
+                          key=lambda i: faces[i].centre[0])
+            if len(mine) >= 2:
+                for h, i in ((hand + '1', mine[0]), (hand + '2', mine[1])):
+                    places[h] = (i, deepest([P.to2d(frames[i], c) for c in polys[i]]))
+            else:
+                i = mine[0]
+                c = P.to2d(frames[i], faces[i].centre)
+                ahead = P.to2d(frames[i], P.add(faces[i].centre, (1.0, 0.0, 0.0)))
+                xy1, xy2 = pair([P.to2d(frames[i], q) for q in polys[i]],
+                                P.sub(ahead, c) + (0.0,), dia[hand + '1'], dia[hand + '2'])
+                places[hand + '1'], places[hand + '2'] = (i, xy1), (i, xy2)
+        places = {h: places[h] for h in M.HOLES}
     else:
         places = {h: (ft, xy) for h, xy in
                   {'R2': (T + ROW_2, COLUMNS / 2), 'R1': (T + ROW_1, COLUMNS / 2),
@@ -643,6 +660,35 @@ def deepest(poly):
                    key=lambda c: in_poly_margin(c, 0, poly))
         h /= 2
     return (round(best[0], 3), round(best[1], 3))
+
+
+def pair(poly, ahead, d1, d2):
+    """Two holes, d1 and d2 across, in one convex polygon: the first
+    further along `ahead` the other way -- nearer the beak -- than the
+    second, placed so that the narrowest of their webs to the walls and
+    half the web between them is as wide as it can be, by a grid search
+    that narrows round the best so far."""
+    a = math.hypot(ahead[0], ahead[1])
+    ax, ay = ahead[0] / a, ahead[1] / a
+    x0, x1 = min(x for x, _ in poly), max(x for x, _ in poly)
+    y0, y1 = min(y for _, y in poly), max(y for _, y in poly)
+
+    def at(b):
+        cx, cy, t = b
+        return (cx - t * ax, cy - t * ay), (cx + t * ax, cy + t * ay)
+
+    def score(b):
+        p, q = at(b)
+        return min(in_poly_margin(p, d1 / 2, poly), in_poly_margin(q, d2 / 2, poly),
+                   (2 * b[2] - (d1 + d2) / 2) / 2)
+    best = ((x0 + x1) / 2, (y0 + y1) / 2, max(x1 - x0, y1 - y0) / 4)
+    h = max(x1 - x0, y1 - y0) / 2
+    while h > 1e-3:
+        best = max(((best[0] + i * h / 3, best[1] + j * h / 3, best[2] + k * h / 3)
+                    for i in range(-3, 4) for j in range(-3, 4) for k in range(-3, 4)),
+                   key=score)
+        h /= 2
+    return tuple(tuple(round(x, 3) for x in p) for p in at(best))
 
 
 def in_poly_margin(c, r, poly):

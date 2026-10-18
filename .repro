@@ -11,15 +11,19 @@
 cut-files/box/box-ocarina-G4-box-sheet1-cut-files.svg :: python3 box_ocarina.py --only=box --flat --out=$(dirname $OUT)
 cut-files/stack/box-ocarina-G4-stack-sheet1-cut-files.svg :: python3 box_ocarina.py --only=stack --flat --out=$(dirname $OUT)
 cut-files/octagon/box-ocarina-octagon-sheet1-cut-files.svg :: python3 box_ocarina.py --only=octagon --flat --out=$(dirname $OUT)
-cut-files/snub-square-antiprism/box-ocarina-snub-square-antiprism-sheet1-cut-files.svg :: python3 box_ocarina.py --only=snub-square-antiprism --flat --out=$(dirname $OUT)
-cut-files/snub-cube/box-ocarina-snub-cube-sheet1-cut-files.svg :: python3 box_ocarina.py --only=snub-cube --flat --out=$(dirname $OUT)
+cut-files/cube/box-ocarina-cube-sheet1-cut-files.svg :: python3 box_ocarina.py --only=cube --flat --out=$(dirname $OUT)
+cut-files/square-antiprism/box-ocarina-square-antiprism-sheet1-cut-files.svg :: python3 box_ocarina.py --only=square-antiprism --flat --out=$(dirname $OUT)
+cut-files/octahedron/box-ocarina-octahedron-sheet1-cut-files.svg :: python3 box_ocarina.py --only=octahedron --flat --out=$(dirname $OUT)
+cut-files/dodecahedron/box-ocarina-dodecahedron-sheet1-cut-files.svg :: python3 box_ocarina.py --only=dodecahedron --flat --out=$(dirname $OUT)
 
 # --- the previews, from the cut files ---
 previews/box/box-ocarina-G4-box-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/box/box-ocarina-G4-box-sheet1-cut-files.svg $OUT
 previews/stack/box-ocarina-G4-stack-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/stack/box-ocarina-G4-stack-sheet1-cut-files.svg $OUT
 previews/octagon/box-ocarina-octagon-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/octagon/box-ocarina-octagon-sheet1-cut-files.svg $OUT
-previews/snub-square-antiprism/box-ocarina-snub-square-antiprism-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/snub-square-antiprism/box-ocarina-snub-square-antiprism-sheet1-cut-files.svg $OUT
-previews/snub-cube/box-ocarina-snub-cube-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/snub-cube/box-ocarina-snub-cube-sheet1-cut-files.svg $OUT
+previews/cube/box-ocarina-cube-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/cube/box-ocarina-cube-sheet1-cut-files.svg $OUT
+previews/square-antiprism/box-ocarina-square-antiprism-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/square-antiprism/box-ocarina-square-antiprism-sheet1-cut-files.svg $OUT
+previews/octahedron/box-ocarina-octahedron-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/octahedron/box-ocarina-octahedron-sheet1-cut-files.svg $OUT
+previews/dodecahedron/box-ocarina-dodecahedron-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/dodecahedron/box-ocarina-dodecahedron-sheet1-cut-files.svg $OUT
 
 # --- the page ---
 viewer.js :: python3 page_assets.py --viewer-to=$OUT
