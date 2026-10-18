@@ -11,7 +11,6 @@
 cut-files/box/box-ocarina-G4-box-sheet1-cut-files.svg :: python3 box_ocarina.py --only=box --flat --out=$(dirname $OUT)
 cut-files/stack/box-ocarina-G4-stack-sheet1-cut-files.svg :: python3 box_ocarina.py --only=stack --flat --out=$(dirname $OUT)
 cut-files/octagon/box-ocarina-octagon-sheet1-cut-files.svg :: python3 box_ocarina.py --only=octagon --flat --out=$(dirname $OUT)
-cut-files/truncated-cube/box-ocarina-truncated-cube-sheet1-cut-files.svg :: python3 box_ocarina.py --only=truncated-cube --flat --out=$(dirname $OUT)
 cut-files/snub-square-antiprism/box-ocarina-snub-square-antiprism-sheet1-cut-files.svg :: python3 box_ocarina.py --only=snub-square-antiprism --flat --out=$(dirname $OUT)
 cut-files/snub-cube/box-ocarina-snub-cube-sheet1-cut-files.svg :: python3 box_ocarina.py --only=snub-cube --flat --out=$(dirname $OUT)
 
@@ -19,7 +18,6 @@ cut-files/snub-cube/box-ocarina-snub-cube-sheet1-cut-files.svg :: python3 box_oc
 previews/box/box-ocarina-G4-box-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/box/box-ocarina-G4-box-sheet1-cut-files.svg $OUT
 previews/stack/box-ocarina-G4-stack-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/stack/box-ocarina-G4-stack-sheet1-cut-files.svg $OUT
 previews/octagon/box-ocarina-octagon-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/octagon/box-ocarina-octagon-sheet1-cut-files.svg $OUT
-previews/truncated-cube/box-ocarina-truncated-cube-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/truncated-cube/box-ocarina-truncated-cube-sheet1-cut-files.svg $OUT
 previews/snub-square-antiprism/box-ocarina-snub-square-antiprism-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/snub-square-antiprism/box-ocarina-snub-square-antiprism-sheet1-cut-files.svg $OUT
 previews/snub-cube/box-ocarina-snub-cube-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/snub-cube/box-ocarina-snub-cube-sheet1-cut-files.svg $OUT
 

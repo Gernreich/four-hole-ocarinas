@@ -92,22 +92,18 @@ BUILDS = {
     'box': 'finger-jointed box',
     'stack': 'laminated stack',
     'octagon': 'regular octagonal prism, finger-jointed',
-    'truncated-cube': 'regular truncated cube, finger-jointed',
     'snub-square-antiprism': 'snub square antiprism (Johnson solid J85), finger-jointed',
     'snub-cube': 'snub cube, finger-jointed',
 }
-# The second and third sets, since 2026-10-17: solids, built by polyhedron.py,
+# The second set, since 2026-10-17, and those after it: solids, built by polyhedron.py,
 # whose cavity is what their shape holds and whose key follows from it. The
 # holes are sized against the window, not the cavity, so every fingering
 # and every interval is the first set's; only the key moves.
 #   octagon         flats across and height, outside: bigger than the box on
 #                   all three axes, at the author's asking
-#   truncated-cube  every edge EDGE long, outside: 42mm gives the octagon-to-
-#                   triangle edges seven 6mm fingers exactly
 OCT_FLATS, OCT_HEIGHT = 110.0, 36.0
-TC_EDGE = 42.0
-# The fourth set, the same day: the snub square antiprism, Johnson solid J85,
-# every edge SSA_EDGE long -- seven 6mm fingers again, and triangles big enough
+# The third set, the same day: the snub square antiprism, Johnson solid J85,
+# every edge SSA_EDGE long -- seven 6mm fingers to an edge, and triangles big enough
 # for the 12.2mm hole. Its top square is too small for four holes, so each
 # hole has a triangle of its own: the index fingers' the two either side of
 # the top, the middle fingers' the next ones round, away from the beak. Five
@@ -115,12 +111,12 @@ TC_EDGE = 42.0
 # to its bisector, so that those sharing only the corner stay apart.
 SSA_EDGE = 42.0
 SSA_NIP = 3.5
-# The fifth set: the snub cube, Archimedean, six squares and 32 triangles,
+# The fourth set: the snub cube, Archimedean, six squares and 32 triangles,
 # built as J85 is -- the window on the top square, a triangle for each hole,
 # every corner nipped -- at the same 42mm edge.
 SC_EDGE = 42.0
 SC_NIP = 2.5
-SOLIDS = ('octagon', 'truncated-cube', 'snub-square-antiprism', 'snub-cube')
+SOLIDS = ('octagon', 'snub-square-antiprism', 'snub-cube')
 SNUBS = ('snub-square-antiprism', 'snub-cube')
 
 
@@ -508,7 +504,7 @@ def tiling(parts, info):
     return bad, len(pts)
 
 
-# --- the solids: the octagonal prism and the truncated cube -------------------
+# --- the solids: the octagonal prism and the two snubs ----------------------
 
 def build_solid(kind, diams):
     """Every part of a solid build. The world is the solid's own: z up, the
@@ -516,7 +512,6 @@ def build_solid(kind, diams):
     along -x from the middle of the top's mouth edge. Each part carries its
     frame as p.m, the matrix from its own (u, v, inward) to the world."""
     faces = {'octagon': lambda: P.octagonal_prism(OCT_FLATS, OCT_HEIGHT),
-             'truncated-cube': lambda: P.truncated_cube(TC_EDGE),
              'snub-square-antiprism': lambda: P.snub_square_antiprism(SSA_EDGE),
              'snub-cube': lambda: P.snub_cube(SC_EDGE)}[kind]()
     ft = next(i for i, f in enumerate(faces) if f.name == 'top')
@@ -527,15 +522,14 @@ def build_solid(kind, diams):
     nip = {'snub-square-antiprism': SSA_NIP, 'snub-cube': SC_NIP}.get(kind, 0.0)
 
     def owner_at(v):
-        """The face that owns a corner: the prism's top or bottom, the
-        cube's triangle; on the snubs the square where there is one, and elsewhere
+        """The face that owns a corner: the prism's top or bottom; on the
+        snubs the square where there is one, and elsewhere
         the first triangle, the nip doing the rest."""
         on = [i for i, f in enumerate(faces) if abs(P.dot(v, f.n) - f.off) < 1e-6]
         if kind in SNUBS:
             sq = [i for i in on if faces[i].name in ('top', 'bottom', 'square')]
             return (sq or on)[0]
-        mine = ('triangle',) if kind == 'truncated-cube' else ('top', 'bottom')
-        pick = [i for i in on if faces[i].name in mine]
+        pick = [i for i in on if faces[i].name in ('top', 'bottom')]
         assert len(pick) == 1, f'corner {v} has {len(pick)} owners'
         return pick[0]
 
@@ -585,8 +579,7 @@ def build_solid(kind, diams):
         note = {'top': 'the window' + ('' if nip else ' and the four holes')
                        + '; file the window\'s far edge to a 30 degree bevel on the '
                        'outside face before the bird goes on',
-                'triangle': ('fingers on all three edges, the corners nipped' if nip
-                             else 'a truncated corner, fingers on all three edges')}.get(
+                'triangle': 'fingers on all three edges, the corners nipped'}.get(
                     f.name, 'fingers on every edge')
         p = Part(f.name if f.name != 'top' else 'top plate', next(num), o, note)
         p.m = P.matrix(fr)

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Convex solids finger-jointed on every edge, at any angle the faces meet:
-the octagonal prism, the truncated cube, the snub square antiprism (J85)
-and the snub cube that box_ocarina.py builds.
+the octagonal prism, the snub square antiprism (J85) and the snub cube
+that box_ocarina.py builds.
 
 The box in box_ocarina.py has right angles only, and its joint is drawn as
 cells and corner cubes. Here a solid is any convex polyhedron, given as its
@@ -24,19 +24,17 @@ shellac fills. Every angle here is 90 or more, where no finger pokes out of
 the outside surface.
 
 THE CORNERS. One face owns each vertex -- the octagonal prism's top or
-bottom, the truncated cube's triangle, the square where the snubs have one -- and
-the cells at that end of its two edges are its own. The other edges there
-take no part in that choice. Where three faces meet, every pair shares an
-edge, and that is all. Where five meet, as on both snubs, plates that share only
-the corner run into each other just inside it, so outline() can nip every
+bottom, the square where the snubs have one -- and the cells at that end of
+its two edges are its own. The other edges there take no part in that
+choice. Where three faces meet, every pair shares an edge, and that is all.
+Where five meet, as on both snubs, plates that share only the corner run into each other just inside it, so outline() can nip every
 corner off, square to its bisector.
 
 HOW MANY CELLS. As many as fit with none under FINGER, the square flute's
 6mm, and of the parity the corners need: odd when both ends belong to the
 same plate, even when they belong to different ones. An edge whose ends no
 plate owns takes an even count, starting with whichever plate walks it from
-that end, so every wall of the prism, and every plain octagon of the cube,
-is the same part.
+that end, so every wall of the prism is the same part.
 """
 import itertools
 import math
@@ -111,30 +109,6 @@ def octagonal_prism(flats, height):
         a = k * math.pi / 4
         planes.append(('mouth wall' if k == 4 else 'wall',
                        (math.cos(a), math.sin(a), 0), flats / 2))
-    return solid(planes, verts)
-
-
-def truncated_cube(edge):
-    """The regular truncated cube with every edge `edge` long, outside,
-    centred on the origin: six regular octagons on the axes, eight
-    equilateral triangles on the diagonals. Its corners are the permutations
-    of (+-e/2, +-a/2, +-a/2), a = e (1 + sqrt 2) being the cube it was cut
-    from."""
-    a = edge * (1 + math.sqrt(2))
-    verts = set()
-    for p in itertools.permutations((edge / 2, a / 2, a / 2)):
-        for s in itertools.product((1, -1), repeat=3):
-            verts.add(tuple(round(x * k, 9) for x, k in zip(p, s)))
-    verts = sorted(verts)
-    planes = []
-    for ax in range(3):
-        for sgn in (1, -1):
-            n = [0, 0, 0]
-            n[ax] = sgn
-            name = {(2, 1): 'top', (0, -1): 'mouth octagon'}.get((ax, sgn), 'octagon')
-            planes.append((name, tuple(n), a / 2))
-    for s in itertools.product((1, -1), repeat=3):
-        planes.append(('triangle', s, (edge / 2 + a) / math.sqrt(3)))
     return solid(planes, verts)
 
 

@@ -2,7 +2,7 @@
 
 <!-- readme-only -->
 **[Read the writeup](https://gernreich.github.io/box-ocarina/)** ·
-**[Turn all six builds in 3D](https://gernreich.github.io/box-ocarina/#turn-it-in-3d)**
+**[Turn all five builds in 3D](https://gernreich.github.io/box-ocarina/#turn-it-in-3d)**
 
 <!-- page-only **[Read the README](https://github.com/Gernreich/box-ocarina)** -->
 
@@ -11,9 +11,9 @@ into, four finger holes in its top, and the English fingering, which gets a whol
 octave out of four holes. All closed it sounds G4; the fingerings below give the
 G major scale up to G5, and five more notes besides.
 
-Four more are solids, finger-jointed on every edge at whatever angle their faces
-meet: a regular octagonal prism, a regular truncated cube, the snub square
-antiprism, a Johnson solid, and the snub cube. They take the same window, holes and fingering, so every
+Three more are solids, finger-jointed on every edge at whatever angle their faces
+meet: a regular octagonal prism, the snub square antiprism,
+a Johnson solid, and the snub cube. They take the same window, holes and fingering, so every
 interval is the same; only their cavities differ, and with them the key.
 
 Output is millimetre-true — `1 user unit = 1mm` with a physical `width`/`height` — so
@@ -41,7 +41,7 @@ generator and tool, indexed.
 
 ## The builds
 
-Six builds in five sets. The first set is two ways to build the same G4 ocarina:
+Five builds in four sets. The first set is two ways to build the same G4 ocarina:
 its cavity, window and four holes are identical, and only the walls round the
 cavity differ. The other three sets are the solids, which play in whatever key
 their shape holds.
@@ -51,7 +51,6 @@ their shape holds.
 | `box` | finger-jointed on all twelve edges | 60 × 18 × 93.6mm, 101cm³ | G4, 392.0Hz | 99.6 × 66.0 × 24mm | 8 | 1 |
 | `stack` | laminated stack | 60 × 18 × 93.6mm, 101cm³ | G4, 392.0Hz | 105.6 × 72.0 × 24mm | 10 | 1 |
 | `octagon` | regular octagonal prism, finger-jointed on all 24 edges | 269cm³ | B3 −47 cents, 240.3Hz | 110 × 110 × 36mm | 12 | 1 |
-| `truncated-cube` | regular truncated cube, finger-jointed on all 36 edges | 845cm³ | C#3 −38 cents, 135.6Hz | 101.4mm every way | 16 | 1 |
 | `snub-square-antiprism` | snub square antiprism, Johnson solid J85, finger-jointed on all 40 edges | 206cm³ | C#4 −18 cents, 274.3Hz | 101.9 × 101.9 × 56.9mm | 28 | 1 |
 | `snub-cube` | snub cube, finger-jointed on all 60 edges | 486cm³ | F3 +41 cents, 178.8Hz | 106.8 × 106.8 × 96.0mm | 40 | 1 |
 
@@ -76,15 +75,6 @@ bird stands 3mm on the top over it, and the chin layer hangs 3mm under it.
   bottom own the corners. The holes and the window are in the top, the beak runs out
   from the middle of one wall's top edge, and that wall sends no fingers up into the
   top, as the box's end wall does not.
-- **The truncated cube** is the regular one: six regular octagons and eight
-  equilateral triangles, every edge 42mm, so it is 101.4mm every way. It is not one
-  of the five Platonic solids but Archimedean, so
-  [Boxes](https://github.com/florianfesti/boxes)' Platonic generator does not make
-  it. Octagons meet each other at 90 degrees with six fingers to an edge, and
-  triangles at 125.3 with seven, which at 42mm makes every finger exactly 6mm. The
-  triangles, the truncated corners, own the corners: each triangle's three edges all
-  start and end in its own fingers. One octagon is the top, with the holes and the
-  window, and the beak runs out from its edge with the octagon below it.
 - **The snub square antiprism** is Johnson solid J85: two squares, top and bottom,
   and 24 equilateral triangles, every edge 42mm, so seven 6mm fingers to an edge. It
   is a squat, nearly round body, 102mm across and 57mm deep. Its faces meet at four
@@ -121,8 +111,8 @@ least that clears was 2.0mm. That, with the fingers' own step back at the corner
 leaves **a hole at every corner**: on the snub square antiprism open on the outside
 up to 5.5mm from the corner point, about 10mm across, at 16 corners; on the snub
 cube up to 3.7mm, about 7mm across, at 24. Shellac will not bridge either: fill each
-with glue or wood filler before sealing. On the octagon and
-the truncated cube, where three plates meet and every pair shares an edge, the
+with glue or wood filler before sealing. On the octagon,
+where three plates meet and every pair shares an edge, the
 corners close on the outside.
 
 The shallowest joints also hold least: at 164.3 degrees a finger reaches only 0.8mm
@@ -146,7 +136,7 @@ so they round off as one, and the duct's mouth follows the curve.
 ## Turn it in 3D
 
 <!-- readme-only -->
-All six builds turn in 3D on the [published page](https://gernreich.github.io/box-ocarina/#turn-it-in-3d),
+All five builds turn in 3D on the [published page](https://gernreich.github.io/box-ocarina/#turn-it-in-3d),
 which GitHub does not run: drag to turn it, pull it apart into its parts, or see
 through the walls into the cavity.
 
@@ -188,11 +178,10 @@ use. With every hole open it sounds G♯5, a semitone over the octave.
 | R1 L1 L2 | 812.0Hz | G♯5 | −39.1c |
 | all four | 834.6Hz | G♯5 | +8.4c |
 
-The four solids take these fingerings unchanged. A hole's pitch
+The three solids take these fingerings unchanged. A hole's pitch
 rises by the same ratio whatever cavity it opens, so each solid plays this major
-scale and these cents from its own closed note: B3 −47 cents on the octagon, C♯3
-−38 on the truncated cube, C♯4 −18 on the snub square antiprism, F3 +41 on the
-snub cube.
+scale and these cents from its own closed note: B3 −47 cents on the octagon, C♯4
+−18 on the snub square antiprism, F3 +41 on the snub cube.
 
 ## What the model says
 
@@ -247,10 +236,10 @@ prints the `--mouth` that explains it, and the command to redraw both builds wit
 it. A first build that sounds 50 cents flat is not a failure; it is the measurement.
 
 **The solids are a step further from anything measured.** Their window is the G4
-alto's, 10 × 5mm, on cavities 2.0 to 8.4 times as big. Big ocarinas are usually
+alto's, 10 × 5mm, on cavities 2.0 to 4.8 times as big. Big ocarinas are usually
 given bigger windows, and a small one on a big cavity may speak weakly or breathily,
-the truncated cube most of all. Their pitch does not matter here, but whether they
-sound does: cut the snub square antiprism or the octagon before the truncated cube.
+the snub cube most of all. Their pitch does not matter here, but whether they
+sound does: cut the snub square antiprism or the octagon before the snub cube.
 
 **The holes can only go up.** A hole that plays flat can be opened with a file. A hole
 that plays sharp cannot be closed up, so file in small steps.
@@ -291,8 +280,7 @@ are not numbered: the 3D view shows where each one goes.
    it: `R2` alone 436.9Hz, `R1` 490.4Hz, `L1` 555.8Hz and `L2` 646.1Hz. The
    scale's other notes are sums of these four and follow from them. The solids
    play lower but by the same steps: on the octagon `R2` alone is 267.9Hz, `R1`
-   300.7Hz, `L1` 340.7Hz and `L2` 396.1Hz; on the truncated cube 151.1, 169.6,
-   192.2 and 223.4Hz; on the snub square antiprism 305.7, 343.2, 388.9 and 452.1Hz;
+   300.7Hz, `L1` 340.7Hz and `L2` 396.1Hz; on the snub square antiprism 305.7, 343.2, 388.9 and 452.1Hz;
    on the snub cube 199.3, 223.7, 253.5 and 294.7Hz.
    Tune the solids from whatever the closed note turns out to be:
    each hole alone sounds 1.115, 1.251, 1.418 and 1.648 times it.
@@ -306,7 +294,7 @@ python3 ocarina_model.py --mouth=1.2           # with a different window correct
 python3 ocarina_model.py --heard=380           # the correction a cut ocarina implies
 python3 ocarina_model.py --search              # the fingering patterns, ranked
 python3 box_ocarina.py --no-write              # the generator's checks, writing nothing
-python3 box_ocarina.py --out=cut-files         # all six builds
+python3 box_ocarina.py --out=cut-files         # all five builds
 python3 page_assets.py                         # viewer.js, turn.html and the two plans
 ```
 
@@ -341,8 +329,8 @@ planes and joints every edge at its own angle. For them it checks:
 - each hand's holes lie under that hand, worked out from the geometry
 - the duct runs from the beak's tip to the window
 - every edge is finger-jointed with as many 6mm cells as fit
-- along every joint, no point lies in two plates: 1440 points on the octagon and
-  2160 on the truncated cube, through each finger from the outside edge to the
+- along every joint, no point lies in two plates: 1440 points on the octagon,
+  2376 on the snub square antiprism and 3456 on the snub cube, through each finger from the outside edge to the
   inner corner
 - every joint closes except within a finger of a corner, where the shellac goes
 - round every corner, a 3D grid through the walls finds no point in two plates:
@@ -383,10 +371,6 @@ Each picture is a display rendering; click it for the cut file.
 **`octagon`** · regular octagonal prism, finger-jointed on all 24 edges, cavity 269cm³ · 12 parts on 1 sheet
 
 [![octagon, sheet 1 of 1: two regular octagons with fingers on every edge, one with the beak, the window and four holes in orange; eight rectangular walls with fingers on all four edges, one plain along part of an edge where the beak goes; the bird with the duct in blue and the chin layer](previews/octagon/box-ocarina-octagon-sheet1-cut-files.svg)](cut-files/octagon/box-ocarina-octagon-sheet1-cut-files.svg)
-
-**`truncated-cube`** · regular truncated cube, finger-jointed on all 36 edges, cavity 845cm³ · 16 parts on 1 sheet
-
-[![truncated-cube, sheet 1 of 1: six regular octagons with fingers on every edge, one with the beak, the window and four holes in orange; eight equilateral triangles with fingers on all three edges; the bird with the duct in blue and the chin layer](previews/truncated-cube/box-ocarina-truncated-cube-sheet1-cut-files.svg)](cut-files/truncated-cube/box-ocarina-truncated-cube-sheet1-cut-files.svg)
 
 **`snub-square-antiprism`** · snub square antiprism, Johnson solid J85, finger-jointed on all 40 edges, cavity 206cm³ · 28 parts on 1 sheet
 
