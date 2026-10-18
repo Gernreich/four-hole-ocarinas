@@ -39,11 +39,11 @@ FROM THE MOUTH END, the same in every build:
            the square flute, and the beak had nothing under it
   window   the true sound hole, WINDOW_W x WINDOW_L, against the cavity's
            mouth-end wall, so the jet crosses it over the cavity
-  holes    on the cube, the octagon and the antiprism, two rows across the
-           top: the index fingers' row ROW_1 past the window, the middle
-           fingers' ROW_2 past that, each hand's pair in a column COLUMNS
-           apart; the octahedron and the dodecahedron give them faces of
-           their own (see build_solid)
+  holes    on the cube, the two prisms, the antiprism and the
+           cuboctahedron, two rows across the top: the index fingers' row
+           ROW_1 past the window, the middle fingers' ROW_2 past that, each
+           hand's pair in a column COLUMNS apart; the solids in FACE_HOLES
+           give them faces of their own (see build_solid)
 
 THE SPLITTING EDGE is the window's far edge, and wants the bevel a laser
 cannot cut, as on the square flute: file it, about 30 degrees, on the face
@@ -103,6 +103,10 @@ BUILDS = {
     'square-antiprism': 'square antiprism, finger-jointed',
     'octahedron': 'regular octahedron, finger-jointed',
     'dodecahedron': 'regular dodecahedron, finger-jointed',
+    'truncated-octahedron': 'truncated octahedron, finger-jointed',
+    'hexagonal-prism': 'uniform hexagonal prism, finger-jointed',
+    'icosahedron': 'regular icosahedron, finger-jointed',
+    'cuboctahedron': 'cuboctahedron, finger-jointed',
 }
 # Solids, built by polyhedron.py, since 2026-10-17. Each cavity is what its
 # shape holds, and its key follows from it. The holes are sized against the
@@ -130,14 +134,29 @@ OCT_HEIGHT = OCT_FLATS * math.tan(math.pi / 8)
 #   dodecahedron    standing on a pentagon, every edge DODECA_EDGE; each hole
 #                   has a pentagon of its own, the index fingers' the two
 #                   either side of the mouth, the middle fingers' the next
-# Four plates meet at the antiprism's and the octahedron's corners, and
-# NIP cuts each corner back that far, square to its bisector, so that the
-# two sharing only the corner stay apart.
+# The four the author asked for next (2026-10-18), each at about 280cm^3
+# or as much more as its holes need:
+#   truncated-octahedron  standing on a square, which takes only the
+#                   window; each hand's two holes share the hexagon on its side
+#   hexagonal-prism uniform, as the octagon is: square walls, the holes on
+#                   the top's grid
+#   icosahedron     standing on a triangle, each hole on a triangle of its own
+#   cuboctahedron   standing on a square, the holes on its grid; 54.5mm, not
+#                   the 53.2mm of 280cm^3, so the biggest hole keeps 2mm of ply
+#                   to a wall after the millimetre it may be filed up
+# Four plates meet at the antiprism's, the octahedron's and the
+# cuboctahedron's corners and five at the icosahedron's, and NIP cuts each
+# corner back that far, square to its bisector, so that the plates sharing
+# only the corner stay apart: half a millimetre over the least that clears.
 SAP_EDGE = 72.0
 OCTA_EDGE = 91.5
 DODECA_EDGE = 36.0
-NIP = {'square-antiprism': 4.25, 'octahedron': 4.75}
-FACE_HOLES = ('octahedron', 'dodecahedron')
+HEX_EDGE = 52.0
+ICOSA_EDGE = 54.5
+TRUNC_OCTA_EDGE = 31.6
+CUBOCTA_EDGE = 54.5
+NIP = {'square-antiprism': 4.25, 'octahedron': 4.75, 'icosahedron': 3.5, 'cuboctahedron': 3.5}
+FACE_HOLES = ('octahedron', 'dodecahedron', 'icosahedron', 'truncated-octahedron')
 
 
 def cube_edge(V):
@@ -241,7 +260,11 @@ def build_solid(kind, diams):
              'cube': lambda: P.cube(cube_edge(CUBE_VOLUME)),
              'square-antiprism': lambda: P.square_antiprism(SAP_EDGE),
              'octahedron': lambda: P.octahedron(OCTA_EDGE),
-             'dodecahedron': lambda: P.dodecahedron(DODECA_EDGE)}[kind]()
+             'dodecahedron': lambda: P.dodecahedron(DODECA_EDGE),
+             'truncated-octahedron': lambda: P.truncated_octahedron(TRUNC_OCTA_EDGE),
+             'hexagonal-prism': lambda: P.hexagonal_prism(HEX_EDGE),
+             'icosahedron': lambda: P.icosahedron(ICOSA_EDGE),
+             'cuboctahedron': lambda: P.cuboctahedron(CUBOCTA_EDGE)}[kind]()
     ft = next(i for i, f in enumerate(faces) if f.name == 'top')
     fm = next(i for i, f in enumerate(faces) if f.name.startswith('mouth'))
     top, mouth = faces[ft], faces[fm]

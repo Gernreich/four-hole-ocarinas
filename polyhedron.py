@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Convex solids finger-jointed on every edge, at any angle the faces meet:
-the cube, the octagonal prism, the square antiprism, the octahedron and the
-dodecahedron that four_hole_ocarinas.py builds.
+the cube, the octagonal and hexagonal prisms, the square antiprism, the
+octahedron, the dodecahedron, the icosahedron, the truncated octahedron and
+the cuboctahedron that four_hole_ocarinas.py builds.
 
 A solid is any convex polyhedron, given as its faces' planes, and every
 plate is that face's polygon, 3mm thick, inward from the outside surface.
@@ -112,6 +113,21 @@ def octagonal_prism(flats, height):
     return solid(planes, verts)
 
 
+def hexagonal_prism(edge):
+    """The uniform hexagonal prism, every edge `edge` long: two regular
+    hexagons and six square walls, its axis z, z from 0 to edge, a flat
+    facing -x for the mouth end."""
+    ring = [(edge * math.cos(math.pi / 6 + k * math.pi / 3),
+             edge * math.sin(math.pi / 6 + k * math.pi / 3)) for k in range(6)]
+    verts = [(x, y, z) for x, y in ring for z in (0.0, edge)]
+    planes = [('top', (0, 0, 1), edge), ('bottom', (0, 0, -1), 0.0)]
+    for k in range(6):
+        a = k * math.pi / 3
+        planes.append(('mouth wall' if k == 3 else 'wall',
+                       (math.cos(a), math.sin(a), 0), edge * math.sqrt(3) / 2))
+    return solid(planes, verts)
+
+
 def stand(verts, edge, name):
     """A solid from its corners, scaled so every edge is `edge` long, then
     turned so that the face nearest +z lies flat on top and its edge
@@ -183,6 +199,37 @@ def dodecahedron(edge):
     for a, b in itertools.product((1 / p, -1 / p), (p, -p)):
         verts += [(0, a, b), (a, b, 0), (b, 0, a)]
     return stand(verts, edge, 'pentagon')
+
+
+def icosahedron(edge):
+    """The regular icosahedron, every edge `edge` long, standing on a face:
+    twenty equilateral triangles, five to a corner. Its corners are the
+    cyclic permutations of (0, +-1, +-phi)."""
+    p = (1 + math.sqrt(5)) / 2
+    verts = []
+    for a, b in itertools.product((1, -1), (p, -p)):
+        verts += [(0, a, b), (a, b, 0), (b, 0, a)]
+    return stand(verts, edge, 'triangle')
+
+
+def truncated_octahedron(edge):
+    """The truncated octahedron, every edge `edge` long, standing on a
+    square: six squares and eight regular hexagons, three to a corner. Its
+    corners are the permutations of (0, +-1, +-2)."""
+    verts = set()
+    for v in itertools.product((0,), (1, -1), (2, -2)):
+        verts |= set(itertools.permutations(v))
+    return stand(sorted(verts), edge, 'face')
+
+
+def cuboctahedron(edge):
+    """The cuboctahedron, every edge `edge` long, standing on a square:
+    six squares and eight equilateral triangles, four to a corner. Its
+    corners are the permutations of (+-1, +-1, 0)."""
+    verts = set()
+    for v in itertools.product((1, -1), (1, -1), (0,)):
+        verts |= set(itertools.permutations(v))
+    return stand(sorted(verts), edge, 'face')
 
 
 def hull(verts):

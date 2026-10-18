@@ -2,19 +2,22 @@
 
 <!-- readme-only -->
 **[Read the writeup](https://gernreich.github.io/four-hole-ocarinas/)** ·
-**[Turn all five builds in 3D](https://gernreich.github.io/four-hole-ocarinas/#turn-it-in-3d)**
+**[Turn all nine builds in 3D](https://gernreich.github.io/four-hole-ocarinas/#turn-it-in-3d)**
 
 <!-- page-only **[Read the README](https://github.com/Gernreich/four-hole-ocarinas)** -->
 
 Four-hole ocarinas in 3mm plywood, each a solid finger-jointed on every edge at
-whatever angle its faces meet: a cube, a uniform octagonal prism, a square antiprism,
-a regular octahedron and a regular dodecahedron. Each has a beak to blow into, a
+whatever angle its faces meet: four Platonic solids (the cube, the octahedron, the
+dodecahedron and the icosahedron), two Archimedean ones (the truncated octahedron and
+the cuboctahedron), two uniform prisms (hexagonal and octagonal) and a square
+antiprism. Each has a beak to blow into, a
 window, four finger holes and the English fingering, which gets a whole octave out
 of four holes.
 
-All five take the same window, holes and fingering, so every interval is the same;
-only their cavities differ, and with them the key. Four hold about 280cm³ and play
-near D4, the octagon 354cm³ and C4. From the closed note the fingerings below give
+All nine take the same window, holes and fingering, so every interval is the same;
+only their cavities differ, and with them the key. Seven hold 279 to 283cm³ and play
+near D4; the cuboctahedron, made a little bigger so its top takes the holes, holds
+303cm³ and plays C♯4, and the octagon 354cm³ and C4. From the closed note the fingerings below give
 the major scale up an octave, and three of the five notes between that the scale
 leaves out.
 
@@ -43,7 +46,7 @@ generator and tool, indexed.
 
 ## The builds
 
-Five builds, every one a solid, each playing in whatever key its cavity holds.
+Nine builds, every one a solid, each playing in whatever key its cavity holds.
 
 | Build | Construction | Cavity | Key, all closed | Body | Parts | Sheets |
 |---|---|---|---|---|---|---|
@@ -52,10 +55,14 @@ Five builds, every one a solid, each playing in whatever key its cavity holds.
 | `square-antiprism` | square antiprism, finger-jointed on all 16 edges | 279cm³ | D4 −7 cents, 292.4Hz | 101.8 × 101.8 × 60.5mm | 12 | 1 |
 | `octahedron` | regular octahedron, finger-jointed on all 12 edges | 281cm³ | D4 −14 cents, 291.2Hz | 105.7 × 91.5 × 74.7mm | 10 | 1 |
 | `dodecahedron` | regular dodecahedron, finger-jointed on all 30 edges | 283cm³ | D4 −21 cents, 290.1Hz | 99.1 × 94.2 × 80.2mm | 14 | 1 |
+| `truncated-octahedron` | truncated octahedron, finger-jointed on all 36 edges | 283cm³ | D4 −19 cents, 290.4Hz | 94.8 × 94.8 × 89.4mm | 16 | 1 |
+| `hexagonal-prism` | uniform hexagonal prism, finger-jointed on all 18 edges | 282cm³ | D4 −16 cents, 290.9Hz | 90.1 × 104.0 × 52.0mm | 10 | 1 |
+| `icosahedron` | regular icosahedron, finger-jointed on all 30 edges | 282cm³ | D4 −16 cents, 290.9Hz | 101.8 × 88.2 × 82.4mm | 22 | 1 |
+| `cuboctahedron` | cuboctahedron, finger-jointed on all 24 edges | 303cm³ | C♯4 +20 cents, 280.3Hz | 109.0 × 109.0 × 77.1mm | 16 | 1 |
 
 The bird and the chin layer are glued, and the rest is press-fit.
 
-The body is length × width × height, the octagon's across its flats; the beak runs 18mm
+The body is length × width × height, the prisms' length across their flats; the beak runs 18mm
 past it at the mouth end, the bird stands 3mm on the top over it, and the chin layer
 hangs 3mm under it.
 
@@ -99,29 +106,58 @@ hangs 3mm under it.
   from that pentagon's walls: the index fingers on the two either side of the
   mouth's pentagon, the middle fingers on the next two round. The pentagon under the
   beak stops 3.4mm short there, and the chin layer is 3.0mm shorter.
+- **The truncated octahedron** stands on one of its six squares, every edge 31.6mm,
+  with four or five fingers to an edge. Squares meet hexagons at 125.3 degrees and
+  hexagons meet each other at 109.5; three plates meet at every corner, so the
+  corners close. The top square is too small for more than the window, so each hand
+  has the hexagon on its side of it, both holes on the one face, the index finger's
+  nearer the beak. The hexagon under the beak stops 3.7mm short there, and the chin
+  layer is 4.2mm shorter.
+- **The hexagonal prism** is uniform, as the octagon is: two regular hexagons and six
+  52mm squares, 90.1mm across the flats and 52mm tall. The walls meet each other at
+  120 degrees with eight fingers to an edge, and the top and bottom at 90 with seven.
+  The window and the holes are in the top, on the cube's grid, and the beak runs out
+  from the middle of one wall's top edge.
+- **The icosahedron** stands on one of its twenty equilateral triangles, every edge
+  54.5mm, every joint at 138.2 degrees with eight or nine fingers. Five plates meet
+  at each corner. Its top triangle carries the window, and each hole has a triangle
+  of its own, two on each side, the index finger's nearer the beak. The triangle
+  under the beak stops 4.5mm short there, and the chin layer is 6.7mm shorter.
+- **The cuboctahedron** stands on one of its six squares, every edge 54.5mm, every
+  joint at 125.3 degrees with eight or nine fingers. Four plates meet at each corner,
+  as on the antiprism and the octahedron. The window and the holes are on the top
+  square, on the cube's grid. Near 280cm³, at a 53.5mm edge, its top left 1.3mm of
+  ply between the biggest hole and a wall, under the 1.5mm the generator asks for;
+  at 54.5mm and 303cm³ it leaves 2.3mm, enough to file that hole up by the
+  millimetre allowed. The triangle under the beak stops 3.7mm short there, and the
+  chin layer is 4.2mm shorter.
 
 **How the solids' fingers go together.** Where two plates meet at an angle wider
 than 90 degrees, a plate's finger reaches the outside edge, and in its neighbour's
 finger it stops short by 3mm × sin of the angle: 2.12mm at 135 degrees, 2.83mm at
-109.5. That is the least that keeps the two plates out of each other, and it leaves
+109.5, 2.00mm at the icosahedron's 138.2. That is the least that keeps the two plates out of each other, and it leaves
 the joint closed along a line, with a shallow V-shaped notch outside each finger and
 a small void at each corner. The shellac fills both.
 
-**Where four plates meet.** At a corner of the square antiprism or the octahedron,
-two of the four plates share only the corner, and no edge, and run into each other
-just inside it. So every plate's corners there are cut off square to the corner's
-bisector: 4.25mm in from the corner on the antiprism and 4.75mm on the octahedron,
-where the least that clears, found by scanning the corners in 3D, was 3.75 and
-4.25mm. That leaves **a hole at every such corner**, open on the outside up to about
-6mm in from the point. Shellac will not bridge it: fill each with glue or wood
-filler before sealing. On the octagon, the cube and the dodecahedron, where three
-plates meet and every pair shares an edge, the corners close on the outside.
+**Where four or five plates meet.** At a corner of the square antiprism, the
+octahedron or the cuboctahedron, two of the four plates share only the corner, and
+no edge, and run into each other just inside it; on the icosahedron five meet, and
+each shares only the corner with two. So every plate's corners there are cut off
+square to the corner's bisector: 4.25mm in from the corner on the antiprism, 4.75mm
+on the octahedron and 3.5mm on the cuboctahedron and the icosahedron, where the
+least that clears, found by scanning the corners in 3D, was 3.75, 4.25, 3.0 and
+3.0mm. That leaves **a hole at every such corner**, open on the outside up to about
+6mm in from the point on the antiprism and the octahedron. Shellac will not bridge it: fill each with glue or wood filler before
+sealing. On the cube, the two prisms, the dodecahedron and the truncated
+octahedron, where three plates meet and every pair shares an edge, the corners
+close on the outside.
 
-The triangles of the antiprism and the octahedron, and the dodecahedron's pentagons,
+Plates of one shape, the triangles of the antiprism, the octahedron, the icosahedron
+and the cuboctahedron, the dodecahedron's pentagons, and the squares and hexagons,
 look alike but are not: each has its own pattern of fingers, set by which corners
 are whose, so each goes in one place only. **Every corner of a solid has a number,
 and every plate carries it near each of its own corners**: three numbers on a
-triangle, four on a square, five on a pentagon. The plates that meet at a corner
+triangle, four on a square, five on a pentagon, six on a hexagon. The plates that meet at a corner
 all show its number, so the solid goes together by matching them. The 3D view
 labels every plate's corners with them (the Corner numbers box turns them off);
 pulled apart, it shows each plate with its own. The top plate is the one plate left
@@ -141,12 +177,12 @@ itself turned end for end, and every finger a full plate thickness deep, as at 9
 degrees, whatever angle the faces meet at. Here each edge is cut for its own angle,
 each corner is given to one plate, and so the plates differ; in exchange the
 fingers step back 3mm × sin of the angle, the joints close on the outside, and the
-corners are checked in 3D. Boxes does not make the octagonal prism or the
-antiprism.
+corners are checked in 3D. Boxes does not make the prisms, the antiprism or the
+two Archimedean solids.
 
 None of the builds has anything to slide, so all are tuned at the window and the holes.
 
-All five carry the same mouthpiece: the top plate runs on past the body as a beak 24mm
+All nine carry the same mouthpiece: the top plate runs on past the body as a beak 24mm
 wide. One layer, the bird, is glued over it and one, the chin layer, under it, so the
 mouthpiece is three plies, 9mm thick, with the duct near its middle. The duct is
 14mm wide, the window's width, and runs from the beak's tip to the window. Only the bird is needed for the sound; the chin layer gives the
@@ -175,7 +211,7 @@ simulate the jet, so which voices best is for a test cut to show.
 ## Turn it in 3D
 
 <!-- readme-only -->
-All five builds turn in 3D on the [published page](https://gernreich.github.io/four-hole-ocarinas/#turn-it-in-3d),
+All nine builds turn in 3D on the [published page](https://gernreich.github.io/four-hole-ocarinas/#turn-it-in-3d),
 which GitHub does not run: drag to turn it, pull it apart into its parts, or see
 through the walls into the cavity.
 
@@ -224,7 +260,8 @@ three of them give the notes it lacks closely enough to use: C♯5, D♯5 and F5
 A hole's pitch rises by the same ratio whatever cavity it opens, so each build plays
 this major scale and these cents from its own closed note: D4 −12 cents on the cube,
 C4 −16 on the octagon, D4 −7 on the square antiprism, D4 −14 on the octahedron and
-D4 −21 on the dodecahedron.
+D4 −21 on the dodecahedron, D4 −19 on the truncated octahedron, D4 −16 on the
+hexagonal prism and the icosahedron, and C♯4 +20 on the cuboctahedron.
 
 ## What the model says
 
@@ -291,10 +328,10 @@ python3 ocarina_model.py --heard=290 --cavity=280   # the pitch you heard, in Hz
 
 prints the `--mouth` that explains it, and the command to redraw every build with
 it. The cavity is the one in the table of builds, or as the generator prints it;
-any build's closed note will do, since the window is the same on all five. A first build that sounds 50 cents flat is not a failure; it is the measurement.
+any build's closed note will do, since the window is the same on all nine. A first build that sounds 50 cents flat is not a failure; it is the measurement.
 
 **Cut the cube first.** It is the simplest, every joint at 90 degrees, and its
-closed note measures the window as well as any. All five are a step from anything
+closed note measures the window as well as any. All nine are a step from anything
 measured: their 14 × 7mm window is sized to the holes, and the cavities it speaks
 into play a fourth or a fifth below the G4 it would suit. Whether it is big enough
 for them to speak strongly is for a test to show.
@@ -351,7 +388,10 @@ of the duct.
    420.2Hz; the scale's other notes are sums of these four and follow from them. On
    the octagon they are 292.1, 323.0, 368.1 and 373.4Hz; on the square antiprism
    329.4, 364.4, 415.2 and 421.2Hz; on the octahedron 328.1, 362.9, 413.5 and
-   419.5Hz; on the dodecahedron 326.8, 361.5, 411.9 and 417.8Hz. Tune any of them
+   419.5Hz; on the dodecahedron 326.8, 361.5, 411.9 and 417.8Hz; on the truncated octahedron
+   327.1, 361.8, 412.3 and 418.2Hz; on the hexagonal prism and the icosahedron
+   327.7, 362.5, 413.1 and 419.0Hz; on the cuboctahedron 315.8, 349.3, 398.1 and
+   403.8Hz. Tune any of them
    from whatever its closed note turns out to be:
    each hole alone sounds 1.127, 1.246, 1.420 and 1.440 times it.
 5. Seal with shellac once it plays in tune.
@@ -364,7 +404,7 @@ python3 ocarina_model.py --mouth=1.2           # with a different window correct
 python3 ocarina_model.py --heard=290 --cavity=280   # the correction a cut ocarina implies
 python3 ocarina_model.py --search              # the fingering patterns, ranked
 python3 four_hole_ocarinas.py --no-write              # the generator's checks, writing nothing
-python3 four_hole_ocarinas.py --out=cut-files         # all five builds
+python3 four_hole_ocarinas.py --out=cut-files         # all nine builds
 python3 four_hole_ocarinas.py --kerf=0.18 --out=mine   # for a laser with a 0.18mm kerf
 python3 page_assets.py                         # viewer.js, turn.html and the two plans
 ```
@@ -375,14 +415,14 @@ four conductances by a pattern search that minimises the worst note's error in c
 different fingerings. The tightest heads the list, at 12.3 cents and 11 finger moves
 up the scale; the one used here is at 19.2 cents and 10 moves, chosen for its holes.
 
-`four_hole_ocarinas.py` builds all five with what the model asks for and checks them
+`four_hole_ocarinas.py` builds all nine with what the model asks for and checks them
 before writing anything. The solids are built by `polyhedron.py`, which takes any
 convex solid as its faces' planes and joints every edge at its own angle. It checks:
 
 - the model holds the scale within 20 cents
 - the cube's cavity is the 280cm³ asked for
 - the cavity is small against a quarter wavelength, so it rings as one chamber:
-  119mm corner to corner at most, in the octagon and the octahedron, against 297mm
+  119mm corner to corner at most, in the octagon and the octahedron, against 296mm
   or more
 - every hole speaks and a finger covers it: from 2.5 to 13mm across
 - every hole and the window open into the cavity, and ply is left between the holes
@@ -392,7 +432,7 @@ convex solid as its faces' planes and joints every edge at its own angle. It che
   bird and the top, and the top carries no numbers
 - every edge is finger-jointed with as many 6mm cells as fit
 - along every joint, no point lies in two plates: from 1152 points on the cube
-  to 1656 on the square antiprism, through each finger from the outside edge to the
+  to 2313 on the icosahedron, through each finger from the outside edge to the
   inner corner
 - every joint closes except within a finger of a corner, where the shellac goes
 - round every corner, a 3D grid through the walls finds no point in two plates:
@@ -405,8 +445,8 @@ convex solid as its faces' planes and joints every edge at its own angle. It che
 
 The joint checks were proved by breaking them: with no step back every sampled point
 lies in two plates, and with three times the step the joints open. Without the
-corner cuts the corner scan finds 229 points in two plates on the square antiprism
-and 93 on the octahedron.
+corner cuts the corner scan finds 229 points in two plates on the square antiprism,
+93 on the octahedron, 1401 on the cuboctahedron and 361 on the icosahedron.
 
 It borrows the finger size, the plate class and the sheet packer from
 [`square_flute.py`](https://github.com/Gernreich/square-flute/blob/main/square_flute.py),
@@ -444,6 +484,22 @@ Each picture is a display rendering; click it for the cut file.
 
 [![dodecahedron, sheet 1 of 1: a pentagon with the beak and the window in orange; eleven regular pentagons with fingers on all five edges, four of them with a finger hole in orange and one with a long shallow notch where the beak passes over it; the bird with its half of the duct in red, the other half in magenta on the beak and the chin layer](previews/dodecahedron/four-hole-ocarina-dodecahedron-sheet1-cut-files.svg)](cut-files/dodecahedron/four-hole-ocarina-dodecahedron-sheet1-cut-files.svg)
 
+**`truncated-octahedron`** · truncated octahedron, finger-jointed on all 36 edges, cavity 283cm³ · 16 parts on 1 sheet
+
+[![truncated-octahedron, sheet 1 of 1: a square with the beak and the window in orange; five more squares and eight regular hexagons with fingers on every edge, two of the hexagons with two finger holes each in orange and one with a long shallow notch where the beak passes over it; the bird with its half of the duct in red, the other half in magenta on the beak and the chin layer](previews/truncated-octahedron/four-hole-ocarina-truncated-octahedron-sheet1-cut-files.svg)](cut-files/truncated-octahedron/four-hole-ocarina-truncated-octahedron-sheet1-cut-files.svg)
+
+**`hexagonal-prism`** · uniform hexagonal prism, finger-jointed on all 18 edges, cavity 282cm³ · 10 parts on 1 sheet
+
+[![hexagonal-prism, sheet 1 of 1: two regular hexagons with fingers on every edge, one with the beak, the window and four holes in orange; six square walls with fingers on all four edges, one plain along part of an edge where the beak goes; the bird with its half of the duct in red, the other half in magenta on the beak and the chin layer](previews/hexagonal-prism/four-hole-ocarina-hexagonal-prism-sheet1-cut-files.svg)](cut-files/hexagonal-prism/four-hole-ocarina-hexagonal-prism-sheet1-cut-files.svg)
+
+**`icosahedron`** · regular icosahedron, finger-jointed on all 30 edges, cavity 282cm³ · 22 parts on 1 sheet
+
+[![icosahedron, sheet 1 of 1: a triangle with the beak and the window in orange; nineteen equilateral triangles with fingers on all three edges and their corners cut off, four of them with a finger hole in orange and one with a long shallow notch where the beak passes over it; the bird with its half of the duct in red, the other half in magenta on the beak and the chin layer](previews/icosahedron/four-hole-ocarina-icosahedron-sheet1-cut-files.svg)](cut-files/icosahedron/four-hole-ocarina-icosahedron-sheet1-cut-files.svg)
+
+**`cuboctahedron`** · cuboctahedron, finger-jointed on all 24 edges, cavity 303cm³ · 16 parts on 1 sheet
+
+[![cuboctahedron, sheet 1 of 1: six squares with fingers on every edge and their corners cut off, one with the beak, the window and four holes in orange; eight equilateral triangles with fingers on all three edges and their corners cut off, one with a long shallow notch where the beak passes over it; the bird with its half of the duct in red, the other half in magenta on the beak and the chin layer](previews/cuboctahedron/four-hole-ocarina-cuboctahedron-sheet1-cut-files.svg)](cut-files/cuboctahedron/four-hole-ocarina-cuboctahedron-sheet1-cut-files.svg)
+
 ## Files
 
 | | |
@@ -453,6 +509,10 @@ Each picture is a display rendering; click it for the cut file.
 | `cut-files/square-antiprism/four-hole-ocarina-square-antiprism-sheet1-cut-files.svg` | the square antiprism |
 | `cut-files/octahedron/four-hole-ocarina-octahedron-sheet1-cut-files.svg` | the octahedron |
 | `cut-files/dodecahedron/four-hole-ocarina-dodecahedron-sheet1-cut-files.svg` | the dodecahedron |
+| `cut-files/truncated-octahedron/four-hole-ocarina-truncated-octahedron-sheet1-cut-files.svg` | the truncated octahedron |
+| `cut-files/hexagonal-prism/four-hole-ocarina-hexagonal-prism-sheet1-cut-files.svg` | the hexagonal prism |
+| `cut-files/icosahedron/four-hole-ocarina-icosahedron-sheet1-cut-files.svg` | the icosahedron |
+| `cut-files/cuboctahedron/four-hole-ocarina-cuboctahedron-sheet1-cut-files.svg` | the cuboctahedron |
 | `previews/` | display renderings of every sheet — **not** cut files |
 | `plans/four-hole-ocarina-top-plate.svg` · `plans/four-hole-ocarina-fingering.svg` | the cube's top plate to scale, and the fingering chart — display drawings, **not** cut files |
 | `viewer.js` | the 3D view of every build, loaded by the published page |
