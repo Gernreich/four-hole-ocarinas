@@ -5,7 +5,7 @@ from G4 to G5.
 
     python3 ocarina_model.py                 # the design and all 16 fingerings
     python3 ocarina_model.py --mouth=1.3     # scale the window's end correction
-    python3 ocarina_model.py --heard=380     # the --mouth a cut ocarina implies
+    python3 ocarina_model.py --heard=290 --cavity=280   # the --mouth a cut ocarina implies
     python3 ocarina_model.py --search        # the fingering patterns, ranked
 
 AN OCARINA IS A VESSEL, NOT A TUBE. Its cavity is small against the
@@ -55,7 +55,10 @@ THE WINDOW IS THE UNCALIBRATED PART, as in the square flute. Its end
 correction is Rayleigh's, but the jet across it lengthens it, by an amount
 measured only in simulation (arXiv:0911.3567 found it larger than the
 textbook value). Every hole is sized against K_w, so --mouth scales the
-window's correction, and --heard= reads it back off a cut ocarina.
+window's correction, and --heard= reads it back off a cut ocarina: the
+pitch it sounds with every hole closed, and --cavity= the volume in cm^3
+the generator printed for that build. Without --cavity it takes the G4
+volume design() sizes, which no build has had since 2026-10-18.
 """
 import math
 import sys
@@ -239,12 +242,14 @@ def mouth_for(heard, V):
 
 def main():
     global MOUTH
-    heard = None
+    heard = cavity = None
     for x in sys.argv[1:]:
         if x.startswith('--mouth='):
             MOUTH = float(x.split('=', 1)[1])
         elif x.startswith('--heard='):
             heard = float(x.split('=', 1)[1])
+        elif x.startswith('--cavity='):
+            cavity = float(x.split('=', 1)[1]) * 1000
         elif x == '--search':
             rows = search()
             print(f'{len(rows)} fingering patterns found; the best, worst note first, '
@@ -256,7 +261,7 @@ def main():
             return 0
         else:
             raise SystemExit(f'error: {x} is not a flag this model reads. '
-                             f'It takes --mouth=, --heard= and --search.')
+                             f'It takes --mouth=, --heard=, --cavity= and --search.')
     V, kw, ratios, diams = design()
     print(f'G4 = {F0:.2f}Hz, air at {T_C:g}C ({C / 1000:.1f} m/s), '
           f'window {WINDOW_W:g} x {WINDOW_L:g}mm in {WALL:g}mm, mouth x{MOUTH:g}')
@@ -278,9 +283,9 @@ def main():
     for f, p, note, c, used in fingering_table(V, kw, diams):
         print(f'  {p}  {f:7.2f}Hz  {note:4} {c:+6.1f}c{"   scale" if used else ""}')
     if heard:
-        m = mouth_for(heard, V)
-        print(f'\nheard {heard:g}Hz with every hole closed: the window acts as if '
-              f'--mouth={m:.3f}')
+        m = mouth_for(heard, cavity or V)
+        print(f'\nheard {heard:g}Hz with every hole closed, on a cavity of '
+              f'{(cavity or V) / 1000:.1f}cm^3: the window acts as if --mouth={m:.3f}')
         print(f'  python3 four_hole_ocarinas.py --mouth={m:.3f} --out=cut-files   # recut to that')
     return 0
 

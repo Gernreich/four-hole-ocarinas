@@ -14,14 +14,13 @@ go wherever the fingers fall, since a Helmholtz resonator hears their size
 and not their place, so the layout here is the hands', not the model's.
 
 EVERY BUILD IS A SOLID, built by polyhedron.py and finger-jointed on every
-edge at whatever angle its faces meet (see BUILDS). The cube is the one
-sized to the model: its edge holds the volume G4 asks for (cube_edge), so
-it plays G4, and it is the build whose closed note measures the window.
-The others hold what their shape holds and play in the key that gives.
-Until 2026-10-18 the G4 build was a box 60 x 18mm inside and as long as the
-volume needed, finger-jointed or laminated as a stack; at the 14 x 7mm
-window it ran 144mm, near enough a quarter wave to act partly as a tube,
-and the author made it a cube and dropped the stack.
+edge at whatever angle its faces meet (see BUILDS). Each holds what its
+shape holds and plays in the key that gives; the model's G4 is only the
+frame the scale is worked out in. Until 2026-10-18 there was a G4 build, a
+box 60 x 18mm inside and as long as the volume needed, finger-jointed or
+laminated as a stack; at the 14 x 7mm window it ran 144mm, near enough a
+quarter wave to act partly as a tube, and the author made it a cube sized
+to G4, then the same day a cube of about 280cm^3, as the octahedron.
 
 All are tuned at the window and the holes.
 
@@ -91,36 +90,41 @@ BEAK, BEAK_W = 18.0, 24.0
 # so the three plies round off as one (the author, 2026-10-17)
 TIP_ROUND, TIP_STEPS = 8.0, 32
 # the hole rows, from the cavity's mouth-end wall, and the two hands'
-# columns, centre to centre: they fit the G4 cube's 54mm inside with room to
-# spare. The box's were 30, 52 and 36mm, until it became the cube
+# columns, centre to centre: set to fit the 54mm inside of the G4 cube that
+# was a build for a day. The box's were 30, 52 and 36mm
 ROW_1, ROW_2 = 20.0, 42.0
 COLUMNS = 34.0
 D_MIN, D_MAX = 2.5, 13.0     # a hole that still speaks; one a finger covers
 HOLE_GAP = 3.0               # ply between neighbouring holes
 
 BUILDS = {
-    'cube': 'cube, finger-jointed, sized to G4',
+    'cube': 'cube, finger-jointed',
     'octagon': 'uniform octagonal prism, finger-jointed',
     'square-antiprism': 'square antiprism, finger-jointed',
     'octahedron': 'regular octahedron, finger-jointed',
     'dodecahedron': 'regular dodecahedron, finger-jointed',
 }
-# Solids, built by polyhedron.py, since 2026-10-17. The cube's edge is
-# whatever holds the volume G4 asks for; the others' cavities are what their
-# shape holds, and their key follows from it. The holes are sized against
-# the window, not the cavity, so every fingering and every interval is the
-# cube's; only the key moves.
+# Solids, built by polyhedron.py, since 2026-10-17. Each cavity is what its
+# shape holds, and its key follows from it. The holes are sized against the
+# window, not the cavity, so every fingering and every interval is the same
+# in all of them; only the key moves.
+#   cube            its edge whatever holds CUBE_VOLUME (cube_edge), about
+#                   the octahedron's, at the author's asking (2026-10-18)
+CUBE_VOLUME = 280e3
 #   octagon         OCT_FLATS across the flats, outside, and as tall as a
 #                   wall is wide, so every wall is square and the prism is
 #                   uniform, as the cube is; it was 36mm tall until
 #                   2026-10-18
 OCT_FLATS = 110.0
 OCT_HEIGHT = OCT_FLATS * math.tan(math.pi / 8)
-# The other solids, every edge a whole number of 6mm fingers:
+# The other solids, the antiprism's and the dodecahedron's edges a whole
+# number of 6mm fingers:
 #   square-antiprism  72mm, so the top square takes the window and the four
-#                   holes on the cube's grid; its square is a quarter turn
+#                   holes on the cube's grid, ROW_1 and the rest; its square is a quarter turn
 #                   from the one below it, with eight triangles between
-#   octahedron      standing on a triangle, every edge OCTA_EDGE; the top is
+#   octahedron      standing on a triangle, every edge OCTA_EDGE, sized for
+#                   a cavity of about 280cm^3 at the author's asking
+#                   (2026-10-18; 72mm and 127cm^3 until then); the top is
 #                   too small for four holes, so each hand has a triangle of
 #                   its own, the index finger's hole nearer the beak
 #   dodecahedron    standing on a pentagon, every edge DODECA_EDGE; each hole
@@ -130,7 +134,7 @@ OCT_HEIGHT = OCT_FLATS * math.tan(math.pi / 8)
 # NIP cuts each corner back that far, square to its bisector, so that the
 # two sharing only the corner stay apart.
 SAP_EDGE = 72.0
-OCTA_EDGE = 72.0
+OCTA_EDGE = 91.5
 DODECA_EDGE = 36.0
 NIP = {'square-antiprism': 4.25, 'octahedron': 4.75}
 FACE_HOLES = ('octahedron', 'dodecahedron')
@@ -228,13 +232,13 @@ def owners(parts, q):
 
 # --- the solids ----------------------------------------------------------------
 
-def build_solid(kind, diams, V):
+def build_solid(kind, diams):
     """Every part of a solid build. The world is the solid's own: z up, the
     hole face on top, the mouth face looking down -x, so the beak runs out
     along -x from the middle of the top's mouth edge. Each part carries its
     frame as p.m, the matrix from its own (u, v, inward) to the world."""
     faces = {'octagon': lambda: P.octagonal_prism(OCT_FLATS, OCT_HEIGHT),
-             'cube': lambda: P.cube(cube_edge(V)),
+             'cube': lambda: P.cube(cube_edge(CUBE_VOLUME)),
              'square-antiprism': lambda: P.square_antiprism(SAP_EDGE),
              'octahedron': lambda: P.octahedron(OCTA_EDGE),
              'dodecahedron': lambda: P.dodecahedron(DODECA_EDGE)}[kind]()
@@ -554,9 +558,9 @@ def solid_checks(kind, parts, info, V0, kw, diams, worst):
     note(worst < 20.0, 'the model holds the scale', f'worst {worst:.1f} cents of eight notes')
     V = info['V']
     if kind == 'cube':
-        note(abs(V / V0 - 1) < 1e-6, 'the cavity is the volume the model asks for',
-             f'{cube_edge(V0):.2f}mm edge, {cube_edge(V0) - 2 * T:.2f}mm inside, '
-             f'{V / 1000:.2f}cm^3')
+        e = cube_edge(CUBE_VOLUME)
+        note(abs(V / CUBE_VOLUME - 1) < 1e-6, 'the cavity is the volume asked for',
+             f'{e:.2f}mm edge, {e - 2 * T:.2f}mm inside, {V / 1000:.2f}cm^3')
     f0 = M.freq(0, kw, V)
     span = max(P.dist(a, b) for a in info['inner_pts'] for b in info['inner_pts'])
     lam = M.C / f0
@@ -794,7 +798,7 @@ def main():
     for name, how in BUILDS.items():
         if only and name != only:
             continue
-        parts, info = build_solid(name, diams, V)
+        parts, info = build_solid(name, diams)
         res, sheets, f0 = solid_checks(name, parts, info, V, kw, diams, worst)
         key = note_name(f0)
         print(f'\n{name}: {how}, cavity {info["V"] / 1000:.1f}cm^3, '

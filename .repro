@@ -24,6 +24,6 @@ previews/dodecahedron/four-hole-ocarina-dodecahedron-sheet1-cut-files.svg :: pyt
 # --- the page ---
 viewer.js :: python3 page_assets.py --viewer-to=$OUT
 turn.html :: python3 page_assets.py --turn-to=$OUT
-plans/four-hole-ocarina-G4-top-plate.svg :: python3 page_assets.py --plans-to=$(dirname $OUT)
-plans/four-hole-ocarina-G4-fingering.svg :: python3 page_assets.py --plans-to=$(dirname $OUT)
+plans/four-hole-ocarina-top-plate.svg :: python3 page_assets.py --plans-to=$(dirname $OUT)
+plans/four-hole-ocarina-fingering.svg :: python3 page_assets.py --plans-to=$(dirname $OUT)
 index.html :: python3 ../lasermade-tools/md2html.py README.md $OUT

@@ -247,7 +247,7 @@ def artifact(out):
     print(f'  wrote {out}: {len(page) // 1024}KB')
 
 
-PLANS = ('four-hole-ocarina-G4-top-plate.svg', 'four-hole-ocarina-G4-fingering.svg')
+PLANS = ('four-hole-ocarina-top-plate.svg', 'four-hole-ocarina-fingering.svg')
 
 
 def main():
@@ -270,7 +270,7 @@ def main():
     V, kw, ratios, diams = M.design()
     three = {}
     for name in B.BUILDS:
-        parts, info = B.build_solid(name, diams, V)
+        parts, info = B.build_solid(name, diams)
         three[name] = solid_solids(parts, info)
         if name == 'cube':
             cube = parts, info
