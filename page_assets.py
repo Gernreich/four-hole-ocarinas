@@ -124,6 +124,10 @@ def solid_solids(parts, info):
                     'e': e, 'g': g, 'name': p.name,
                     'f': [[[round(x, 3), round(y, 3)] for x, y in f] for f in p.fills],
                     'flip': flip, 'zc': round(zc, 3)})
+        if hasattr(p, 'numbers'):
+            # drawn inside face up for the laser; back into the plate's frame
+            out[-1]['n'] = [[[round(x, 3), round(-y, 3)] for x, y in st]
+                            for st in B.inside_up(p).strokes]
     span = max(v[0] for f in faces for v in f.verts) + shift
     return {'parts': out, 'len': round(span, 1), 'top': round(zmax - zmin, 2),
             'cav': f'{info["V"] / 1000:.0f}cm³'}
@@ -212,6 +216,14 @@ def viewer_js(three):
                     "'mm body · cavity ' + d.cav")
     js = js.replace('let yaw = -0.65, pitch = 0.42, dist = 600;\n  const home = { yaw: -0.65, pitch: 0.42, dist: 600 };',
                     'let yaw = -0.65, pitch = 0.62, dist = 380;\n  const home = { yaw: -0.65, pitch: 0.62, dist: 380 };')
+    # a solid's corner numbers, red lines just inside each plate's inner face
+    a = '      const m = p.m, M = new THREE.Matrix4();'
+    assert a in js, 'the square flute\'s viewer script changed'
+    js = js.replace(a, "      (p.n || []).forEach(st => holder.add(new THREE.Line(new THREE.BufferGeometry()"
+                       ".setFromPoints(st.map(q => new THREE.Vector3(q[0], q[1], 3.05))), numMat)));\n" + a)
+    a = '  function build(name) {'
+    assert a in js, 'the square flute\'s viewer script changed'
+    js = js.replace(a, "  const numMat = new THREE.LineBasicMaterial({ color: 0xd02020 });\n" + a)
     assert "d.cav" in js and 'dist = 380' in js, 'the square flute\'s viewer script changed'
     js += ("  const bb = [...document.querySelectorAll('#turn .vbar button[data-v]')];\n"
            "  bb.forEach(b => b.addEventListener('click', () => {\n"

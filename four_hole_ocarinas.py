@@ -74,6 +74,7 @@ T, KERF, FINGER = SF.T, SF.KERF, SF.FINGER
 MIN_WEB = SF.MIN_WEB
 BED, MARGIN = SF.BED, SF.MARGIN
 BLUE, ORANGE, BLACK = SF.BLUE, SF.ORANGE, SF.BLACK
+RED = '#ff0000'                # line-engraves the solids' corner numbers
 
 W_IN = 60.0          # the cavity across: room for two columns of holes
 D_IN = 18.0          # and deep: six 3mm frame layers in the stack
@@ -644,10 +645,121 @@ def build_solid(kind, diams):
                 'glued under the beak, its end against the mouth face')
     chin.m = P.matrix((P.sub(O, (0, 0, T)), U, V, W))
     parts += [bird, chin]
+    inner2d = [[P.to2d(fr, q) for q in pl] for fr, pl in zip(frames, polys)]
+    vnum = corner_numbers(faces)
+    for p in parts[:len(faces)]:
+        p.numbers = number_corners(faces[p.face], frames[p.face], inner2d[p.face], p.cuts, vnum)
     return parts, dict(kind=kind, faces=faces, edges=es, cellmap=cellmap, ft=ft, fm=fm,
                        V=vol, inner=[[P.to2d(fr, q) for q in pl] for fr, pl in zip(frames, polys)],
                        places=places, fr_top=fr_top, frames=frames, back=back, nip=nip,
                        inner_pts=[q for pl in polys for q in pl])
+
+
+# --- corner numbers ----------------------------------------------------------
+# Every corner of a solid has a number, and every plate engraves it near each
+# of its own corners, on its inside face: the plates that meet at a corner
+# all carry its number, so the solid goes together by matching them. The
+# digits are the trumpet tooling's single-stroke ones (bore_split.py's G),
+# x across and y up, in a cell 0.62 of the height wide.
+DIGITS = {
+    '0': [[(.5, 1), (.85, .8), (.85, .2), (.5, 0), (.15, .2), (.15, .8), (.5, 1)]],
+    '1': [[(.30, .78), (.52, 1), (.52, 0)], [(.28, 0), (.78, 0)]],
+    '2': [[(.10, .78), (.30, 1), (.70, 1), (.90, .78), (.90, .60), (.10, 0), (.90, 0)]],
+    '3': [[(.10, 1), (.90, 1), (.45, .55)],
+          [(.45, .55), (.90, .55), (.90, .16), (.72, 0), (.28, 0), (.10, .16)]],
+    '4': [[(.70, 0), (.70, 1), (.12, .32), (.92, .32)]],
+    '5': [[(.85, 1), (.20, 1), (.15, .55), (.50, .62), (.80, .50), (.88, .28), (.75, .06),
+           (.40, 0), (.15, .12)]],
+    '6': [[(.82, .92), (.55, 1), (.25, .85), (.15, .45), (.15, .18), (.35, 0), (.62, 0),
+           (.85, .18), (.85, .38), (.62, .55), (.30, .55), (.15, .45)]],
+    '7': [[(.12, 1), (.90, 1), (.42, 0)]],
+    '8': [[(.5, .55), (.22, .68), (.22, .87), (.5, 1), (.78, .87), (.78, .68), (.5, .55),
+           (.18, .40), (.18, .14), (.5, 0), (.82, .14), (.82, .40), (.5, .55)]],
+    '9': [[(.18, .08), (.45, 0), (.75, .15), (.85, .55), (.85, .82), (.65, 1), (.38, 1),
+           (.15, .82), (.15, .62), (.38, .45), (.70, .45), (.85, .55)]],
+}
+NUM_H = 4.0          # digit height
+NUM_CLEAR = 1.0      # from the joints, the holes and the window
+
+
+def corner_numbers(faces):
+    """Every corner of the solid numbered from 1: top down, and round
+    each level anticlockwise from -x, the beak's side."""
+    vs = {tuple(round(x, 6) for x in v) for f in faces for v in f.verts}
+    key = lambda v: (-round(v[2], 3), (math.atan2(v[1], v[0]) - math.pi) % (2 * math.pi))
+    return {v: i + 1 for i, v in enumerate(sorted(vs, key=key))}
+
+
+def number_box(text, c, up):
+    """The four corners of a number's box centred on c, its top toward up,
+    in the plate's frame as seen from outside."""
+    w = len(text) * 0.62 * NUM_H + (len(text) - 1) * 0.2 * NUM_H
+    r = (up[1], -up[0])
+    return [(c[0] + i * r[0] * w / 2 + j * up[0] * NUM_H / 2,
+             c[1] + i * r[1] * w / 2 + j * up[1] * NUM_H / 2)
+            for i, j in ((-1, -1), (1, -1), (1, 1), (-1, 1))]
+
+
+def number_corners(face, fr, inner, cuts, vnum):
+    """A plate's corner numbers: (text, centre, up) in its frame as seen
+    from outside, each moved in from its corner along the line to the face's
+    centre until its box clears the plate's joints -- it lies inside the
+    face's inside, the part of it the cavity sees -- and its holes and window
+    by NUM_CLEAR. Up points at the corner."""
+    g = P.to2d(fr, face.centre)
+    keep = []
+    for c in cuts:
+        if c[0] == 'circle':
+            keep.append(((c[1], c[2]), c[3]))
+        else:
+            xs, ys = [q[0] for q in c[1]], [q[1] for q in c[1]]
+            keep.append((((min(xs) + max(xs)) / 2, (min(ys) + max(ys)) / 2),
+                         math.hypot(max(xs) - min(xs), max(ys) - min(ys)) / 2))
+    out = []
+    for v in face.verts:
+        k = vnum[tuple(round(x, 6) for x in v)]
+        a = P.to2d(fr, v)
+        L = math.hypot(g[0] - a[0], g[1] - a[1])
+        d = ((g[0] - a[0]) / L, (g[1] - a[1]) / L)
+        up = (-d[0], -d[1])
+        s = 0.0
+        while s < L:
+            c = (a[0] + s * d[0], a[1] + s * d[1])
+            box = number_box(str(k), c, up)
+            half = math.hypot(*(box[0][i] - c[i] for i in range(2)))
+            if (all(in_poly_margin(q, NUM_CLEAR, inner) >= 0 for q in box)
+                    and all(math.hypot(c[0] - h[0], c[1] - h[1]) >= r + NUM_CLEAR + half
+                            for h, r in keep)):
+                break
+            s += 0.25
+        else:
+            raise ValueError(f'no room for corner {k} on a {face.name}')
+        out.append((str(k), (round(c[0], 3), round(c[1], 3)), up))
+    return out
+
+
+def inside_up(p):
+    """A solid's plate as the laser sees it, inside face up, so the corner
+    numbers engrave on the inside: mirrored across u, the numbers drawn as
+    strokes reading the right way round."""
+    q = Part(p.name, p.num, [(x, -y) for x, y in p.outline], p.note)
+    q.cuts = [('rect', [(x, -y) for x, y in c[1]]) if c[0] == 'rect'
+              else ('circle', c[1], -c[2], c[3]) for c in p.cuts]
+    q.fills = [[(x, -y) for x, y in f] for f in p.fills]
+    q.strokes = []
+    for text, (cx, cy), (ux, uy) in p.numbers:
+        c, up = (cx, -cy), (ux, -uy)
+        r = (-up[1], up[0])                       # reading direction, y down
+        w = len(text) * 0.62 * NUM_H + (len(text) - 1) * 0.2 * NUM_H
+        o = (c[0] - r[0] * w / 2 - up[0] * NUM_H / 2, c[1] - r[1] * w / 2 - up[1] * NUM_H / 2)
+        x0 = 0.0
+        for ch in text:
+            for st in DIGITS[ch]:
+                q.strokes.append([(o[0] + r[0] * (x0 + px * 0.62 * NUM_H) + up[0] * py * NUM_H,
+                                   o[1] + r[1] * (x0 + px * 0.62 * NUM_H) + up[1] * py * NUM_H)
+                                  for px, py in st])
+            x0 += 0.82 * NUM_H
+    return q
 
 
 def deepest(poly):
@@ -785,7 +897,17 @@ def solid_checks(kind, parts, info, V0, kw, diams, worst):
     note(not two, 'the beak, the bird and the chin layer clear the body',
          f'{n} points through them, none in a second part' if not two
          else f'{two} of {n} points in a second part')
-    sheets = pack(parts)
+    nums = [p.numbers for p in parts if hasattr(p, 'numbers')]
+    each = {}
+    for p in parts:
+        for text, _, _ in getattr(p, 'numbers', []):
+            each[text] = each.get(text, 0) + 1
+    note(len(nums) == len(info['faces']) and
+         sum(map(len, nums)) == sum(len(f.verts) for f in info['faces']),
+         'every plate numbers its corners, inside, clear of joints and holes',
+         f'{len(each)} corners, {sum(each.values())} numbers, '
+         f'{min(each.values())} to {max(each.values())} plates to a corner')
+    sheets = pack([inside_up(p) if hasattr(p, 'numbers') else p for p in parts])
     note(all(s['w'] <= BED[0] and s['h'] <= BED[1] for s in sheets), 'every sheet fits the bed',
          f'{len(sheets)} sheet(s), largest {max(s["w"] for s in sheets):.0f} x '
          f'{max(s["h"] for s in sheets):.0f}mm')
@@ -852,7 +974,7 @@ def mouthpiece_scan(parts, step=0.5):
 # --- sheets ------------------------------------------------------------------
 
 def svg_sheet(name, k, n, s, what):
-    orange, black, fills = [], [], []
+    orange, black, fills, red = [], [], [], []
     for p, sx, sy in s['parts']:
         dx, dy = sx - p.x0 + KERF / 2, sy - p.y0 + KERF / 2
         mv = lambda pts: [(x + dx, y + dy) for x, y in pts]
@@ -866,12 +988,17 @@ def svg_sheet(name, k, n, s, what):
                               f'r="{r - KERF / 2:.3f}"/>')
         for f in p.fills:
             fills.append(path(mv(f)))
+        for st in getattr(p, 'strokes', []):
+            red.append(path(mv(st), close=False))
     desc = (f'1 user unit = 1mm. Four-hole ocarina in G4, English fingering, {name}, '
             f'sheet {k} of {n}: {what}. 3mm ply, drawn for a {KERF:g}mm kerf. '
             f'Blue {BLUE} engraves the duct, a fill engrave about 1mm deep -- set the '
             f'depth on scrap first; orange {ORANGE} cuts the window, the holes'
             + (' and the cavity' if name == 'stack' else '')
-            + f'; black {BLACK} frees the parts.')
+            + f'; black {BLACK} frees the parts.'
+            + (f' Red {RED} line-engraves the corner numbers, lightly, before anything is '
+               f'cut: the plates lie inside face up, so they mark the inside, and the '
+               f'plates that meet at a corner carry its number.' if red else ''))
     g = lambda col, items: (
         f'  <g fill="none" stroke="{col}" stroke-width="0.2">\n'
         + ''.join(f'    {i}\n' if i.startswith('<') else f'    <path d="{i}"/>\n'
@@ -883,7 +1010,7 @@ def svg_sheet(name, k, n, s, what):
             f'<desc>{desc}</desc>\n'
             f'  <g fill="{BLUE}" stroke="none">\n'
             + ''.join(f'    <path d="{d}"/>\n' for d in fills) + '  </g>\n'
-            + g(ORANGE, orange) + g(BLACK, black) + '</svg>\n')
+            + (g(RED, red) if red else '') + g(ORANGE, orange) + g(BLACK, black) + '</svg>\n')
 
 
 def main():

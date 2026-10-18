@@ -122,8 +122,15 @@ plates meet and every pair shares an edge, the corners close on the outside.
 
 The triangles of the antiprism and the octahedron, and the dodecahedron's pentagons,
 look alike but are not: each has its own pattern of fingers, set by which corners
-are whose. Pencil a number on each as it comes off the bed, in the sheet's order,
-and build it with the 3D view open.
+are whose, so each goes in one place only. **Every corner of a solid has a number,
+and every plate carries it near each of its own corners**: three numbers on a
+triangle, four on a square, five on a pentagon. The plates that meet at a corner
+all show its number, so the solid goes together by matching them, as in the 3D
+view, which draws them in red. They are numbered from the top down, 1 at the top
+plate's corner beside the beak on the right hand's side. Each number is
+line-engraved on the plate's inside face, where the finished ocarina hides it,
+4mm tall, its top toward its corner, and set in until it clears the joints, the
+holes and the window by 1mm.
 
 **Against Boxes' polyhedra.** [Boxes](https://github.com/florianfesti/boxes) has
 a Platonic generator, in its Unstable group, for the tetrahedron, cube, octahedron,
@@ -280,9 +287,11 @@ beak, and every layer of the stack. Press-fit
 the box, then seal every seam with shellac, inside where you can reach and outside
 everywhere: a Helmholtz resonator leaks its note out of any gap.
 
-Run the colours **blue, orange, black**: blue engraves the duct, orange cuts the
-window and the holes (and the stack's cavity), and black frees the parts. The parts
-are not numbered: the 3D view shows where each one goes.
+Run the colours **blue, red, orange, black**: blue engraves the duct, red
+line-engraves the solids' corner numbers, lightly, orange cuts the window and the
+holes (and the stack's cavity), and black frees the parts. The solids' plates are
+drawn inside face up, so the numbers land on the inside; the box and the stack are
+not numbered, and the 3D view shows where each of their parts goes.
 
 ## Tuning
 
@@ -353,6 +362,8 @@ planes and joints every edge at its own angle. For them it checks:
 - round every corner, a 3D grid through the walls finds no point in two plates:
   this is what catches plates that share only a corner
 - the beak, the bird and the chin layer run into no other part
+- every plate numbers each of its corners on its inside, clear of the joints, the
+  holes and the window, and every corner's number is on each plate that meets there
 - every sheet fits the bed, and every part is on a sheet
 
 The joint checks were proved by breaking them: with no step back every sampled point
