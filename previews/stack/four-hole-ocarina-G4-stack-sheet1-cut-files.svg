@@ -9,9 +9,12 @@
      Cut the file in the repository root, not this one. -->
   <rect x="0.0" y="0.0" width="594.58" height="158.26" fill="#ffffff"/>
 <title>Four-hole ocarina in G4, stack, sheet 1 of 1</title>
-<desc>1 user unit = 1mm. Four-hole ocarina in G4, English fingering, stack, sheet 1 of 1: bird, bottom layer, chin layer, frame layer, top plate. 3mm ply, drawn for a 0.13mm kerf. Blue #0000ff engraves the duct, a fill engrave about 1mm deep -- set the depth on scrap first; orange #ff8000 cuts the window, the holes and the cavity; black #000000 frees the parts.</desc>
-  <g fill="#0000ff" stroke="none">
+<desc>1 user unit = 1mm. Four-hole ocarina in G4, English fingering, stack, sheet 1 of 1: bird, bottom layer, chin layer, frame layer, top plate. 3mm ply, drawn for a 0.13mm kerf. The duct is a fill engrave in two inks, run either or both: red #ff0000 in the bird's underside, magenta #ff00ff in the top's outside face. One alone about 1mm deep, both about 0.5mm each -- set the depth on scrap first. Then the cuts: orange #ff8000 cuts the window, the holes and the cavity, and black #000000 frees the parts.</desc>
+  <g fill="#ff0000" stroke="none">
     <path d="M 358.134,88.195 L 358.134,98.195 L 334.861,98.195 L 334.774,97.900 L 334.693,97.602 L 334.617,97.301 L 334.546,96.996 L 334.481,96.689 L 334.421,96.380 L 334.366,96.068 L 334.318,95.754 L 334.275,95.438 L 334.238,95.121 L 334.206,94.802 L 334.180,94.482 L 334.160,94.161 L 334.145,93.839 L 334.137,93.517 L 334.134,93.195 L 334.137,92.873 L 334.145,92.551 L 334.160,92.229 L 334.180,91.908 L 334.206,91.588 L 334.238,91.269 L 334.275,90.952 L 334.318,90.636 L 334.366,90.322 L 334.421,90.010 L 334.481,89.701 L 334.546,89.394 L 334.617,89.089 L 334.693,88.788 L 334.774,88.490 L 334.861,88.195 Z"/>
+  </g>
+  <g fill="#ff00ff" stroke="none">
+    <path d="M 29.065,36.065 L 29.065,46.065 L 5.793,46.065 L 5.706,45.770 L 5.624,45.472 L 5.548,45.171 L 5.477,44.866 L 5.412,44.559 L 5.352,44.250 L 5.298,43.938 L 5.249,43.624 L 5.206,43.308 L 5.169,42.991 L 5.137,42.672 L 5.111,42.352 L 5.091,42.031 L 5.077,41.709 L 5.068,41.387 L 5.065,41.065 L 5.068,40.743 L 5.077,40.421 L 5.091,40.099 L 5.111,39.778 L 5.137,39.458 L 5.169,39.139 L 5.206,38.822 L 5.249,38.506 L 5.298,38.192 L 5.352,37.880 L 5.412,37.571 L 5.477,37.264 L 5.548,36.959 L 5.624,36.658 L 5.706,36.360 L 5.793,36.065 Z"/>
   </g>
   <g fill="none" stroke="#a85800" stroke-width="1.189">
     <path d="M 29.130,36.130 L 34.000,36.130 L 34.000,46.000 L 29.130,46.000 Z"/>

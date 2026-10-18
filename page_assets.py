@@ -74,8 +74,6 @@ def solids(kind, parts, info):
             e = [0, 0, -0.75 + 0.25 * k_frame]
             k_frame += 1
             g = 'wall'
-        elif n == 'top plate':                     # the stack's
-            m, e, g = plate(T + D), [0, 0, 1.2], 'plate'
         elif n == 'bird':
             # the duct is on its underside, hidden from above: exploded, it
             # comes out toward the viewer and turns over, as the square
@@ -89,7 +87,7 @@ def solids(kind, parts, info):
                     'h': holes, 'm': [[round(v, 4) for v in r] for r in m],
                     'e': e, 'g': g, 'name': n,
                     'f': [[[round(x, 3), round(y, 3)] for x, y in f] for f in p.fills],
-                    'flip': flip, 'zc': round(m[2][3] + T / 2, 3)})
+                    'flip': flip, 'zc': round(m[2][3] + m[2][2] * T / 2, 3)})
     return {'parts': out, 'len': round(info['total'], 1), 'top': round(2 * T + D, 2),
             'cav': f'{W:g} × {D:g} × {info["Lc"]:.1f}mm'}
 
@@ -136,7 +134,7 @@ def solid_solids(parts, info):
 
 def plan_svg(info, diams, title):
     """The top plate from above, to scale, beak on the left: the bird's
-    footprint dashed, the duct in blue, the window, the four holes with
+    footprint dashed, the duct in magenta, the window, the four holes with
     their names and sizes, and the cavity's walls dotted under the plate.
     Fixed colours on a white ground, like the previews."""
     PW, c0, Lc, total = info['PW'], info['c0'], info['Lc'], info['total']
@@ -153,7 +151,7 @@ def plan_svg(info, diams, title):
          f'fill="none" stroke="#8a7350" stroke-width=".5" stroke-dasharray="1 1"/>',
          f'<path d="{d(B.mouthpiece(c0, yc))}" fill="none" stroke="#1d232b" stroke-width=".5" '
          f'stroke-dasharray="2 1.5"/>',
-         f'<path d="{d(B.duct(c0, yc))}" fill="#0000ff" fill-opacity=".45"/>',
+         f'<path d="{d(B.duct(c0, yc))}" fill="{B.NEST_INK}" fill-opacity=".55"/>',
          f'<rect x="{X(c0):.2f}" y="{Y(yc - M.WINDOW_W / 2):.2f}" width="{M.WINDOW_L:g}" '
          f'height="{M.WINDOW_W:g}" fill="#ffffff" stroke="#a85800" stroke-width=".6"/>']
     t = f'{FONT} text-anchor="middle"'
@@ -167,7 +165,8 @@ def plan_svg(info, diams, title):
             f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {X(total) + 6:.0f} {Y(PW) + 6:.0f}">\n'
             f'<title>{title}</title>\n'
             f'<desc>Display drawing, not a cut file. The top plate from outside, to scale, beak '
-            f'on the left: the bird\'s footprint dashed, the duct under it in blue, the window, '
+            f'on the left: the bird\'s footprint dashed, the duct under it in magenta, the nest\'s '
+            f'half engraved in this face and the bird\'s matching it above, the window, '
             f'the four finger holes named for their fingers with their diameters, and the '
             f'cavity\'s walls dotted beneath. The right hand\'s holes are at the bottom of the '
             f'drawing: the player sees the other face.</desc>\n' + '\n'.join(s) + '\n</svg>\n')

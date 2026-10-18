@@ -30,9 +30,10 @@ FROM THE MOUTH END, the same in both:
   beak     the top plate run on past the end, BEAK long and BEAK_W wide:
            what the lips close on
   bird     one layer glued over the beak and on to the window's near
-           edge, carrying the duct on its underside as a fill engrave, the
-           window's width and about 1mm deep, from the beak's tip to the
-           window
+           edge. The duct, the window's width, runs from the beak's tip to
+           the window as a fill engrave in two inks: BIRD_INK in the bird's
+           underside, NEST_INK in the top plate's outside face under it, so
+           either or both can be run (see BIRD_INK)
   chin     one plain layer glued under the beak, so the mouthpiece is
            three plies thick, 9mm, with the duct near its middle. Until
            2026-10-17 the bird was three layers stacked on top, copied from
@@ -74,6 +75,13 @@ T, KERF, FINGER = SF.T, SF.KERF, SF.FINGER
 MIN_WEB = SF.MIN_WEB
 BED, MARGIN = SF.BED, SF.MARGIN
 BLUE, ORANGE, BLACK = SF.BLUE, SF.ORANGE, SF.BLACK
+# The duct is a savanna flue, cut both ways at once: the bird's half in its
+# underside and the nest's half in the top plate's outside face, over the
+# beak, each in an ink of its own. Run one for a woodland (bird) flue or a
+# plains (nest) one, about 1mm deep, or both at about 0.5mm each for a
+# savanna flue. The house order has one engrave ink, blue, which the corner
+# numbers keep, and green and cyan are cut stages, so these two are new.
+BIRD_INK, NEST_INK = '#ff0000', '#ff00ff'
 
 W_IN = 60.0          # the cavity across: room for two columns of holes
 D_IN = 18.0          # and deep: six 3mm frame layers in the stack
@@ -318,8 +326,12 @@ def box_parts(Lc, PW, Hz, num):
         run(D_IN, odd), run(W_IN, odd), run(D_IN, odd)]
     none, every = [False] * 4, [True] * 4
     spec = [
+        # the top is drawn outside face up, as the laser engraves it, so its
+        # own v runs across the box the other way and its w inward; until
+        # 2026-10-18 it was placed inside face up, which the 3D view showed
+        # with the hands' holes swapped
         ('top plate', jointed(Lx, PW, tb(True), none),
-         [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, Hz - T]]),
+         [[1, 0, 0, 0], [0, -1, 0, PW], [0, 0, -1, Hz]]),
         ('bottom plate', jointed(Lx, PW, tb(False), none),
          [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0]]),
         ('side wall', jointed(Lx, Hz, side, every),
@@ -364,9 +376,12 @@ def build(kind, V, diams):
 
     def top_plate(outline):
         p = Part('top plate', next(num), rounded(outline, yc),
-                 'the window and the four holes; file the window\'s far edge to a '
+                 'the window and the four holes, and the nest\'s half of the duct '
+                 'fill-engraved in its outside face; file the window\'s far edge to a '
                  '30 degree bevel on the outside face before the bird goes on')
         p.slot(c0, yc - M.WINDOW_W / 2, c0 + M.WINDOW_L, yc + M.WINDOW_W / 2)
+        p.fills.append(duct(c0, yc))
+        p.ink = NEST_INK
         for h, d in zip(M.HOLES, diams):
             p.hole(*places[h], d)
         return p
@@ -378,6 +393,7 @@ def build(kind, V, diams):
         parts += [top] + box[1:]
     else:
         parts.append(top_plate(beaked(rect(0, 0, total, PW), 0, PW)))
+        parts[-1].m = [[1, 0, 0, 0], [0, -1, 0, PW], [0, 0, -1, D_IN + 2 * T]]
         parts.append(Part('bottom layer', next(num), rect(0, 0, total, PW), 'plain'))
         for k in range(int(round(D_IN / T))):
             p = Part('frame layer', next(num), rect(0, 0, total, PW),
@@ -385,8 +401,9 @@ def build(kind, V, diams):
             p.slot(c0, SIDE, c0 + Lc, SIDE + W_IN)
             parts.append(p)
     p = Part('bird', next(num), mouthpiece(c0, yc),
-             'the duct fill-engraved in its underside, about 1mm deep')
+             'the bird\'s half of the duct fill-engraved in its underside')
     p.fills.append(duct(c0, yc))
+    p.ink = BIRD_INK
     parts.append(p)
     # under the beak only: the body starts at x = 0
     parts.append(Part('chin layer', next(num), mouthpiece(0, yc),
@@ -423,11 +440,19 @@ def checks(kind, parts, info, V, diams, worst):
     note(c0 + M.WINDOW_L < c0 + Lc and M.WINDOW_W < W_IN,
          'the window opens into the cavity at its mouth-end wall',
          f'{M.WINDOW_W:g} x {M.WINDOW_L:g}mm from x = {c0:g}')
-    bird = [p for p in parts if p.fills][0]
+    bird = next(p for p in parts if p.name == 'bird')
+    top = next(p for p in parts if p.name == 'top plate')
     fx = [q[0] for q in bird.fills[0]]
-    note(min(fx) == -BEAK and max(fx) == c0 == bird.x0 + bird.w,
-         'the duct runs from the beak\'s tip to the window',
+    note(min(fx) == -BEAK and max(fx) == c0 == bird.x0 + bird.w
+         and top.fills == bird.fills,
+         'the duct runs from the beak\'s tip to the window, in the bird and the top alike',
          f'{c0 + BEAK:g}mm long, {M.WINDOW_W:g}mm wide')
+    m = top.m
+    right = [m[1][0] * x + m[1][1] * y + m[1][3] < PW / 2
+             for h, (x, y) in info['places'].items() if h.startswith('R')]
+    note(m[2][2] < 0 and all(right),
+         'the top lies outside face up, and each hand\'s holes lie under that hand',
+         'the nest\'s duct engraves the outside; held holes forward, beak up')
     chin = [p for p in parts if p.name == 'chin layer']
     note(len(chin) == 1 and chin[0].x0 == -BEAK and chin[0].x0 + chin[0].w == 0
          and chin[0].h == BEAK_W,
@@ -596,6 +621,9 @@ def build_solid(kind, diams):
     # is up (-x), so right = forward x up = -y. On the sheet, drawn from
     # outside with v = -y, the right hand's holes are at v > 0
     tp.slot(T, -M.WINDOW_W / 2, T + M.WINDOW_L, M.WINDOW_W / 2)
+    tp.note += ', the nest\'s half of the duct fill-engraved in its outside face'
+    tp.fills.append(duct(T, 0.0))
+    tp.ink = NEST_INK
     vol, polys = P.inner(faces)
     if kind in FACE_HOLES:
         # the faces round the top on either side of it, left hand +y, right
@@ -634,8 +662,9 @@ def build_solid(kind, diams):
     n = mouth.n
     back = max(0.0, (mouth.off - P.dot(n, (x_edge, 0.0, z_top - 2 * T))) / -n[0])
     bird = Part('bird', next(num), mouthpiece(T, 0.0),
-                'the duct fill-engraved in its underside, about 1mm deep')
+                'the bird\'s half of the duct fill-engraved in its underside')
     bird.fills.append(duct(T, 0.0))
+    bird.ink = BIRD_INK
     # the bird faces down, as the box's does: its own w = 0, the face the
     # duct is engraved in, lies on the top plate, so it is turned over
     # about U, which its outline and duct, both symmetric across, allow
@@ -646,7 +675,12 @@ def build_solid(kind, diams):
     parts += [bird, chin]
     inner2d = [[P.to2d(fr, q) for q in pl] for fr, pl in zip(frames, polys)]
     vnum = corner_numbers(faces)
+    # the top carries the nest's duct on its outside face and is drawn
+    # outside face up, so it takes no numbers: the beak, the window and the
+    # holes place it, and every corner it touches is numbered on the others
     for p in parts[:len(faces)]:
+        if p.face == ft:
+            continue
         p.numbers = number_corners(faces[p.face], frames[p.face], inner2d[p.face], p.cuts, vnum)
     return parts, dict(kind=kind, faces=faces, edges=es, cellmap=cellmap, ft=ft, fm=fm,
                        V=vol, inner=[[P.to2d(fr, q) for q in pl] for fr, pl in zip(frames, polys)],
@@ -745,6 +779,7 @@ def inside_up(p):
     q.cuts = [('rect', [(x, -y) for x, y in c[1]]) if c[0] == 'rect'
               else ('circle', c[1], -c[2], c[3]) for c in p.cuts]
     q.fills = [[(x, -y) for x, y in f] for f in p.fills]
+    q.ink = getattr(p, 'ink', BLUE)
     q.strokes = []
     for text, (cx, cy), (ux, uy) in p.numbers:
         c, up = (cx, -cy), (ux, -uy)
@@ -856,10 +891,12 @@ def solid_checks(kind, parts, info, V0, kw, diams, worst):
     ok = all((P.dot(world(*ixy), right) > 0) == h.startswith('R')
              for h, ixy in info['places'].items())
     note(ok, 'each hand\'s holes lie under that hand', 'held holes forward, beak up')
-    bird = [p for p in parts if p.fills][0]
+    bird = next(p for p in parts if p.name == 'bird')
+    tp = parts[info['ft']]
     fx = [q[0] for q in bird.fills[0]]
-    note(abs(min(fx) + BEAK) < 1e-9 and abs(max(fx) - T) < 1e-9,
-         'the duct runs from the beak\'s tip to the window',
+    note(abs(min(fx) + BEAK) < 1e-9 and abs(max(fx) - T) < 1e-9 and tp.fills == bird.fills
+         and not hasattr(tp, 'numbers'),
+         'the duct runs from the beak\'s tip to the window, in the bird and the top alike',
          f'{T + BEAK:g}mm long, {M.WINDOW_W:g}mm wide')
     es, cm = info['edges'], info['cellmap']
     kinds = {}
@@ -901,9 +938,11 @@ def solid_checks(kind, parts, info, V0, kw, diams, worst):
     for p in parts:
         for text, _, _ in getattr(p, 'numbers', []):
             each[text] = each.get(text, 0) + 1
-    note(len(nums) == len(info['faces']) and
-         sum(map(len, nums)) == sum(len(f.verts) for f in info['faces']),
-         'every plate numbers its corners, inside, clear of joints and holes',
+    tv = len(info['faces'][info['ft']].verts)
+    note(len(nums) == len(info['faces']) - 1 and
+         sum(map(len, nums)) == sum(len(f.verts) for f in info['faces']) - tv
+         and min(each.values()) >= 2,
+         'every plate but the top numbers its corners, inside, clear of joints and holes',
          f'{len(each)} corners, {sum(each.values())} numbers, '
          f'{min(each.values())} to {max(each.values())} plates to a corner')
     sheets = pack([inside_up(p) if hasattr(p, 'numbers') else p for p in parts])
@@ -973,7 +1012,8 @@ def mouthpiece_scan(parts, step=0.5):
 # --- sheets ------------------------------------------------------------------
 
 def svg_sheet(name, k, n, s, what):
-    orange, black, fills, nums = [], [], [], []
+    orange, black, nums = [], [], []
+    fills = {BIRD_INK: [], NEST_INK: []}
     for p, sx, sy in s['parts']:
         dx, dy = sx - p.x0 + KERF / 2, sy - p.y0 + KERF / 2
         mv = lambda pts: [(x + dx, y + dy) for x, y in pts]
@@ -986,18 +1026,21 @@ def svg_sheet(name, k, n, s, what):
                 orange.append(f'<circle cx="{cx + dx:.3f}" cy="{cy + dy:.3f}" '
                               f'r="{r - KERF / 2:.3f}"/>')
         for f in p.fills:
-            fills.append(path(mv(f)))
+            fills[p.ink].append(path(mv(f)))
         for st in getattr(p, 'strokes', []):
             nums.append(path(mv(st), close=False))
     desc = (f'1 user unit = 1mm. Four-hole ocarina in G4, English fingering, {name}, '
             f'sheet {k} of {n}: {what}. 3mm ply, drawn for a {KERF:g}mm kerf. '
-            f'Blue {BLUE} engraves the duct, a fill engrave about 1mm deep -- set the '
-            f'depth on scrap first; orange {ORANGE} cuts the window, the holes'
-            + (' and the cavity' if name == 'stack' else '')
-            + f'; black {BLACK} frees the parts.'
-            + (f' Blue also engraves the corner numbers, as single lines: the plates '
+            f'The duct is a fill engrave in two inks, run either or both: red {BIRD_INK} '
+            f'in the bird\'s underside, magenta {NEST_INK} in the top\'s outside face. One '
+            f'alone about 1mm deep, both about 0.5mm each -- set the depth on scrap first. '
+            + (f'Blue {BLUE} engraves the corner numbers, as single lines: the plates '
                f'lie inside face up, so they mark the inside, and the plates that meet '
-               f'at a corner carry its number.' if nums else ''))
+               f'at a corner carry its number; the top, outside face up, has none. '
+               if nums else '')
+            + f'Then the cuts: orange {ORANGE} cuts the window'
+            + (', the holes and the cavity' if name == 'stack' else ' and the holes')
+            + f', and black {BLACK} frees the parts.')
     g = lambda col, items: (
         f'  <g fill="none" stroke="{col}" stroke-width="0.2">\n'
         + ''.join(f'    {i}\n' if i.startswith('<') else f'    <path d="{i}"/>\n'
@@ -1007,8 +1050,9 @@ def svg_sheet(name, k, n, s, what):
             f'height="{s["h"]:.2f}mm" viewBox="0 0 {s["w"]:.2f} {s["h"]:.2f}">\n'
             f'<title>Four-hole ocarina in G4, {name}, sheet {k} of {n}</title>\n'
             f'<desc>{desc}</desc>\n'
-            f'  <g fill="{BLUE}" stroke="none">\n'
-            + ''.join(f'    <path d="{d}"/>\n' for d in fills) + '  </g>\n'
+            + ''.join(f'  <g fill="{ink}" stroke="none">\n'
+                      + ''.join(f'    <path d="{d}"/>\n' for d in ds) + '  </g>\n'
+                      for ink, ds in fills.items())
             + (g(BLUE, nums) if nums else '') + g(ORANGE, orange) + g(BLACK, black) + '</svg>\n')
 
 

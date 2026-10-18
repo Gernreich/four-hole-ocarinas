@@ -25,7 +25,7 @@ acoustic model whose window term is not measured, and the first one cut will set
 
 <table>
 <tr>
-<td align="center"><a href="cut-files/box/four-hole-ocarina-G4-box-sheet1-cut-files.svg"><img src="previews/box/four-hole-ocarina-G4-box-sheet1-cut-files.svg" alt="One sheet of parts: a top plate with a short beak at one end, its tip rounded, a small rectangular window beside the beak and four round holes of four sizes, every edge notched for finger joints; a matching bottom plate without the beak; two side walls and two end walls with fingers on all four edges, one end wall plain along part of its top edge where the beak goes; and two small pieces for the mouthpiece, rounded at one end like the beak, one with a blue band across it for the duct" width="100%"></a></td>
+<td align="center"><a href="cut-files/box/four-hole-ocarina-G4-box-sheet1-cut-files.svg"><img src="previews/box/four-hole-ocarina-G4-box-sheet1-cut-files.svg" alt="One sheet of parts: a top plate with a short beak at one end, its tip rounded, a small rectangular window beside the beak and four round holes of four sizes, every edge notched for finger joints; a matching bottom plate without the beak; two side walls and two end walls with fingers on all four edges, one end wall plain along part of its top edge where the beak goes; and two small pieces for the mouthpiece, rounded at one end like the beak, one with a red band across it for the bird's half of the duct, and a magenta band on the top plate's beak for the nest's half" width="100%"></a></td>
 </tr>
 <tr>
 <td align="center"><sub>box · the whole ocarina on one 579 × 104mm sheet</sub></td>
@@ -127,8 +127,11 @@ and every plate carries it near each of its own corners**: three numbers on a
 triangle, four on a square, five on a pentagon. The plates that meet at a corner
 all show its number, so the solid goes together by matching them. The 3D view
 labels every plate's corners with them (the Corner numbers box turns them off);
-pulled apart, it shows each plate with its own. They are numbered from the top down, 1 at the top
-plate's corner beside the beak on the right hand's side. Each number is
+pulled apart, it shows each plate with its own. The top plate is the one plate left
+unnumbered: it carries half the duct on its outside face, so it is drawn outside
+face up, and the beak, the window and the holes already place it. Every corner it
+touches is numbered on the plates that meet it there. The corners are numbered from the top down,
+1 at the top plate's corner beside the beak on the right hand's side. Each number is
 engraved in single lines on the plate's inside face, where the finished ocarina hides it,
 4mm tall, its top toward its corner, and set in until it clears the joints, the
 holes and the window by 1mm.
@@ -149,12 +152,29 @@ had a press-fit end plug to tune with until it was jointed on every edge.
 
 All seven carry the same mouthpiece: the top plate runs on past the body as a beak 24mm
 wide. One layer, the bird, is glued over it and one, the chin layer, under it, so the
-mouthpiece is three plies, 9mm thick, with the duct near its middle. The duct is a
-fill engrave in the bird's underside, 10mm wide and about 1mm deep, from the beak's
-tip to the window. Only the bird is needed for the sound; the chin layer gives the
+mouthpiece is three plies, 9mm thick, with the duct near its middle. The duct is
+10mm wide and runs from the beak's tip to the window. Only the bird is needed for the sound; the chin layer gives the
 lips a thicker mouthpiece and stiffens the beak. The tip, where the lips close, is a
 half-ellipse across the beak's full 24mm and 8mm deep, cut the same on all three plies
 so they round off as one, and the duct's mouth follows the curve.
+
+**The duct is drawn as a savanna flue, in two colours, so you choose at the laser.**
+The square flute names its flues for where they are carved: a **bird** flue in the
+underside of the block, the woodland style; a **nest** flue in the body under it, the
+plains style; and a **savanna** flue, half in each. Every sheet here carries both
+halves, each in a colour of its own: **red** in the bird's underside and **magenta**
+in the top plate's outside face, over the beak, the same 10mm footprint lined up.
+
+| Run | Flue | Depth |
+|---|---|---|
+| red only | bird | about 1mm |
+| magenta only | nest | about 1mm |
+| both | savanna | about 0.5mm each |
+
+The three put the airstream at different heights against the splitting edge: just
+above the top plate's surface from a bird flue, just below it from a nest flue, and
+level with it from a savanna flue, a shift of about one duct depth. The model does not
+simulate the jet, so which voices best is for a test cut to show.
 
 ## Turn it in 3D
 
@@ -274,8 +294,10 @@ beak, is where the air splits, and it needs a clean bevel of about 30° that a l
 cannot cut. File it on the outside face, the face the bird sits on, while the top is
 still a flat plate on the bench.
 
-**The duct is a fill engrave**, about 1mm deep and the window's 10mm width. The depth
-is a power setting, so find it on scrap first.
+**The duct is a fill engrave**, the window's 10mm width, about 1mm deep in one colour
+or 0.5mm in each of two (see the mouthpiece, under [The builds](#the-builds)). The depth
+is a power setting, so find it on scrap first, and run the engraves before the cuts,
+while the parts still lie where they were drawn.
 
 **The smallest hole is 2.95mm.** It is right for the note, but at the kerf it is the
 one most likely to come out ragged or choked with char. Clear it with a 3mm drill
@@ -293,11 +315,15 @@ beak, and every layer of the stack. Press-fit
 the box, then seal every seam with shellac, inside where you can reach and outside
 everywhere: a Helmholtz resonator leaks its note out of any gap.
 
-Run the colours **blue, orange, black**: blue engraves the duct, filled, and the
-solids' corner numbers, as single lines, orange cuts the window and the holes (and
-the stack's cavity), and black frees the parts. The solids' plates are
-drawn inside face up, so the numbers land on the inside; the box and the stack are
-not numbered, and the 3D view shows where each of their parts goes.
+Run the engraves first, then the cuts. **Red** and **magenta** engrave the duct,
+filled: red the bird's half, magenta the nest's, either or both. **Blue** engraves the
+solids' corner numbers, as single lines. Then **orange** cuts the window and the
+holes (and the stack's cavity), and **black** frees the parts. Red and magenta are
+outside the house order, whose one engrave colour is blue: the two halves need a
+colour each so that either can be left off. The solids' plates are drawn inside face
+up, so the numbers land on the inside, except the top, drawn outside face up for its
+half of the duct; the box and the stack are not numbered, and the 3D view shows where
+each of their parts goes.
 
 ## Tuning
 
@@ -349,7 +375,10 @@ before writing anything. For the box and the stack:
 - every hole opens into the cavity, clear of its walls and the window
 - ply left between neighbouring holes
 - the window opens into the cavity at its mouth-end wall
-- the duct runs from the beak's tip to the window
+- the duct runs from the beak's tip to the window, its two halves lined up in the
+  bird and the top
+- the top plate is drawn outside face up, so the nest's half of the duct engraves the
+  outside, and each hand's holes lie under that hand
 - the chin layer fills the beak's underside and stops at the body
 - in the box, every edge is finger-jointed with as many 6mm cells as fit, and the
   six plates fill every cell of all twelve edges and all eight corners exactly once:
@@ -363,7 +392,8 @@ planes and joints every edge at its own angle. For them it checks:
 - the cavity is small against a quarter wavelength, so it rings as one chamber
 - every hole and the window open into the cavity, and ply is left between holes
 - each hand's holes lie under that hand, worked out from the geometry
-- the duct runs from the beak's tip to the window
+- the duct runs from the beak's tip to the window, its two halves lined up in the
+  bird and the top, and the top carries no numbers
 - every edge is finger-jointed with as many 6mm cells as fit
 - along every joint, no point lies in two plates: from 1224 points on the cube
   to 1656 on the square antiprism, through each finger from the outside edge to the
@@ -372,8 +402,9 @@ planes and joints every edge at its own angle. For them it checks:
 - round every corner, a 3D grid through the walls finds no point in two plates:
   this is what catches plates that share only a corner
 - the beak, the bird and the chin layer run into no other part
-- every plate numbers each of its corners on its inside, clear of the joints, the
-  holes and the window, and every corner's number is on each plate that meets there
+- every plate but the top numbers each of its corners on its inside, clear of the
+  joints, the holes and the window, and every corner's number is on at least two of
+  the plates that meet there
 - every sheet fits the bed, and every part is on a sheet
 
 The joint checks were proved by breaking them: with no step back every sampled point
@@ -391,7 +422,7 @@ in swept-curve, so it expects both repositories cloned beside this one.
 
 The top plate, from outside and to scale, beak on the left:
 
-![The box's top plate from outside, to scale: the beak on the left with the bird's footprint dashed over it and the duct in blue, the small rectangular window at the start of the cavity, whose walls are dotted beneath the plate, and the four round holes, L1 of 8.0mm and L2 of 12.2mm on the upper side, R1 of 5.2mm and R2 of 2.9mm on the lower](plans/four-hole-ocarina-G4-top-plate.svg)
+![The box's top plate from outside, to scale: the beak on the left with the bird's footprint dashed over it and the duct in magenta, the small rectangular window at the start of the cavity, whose walls are dotted beneath the plate, and the four round holes, L1 of 8.0mm and L2 of 12.2mm on the upper side, R1 of 5.2mm and R2 of 2.9mm on the lower](plans/four-hole-ocarina-G4-top-plate.svg)
 
 ## Every cut sheet
 
@@ -399,31 +430,31 @@ Each picture is a display rendering; click it for the cut file.
 
 **`box`** · finger-jointed on all twelve edges, cavity 60 × 18 × 93.6mm · 8 parts on 1 sheet
 
-[![box, sheet 1 of 1: the parts laid out for the laser, the window and holes in orange, outlines in black, the duct in blue](previews/box/four-hole-ocarina-G4-box-sheet1-cut-files.svg)](cut-files/box/four-hole-ocarina-G4-box-sheet1-cut-files.svg)
+[![box, sheet 1 of 1: the parts laid out for the laser, the window and holes in orange, outlines in black, the duct in red on the bird and magenta on the top](previews/box/four-hole-ocarina-G4-box-sheet1-cut-files.svg)](cut-files/box/four-hole-ocarina-G4-box-sheet1-cut-files.svg)
 
 **`stack`** · laminated stack, cavity 60 × 18 × 93.6mm · 10 parts on 1 sheet
 
-[![stack, sheet 1 of 1: the parts laid out for the laser, the window, holes and six cavity cut-outs in orange, outlines in black, the duct in blue](previews/stack/four-hole-ocarina-G4-stack-sheet1-cut-files.svg)](cut-files/stack/four-hole-ocarina-G4-stack-sheet1-cut-files.svg)
+[![stack, sheet 1 of 1: the parts laid out for the laser, the window, holes and six cavity cut-outs in orange, outlines in black, the duct in red on the bird and magenta on the top](previews/stack/four-hole-ocarina-G4-stack-sheet1-cut-files.svg)](cut-files/stack/four-hole-ocarina-G4-stack-sheet1-cut-files.svg)
 
 **`octagon`** · regular octagonal prism, finger-jointed on all 24 edges, cavity 269cm³ · 12 parts on 1 sheet
 
-[![octagon, sheet 1 of 1: two regular octagons with fingers on every edge, one with the beak, the window and four holes in orange; eight rectangular walls with fingers on all four edges, one plain along part of an edge where the beak goes; the bird with the duct in blue and the chin layer](previews/octagon/four-hole-ocarina-octagon-sheet1-cut-files.svg)](cut-files/octagon/four-hole-ocarina-octagon-sheet1-cut-files.svg)
+[![octagon, sheet 1 of 1: two regular octagons with fingers on every edge, one with the beak, the window and four holes in orange; eight rectangular walls with fingers on all four edges, one plain along part of an edge where the beak goes; the bird with its half of the duct in red, the other half in magenta on the beak and the chin layer](previews/octagon/four-hole-ocarina-octagon-sheet1-cut-files.svg)](cut-files/octagon/four-hole-ocarina-octagon-sheet1-cut-files.svg)
 
 **`cube`** · cube, finger-jointed on all 12 edges, cavity 288cm³ · 8 parts on 1 sheet
 
-[![cube, sheet 1 of 1: six squares with fingers on every edge, one with the beak, the window and four holes in orange, one plain along part of an edge where the beak goes; the bird with the duct in blue and the chin layer](previews/cube/four-hole-ocarina-cube-sheet1-cut-files.svg)](cut-files/cube/four-hole-ocarina-cube-sheet1-cut-files.svg)
+[![cube, sheet 1 of 1: six squares with fingers on every edge, one with the beak, the window and four holes in orange, one plain along part of an edge where the beak goes; the bird with its half of the duct in red, the other half in magenta on the beak and the chin layer](previews/cube/four-hole-ocarina-cube-sheet1-cut-files.svg)](cut-files/cube/four-hole-ocarina-cube-sheet1-cut-files.svg)
 
 **`square-antiprism`** · square antiprism, finger-jointed on all 16 edges, cavity 279cm³ · 12 parts on 1 sheet
 
-[![square-antiprism, sheet 1 of 1: two squares with fingers on every edge and their corners cut off, one with the beak, the window and four holes in orange; eight equilateral triangles with fingers on all three edges and their corners cut off, one with a long shallow notch where the beak passes over it; the bird with the duct in blue and the chin layer](previews/square-antiprism/four-hole-ocarina-square-antiprism-sheet1-cut-files.svg)](cut-files/square-antiprism/four-hole-ocarina-square-antiprism-sheet1-cut-files.svg)
+[![square-antiprism, sheet 1 of 1: two squares with fingers on every edge and their corners cut off, one with the beak, the window and four holes in orange; eight equilateral triangles with fingers on all three edges and their corners cut off, one with a long shallow notch where the beak passes over it; the bird with its half of the duct in red, the other half in magenta on the beak and the chin layer](previews/square-antiprism/four-hole-ocarina-square-antiprism-sheet1-cut-files.svg)](cut-files/square-antiprism/four-hole-ocarina-square-antiprism-sheet1-cut-files.svg)
 
 **`octahedron`** · regular octahedron, finger-jointed on all 12 edges, cavity 127cm³ · 10 parts on 1 sheet
 
-[![octahedron, sheet 1 of 1: a triangle with the beak and the window in orange; seven equilateral triangles with fingers on all three edges and their corners cut off, two of them with two finger holes each in orange and one with a long shallow notch where the beak passes over it; the bird with the duct in blue and the chin layer](previews/octahedron/four-hole-ocarina-octahedron-sheet1-cut-files.svg)](cut-files/octahedron/four-hole-ocarina-octahedron-sheet1-cut-files.svg)
+[![octahedron, sheet 1 of 1: a triangle with the beak and the window in orange; seven equilateral triangles with fingers on all three edges and their corners cut off, two of them with two finger holes each in orange and one with a long shallow notch where the beak passes over it; the bird with its half of the duct in red, the other half in magenta on the beak and the chin layer](previews/octahedron/four-hole-ocarina-octahedron-sheet1-cut-files.svg)](cut-files/octahedron/four-hole-ocarina-octahedron-sheet1-cut-files.svg)
 
 **`dodecahedron`** · regular dodecahedron, finger-jointed on all 30 edges, cavity 283cm³ · 14 parts on 1 sheet
 
-[![dodecahedron, sheet 1 of 1: a pentagon with the beak and the window in orange; eleven regular pentagons with fingers on all five edges, four of them with a finger hole in orange and one with a long shallow notch where the beak passes over it; the bird with the duct in blue and the chin layer](previews/dodecahedron/four-hole-ocarina-dodecahedron-sheet1-cut-files.svg)](cut-files/dodecahedron/four-hole-ocarina-dodecahedron-sheet1-cut-files.svg)
+[![dodecahedron, sheet 1 of 1: a pentagon with the beak and the window in orange; eleven regular pentagons with fingers on all five edges, four of them with a finger hole in orange and one with a long shallow notch where the beak passes over it; the bird with its half of the duct in red, the other half in magenta on the beak and the chin layer](previews/dodecahedron/four-hole-ocarina-dodecahedron-sheet1-cut-files.svg)](cut-files/dodecahedron/four-hole-ocarina-dodecahedron-sheet1-cut-files.svg)
 
 ## Files
 
