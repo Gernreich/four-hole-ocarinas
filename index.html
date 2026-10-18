@@ -102,14 +102,14 @@ pre,.tw{break-inside:avoid}h1{break-after:avoid}}
 <nav><b>Contents</b><a class="l1" href="#four-hole-ocarinas">Four-hole ocarinas</a><a class="l2" href="#the-builds">The builds</a><a class="l2" href="#turn-it-in-3d">Turn it in 3D</a><a class="l2" href="#fingering">Fingering</a><a class="l2" href="#what-the-model-says">What the model says</a><a class="l2" href="#before-you-cut">Before you cut</a><a class="l2" href="#tuning">Tuning</a><a class="l2" href="#regenerating-it">Regenerating it</a><a class="l2" href="#every-cut-sheet">Every cut sheet</a></nav>
 <main>
 <h1 id="four-hole-ocarinas">Four-hole ocarinas</h1>
-<p><strong><a href="https://github.com/Gernreich/box-ocarina">Read the README</a></strong></p>
+<p><strong><a href="https://github.com/Gernreich/four-hole-ocarinas">Read the README</a></strong></p>
 <p>A four-hole ocarina in G4, in 3mm plywood: a rectangular box with a beak to blow into, four finger holes in its top, and the English fingering, which gets a whole octave out of four holes. All closed it sounds G4; the fingerings below give the G major scale up to G5, and five more notes besides.</p>
 <p>Five more are solids, finger-jointed on every edge at whatever angle their faces meet: a regular octagonal prism, a cube, a square antiprism, a regular octahedron and a regular dodecahedron. They take the same window, holes and fingering, so every interval is the same; only their cavities differ, and with them the key.</p>
 <p>Output is millimetre-true — <code>1 user unit = 1mm</code> with a physical <code>width</code>/<code>height</code> — so it prints and cuts at real size.</p>
 <p><strong>No build has been cut or played yet.</strong> The cavity and the holes come from an acoustic model whose window term is not measured, and the first one cut will set it. <a href="#before-you-cut">Before you cut</a> says what that means for the first build.</p>
 <table>
 <tr>
-<td align="center"><a href="cut-files/box/box-ocarina-G4-box-sheet1-cut-files.svg"><img src="previews/box/box-ocarina-G4-box-sheet1-cut-files.svg" alt="One sheet of parts: a top plate with a short beak at one end, its tip rounded, a small rectangular window beside the beak and four round holes of four sizes, every edge notched for finger joints; a matching bottom plate without the beak; two side walls and two end walls with fingers on all four edges, one end wall plain along part of its top edge where the beak goes; and two small pieces for the mouthpiece, rounded at one end like the beak, one with a blue band across it for the duct" width="100%"></a></td>
+<td align="center"><a href="cut-files/box/four-hole-ocarina-G4-box-sheet1-cut-files.svg"><img src="previews/box/four-hole-ocarina-G4-box-sheet1-cut-files.svg" alt="One sheet of parts: a top plate with a short beak at one end, its tip rounded, a small rectangular window beside the beak and four round holes of four sizes, every edge notched for finger joints; a matching bottom plate without the beak; two side walls and two end walls with fingers on all four edges, one end wall plain along part of its top edge where the beak goes; and two small pieces for the mouthpiece, rounded at one end like the beak, one with a blue band across it for the duct" width="100%"></a></td>
 </tr>
 <tr>
 <td align="center"><sub>box · the whole ocarina on one 579 × 104mm sheet</sub></td>
@@ -118,7 +118,7 @@ pre,.tw{break-inside:avoid}h1{break-after:avoid}}
 
 <p>Built for <strong><a href="https://www.youtube.com/@LaserMadeMusic">LaserMadeMusic</a></strong>.</p>
 <p><strong><a href="https://gernreich.github.io/">The rest of the build files</a></strong> — every instrument, generator and tool, indexed.</p>
-<p><strong><a href="https://github.com/Gernreich/box-ocarina/archive/refs/heads/main.zip">Download everything as a ZIP</a></strong></p>
+<p><strong><a href="https://github.com/Gernreich/four-hole-ocarinas/archive/refs/heads/main.zip">Download everything as a ZIP</a></strong></p>
 <h2 id="the-builds">The builds</h2>
 <p>Seven builds in six sets. The first set is two ways to build the same G4 ocarina: its cavity, window and four holes are identical, and only the walls round the cavity differ. The other five sets are the solids, which play in whatever key their shape holds.</p>
 <div class="tw">
@@ -479,11 +479,11 @@ pre,.tw{break-inside:avoid}h1{break-after:avoid}}
 python3 ocarina_model.py --mouth=1.2           # with a different window correction
 python3 ocarina_model.py --heard=380           # the correction a cut ocarina implies
 python3 ocarina_model.py --search              # the fingering patterns, ranked
-python3 box_ocarina.py --no-write              # the generator&#39;s checks, writing nothing
-python3 box_ocarina.py --out=cut-files         # all seven builds
+python3 four_hole_ocarinas.py --no-write              # the generator&#39;s checks, writing nothing
+python3 four_hole_ocarinas.py --out=cut-files         # all seven builds
 python3 page_assets.py                         # viewer.js, turn.html and the two plans</code></pre>
 <p><code>ocarina_model.py</code> is the Helmholtz model above. For a fingering pattern it finds the four conductances by a pattern search that minimises the worst note's error in cents. <code>--search</code> asks which pattern, from 400 random starts: it found 53 that give eight different fingerings, and the one used here heads the list, at 12.3 cents and 11 finger moves up the scale.</p>
-<p><code>box_ocarina.py</code> builds all seven from what the model asks for and checks them before writing anything. For the box and the stack:</p>
+<p><code>four_hole_ocarinas.py</code> builds all seven from what the model asks for and checks them before writing anything. For the box and the stack:</p>
 <ul>
 <li>the model holds the scale within 12.5 cents</li>
 <li>the cavity is the volume the model asks for</li>
@@ -535,19 +535,19 @@ python3 page_assets.py                         # viewer.js, turn.html and the tw
 <h2 id="every-cut-sheet">Every cut sheet</h2>
 <p>Each picture is a display rendering; click it for the cut file.</p>
 <p><strong><code>box</code></strong> · finger-jointed on all twelve edges, cavity 60 × 18 × 93.6mm · 8 parts on 1 sheet</p>
-<p><a href="cut-files/box/box-ocarina-G4-box-sheet1-cut-files.svg"><img src="previews/box/box-ocarina-G4-box-sheet1-cut-files.svg" alt="box, sheet 1 of 1: the parts laid out for the laser, the window and holes in orange, outlines in black, the duct in blue" /></a></p>
+<p><a href="cut-files/box/four-hole-ocarina-G4-box-sheet1-cut-files.svg"><img src="previews/box/four-hole-ocarina-G4-box-sheet1-cut-files.svg" alt="box, sheet 1 of 1: the parts laid out for the laser, the window and holes in orange, outlines in black, the duct in blue" /></a></p>
 <p><strong><code>stack</code></strong> · laminated stack, cavity 60 × 18 × 93.6mm · 10 parts on 1 sheet</p>
-<p><a href="cut-files/stack/box-ocarina-G4-stack-sheet1-cut-files.svg"><img src="previews/stack/box-ocarina-G4-stack-sheet1-cut-files.svg" alt="stack, sheet 1 of 1: the parts laid out for the laser, the window, holes and six cavity cut-outs in orange, outlines in black, the duct in blue" /></a></p>
+<p><a href="cut-files/stack/four-hole-ocarina-G4-stack-sheet1-cut-files.svg"><img src="previews/stack/four-hole-ocarina-G4-stack-sheet1-cut-files.svg" alt="stack, sheet 1 of 1: the parts laid out for the laser, the window, holes and six cavity cut-outs in orange, outlines in black, the duct in blue" /></a></p>
 <p><strong><code>octagon</code></strong> · regular octagonal prism, finger-jointed on all 24 edges, cavity 269cm³ · 12 parts on 1 sheet</p>
-<p><a href="cut-files/octagon/box-ocarina-octagon-sheet1-cut-files.svg"><img src="previews/octagon/box-ocarina-octagon-sheet1-cut-files.svg" alt="octagon, sheet 1 of 1: two regular octagons with fingers on every edge, one with the beak, the window and four holes in orange; eight rectangular walls with fingers on all four edges, one plain along part of an edge where the beak goes; the bird with the duct in blue and the chin layer" /></a></p>
+<p><a href="cut-files/octagon/four-hole-ocarina-octagon-sheet1-cut-files.svg"><img src="previews/octagon/four-hole-ocarina-octagon-sheet1-cut-files.svg" alt="octagon, sheet 1 of 1: two regular octagons with fingers on every edge, one with the beak, the window and four holes in orange; eight rectangular walls with fingers on all four edges, one plain along part of an edge where the beak goes; the bird with the duct in blue and the chin layer" /></a></p>
 <p><strong><code>cube</code></strong> · cube, finger-jointed on all 12 edges, cavity 288cm³ · 8 parts on 1 sheet</p>
-<p><a href="cut-files/cube/box-ocarina-cube-sheet1-cut-files.svg"><img src="previews/cube/box-ocarina-cube-sheet1-cut-files.svg" alt="cube, sheet 1 of 1: six squares with fingers on every edge, one with the beak, the window and four holes in orange, one plain along part of an edge where the beak goes; the bird with the duct in blue and the chin layer" /></a></p>
+<p><a href="cut-files/cube/four-hole-ocarina-cube-sheet1-cut-files.svg"><img src="previews/cube/four-hole-ocarina-cube-sheet1-cut-files.svg" alt="cube, sheet 1 of 1: six squares with fingers on every edge, one with the beak, the window and four holes in orange, one plain along part of an edge where the beak goes; the bird with the duct in blue and the chin layer" /></a></p>
 <p><strong><code>square-antiprism</code></strong> · square antiprism, finger-jointed on all 16 edges, cavity 279cm³ · 12 parts on 1 sheet</p>
-<p><a href="cut-files/square-antiprism/box-ocarina-square-antiprism-sheet1-cut-files.svg"><img src="previews/square-antiprism/box-ocarina-square-antiprism-sheet1-cut-files.svg" alt="square-antiprism, sheet 1 of 1: two squares with fingers on every edge and their corners cut off, one with the beak, the window and four holes in orange; eight equilateral triangles with fingers on all three edges and their corners cut off, one with a long shallow notch where the beak passes over it; the bird with the duct in blue and the chin layer" /></a></p>
+<p><a href="cut-files/square-antiprism/four-hole-ocarina-square-antiprism-sheet1-cut-files.svg"><img src="previews/square-antiprism/four-hole-ocarina-square-antiprism-sheet1-cut-files.svg" alt="square-antiprism, sheet 1 of 1: two squares with fingers on every edge and their corners cut off, one with the beak, the window and four holes in orange; eight equilateral triangles with fingers on all three edges and their corners cut off, one with a long shallow notch where the beak passes over it; the bird with the duct in blue and the chin layer" /></a></p>
 <p><strong><code>octahedron</code></strong> · regular octahedron, finger-jointed on all 12 edges, cavity 127cm³ · 10 parts on 1 sheet</p>
-<p><a href="cut-files/octahedron/box-ocarina-octahedron-sheet1-cut-files.svg"><img src="previews/octahedron/box-ocarina-octahedron-sheet1-cut-files.svg" alt="octahedron, sheet 1 of 1: a triangle with the beak and the window in orange; seven equilateral triangles with fingers on all three edges and their corners cut off, two of them with two finger holes each in orange and one with a long shallow notch where the beak passes over it; the bird with the duct in blue and the chin layer" /></a></p>
+<p><a href="cut-files/octahedron/four-hole-ocarina-octahedron-sheet1-cut-files.svg"><img src="previews/octahedron/four-hole-ocarina-octahedron-sheet1-cut-files.svg" alt="octahedron, sheet 1 of 1: a triangle with the beak and the window in orange; seven equilateral triangles with fingers on all three edges and their corners cut off, two of them with two finger holes each in orange and one with a long shallow notch where the beak passes over it; the bird with the duct in blue and the chin layer" /></a></p>
 <p><strong><code>dodecahedron</code></strong> · regular dodecahedron, finger-jointed on all 30 edges, cavity 283cm³ · 14 parts on 1 sheet</p>
-<p><a href="cut-files/dodecahedron/box-ocarina-dodecahedron-sheet1-cut-files.svg"><img src="previews/dodecahedron/box-ocarina-dodecahedron-sheet1-cut-files.svg" alt="dodecahedron, sheet 1 of 1: a pentagon with the beak and the window in orange; eleven regular pentagons with fingers on all five edges, four of them with a finger hole in orange and one with a long shallow notch where the beak passes over it; the bird with the duct in blue and the chin layer" /></a></p>
+<p><a href="cut-files/dodecahedron/four-hole-ocarina-dodecahedron-sheet1-cut-files.svg"><img src="previews/dodecahedron/four-hole-ocarina-dodecahedron-sheet1-cut-files.svg" alt="dodecahedron, sheet 1 of 1: a pentagon with the beak and the window in orange; eleven regular pentagons with fingers on all five edges, four of them with a finger hole in orange and one with a long shallow notch where the beak passes over it; the bird with the duct in blue and the chin layer" /></a></p>
 </main>
 </div>
 <script>

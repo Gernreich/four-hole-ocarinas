@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Convex solids finger-jointed on every edge, at any angle the faces meet:
 the octagonal prism, the cube, the square antiprism, the octahedron and the
-dodecahedron that box_ocarina.py builds.
+dodecahedron that four_hole_ocarinas.py builds.
 
-The box in box_ocarina.py has right angles only, and its joint is drawn as
+The box in four_hole_ocarinas.py has right angles only, and its joint is drawn as
 cells and corner cubes. Here a solid is any convex polyhedron, given as its
 faces' planes, and every plate is that face's polygon, 3mm thick, inward
 from the outside surface.

@@ -26,7 +26,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-import box_ocarina as B                                        # noqa: E402
+import four_hole_ocarinas as B                                        # noqa: E402
 M = B.M
 # loaded by path: by name, `import page_assets` finds this file
 _spec = importlib.util.spec_from_file_location(
@@ -248,7 +248,7 @@ def artifact(out):
     print(f'  wrote {out}: {len(page) // 1024}KB')
 
 
-PLANS = ('box-ocarina-G4-top-plate.svg', 'box-ocarina-G4-fingering.svg')
+PLANS = ('four-hole-ocarina-G4-top-plate.svg', 'four-hole-ocarina-G4-fingering.svg')
 
 
 def main():

@@ -1,33 +1,33 @@
 # How every shipped SVG and page in this repository is drawn. Checked by
 # lasermade-tools/repro-svg.py; $OUT is where the file must be written.
 #
-# box_ocarina.py names its own sheets, so each command writes one build into
+# four_hole_ocarinas.py names its own sheets, so each command writes one build into
 # $OUT's directory with --flat and the tool compares the file it asked for. It
 # imports square_flute.py from the square-flute checkout beside this one, and
 # that imports ribbon_bore.py from swept-curve, so all three are expected side
 # by side.
 
 # --- the cut files ---
-cut-files/box/box-ocarina-G4-box-sheet1-cut-files.svg :: python3 box_ocarina.py --only=box --flat --out=$(dirname $OUT)
-cut-files/stack/box-ocarina-G4-stack-sheet1-cut-files.svg :: python3 box_ocarina.py --only=stack --flat --out=$(dirname $OUT)
-cut-files/octagon/box-ocarina-octagon-sheet1-cut-files.svg :: python3 box_ocarina.py --only=octagon --flat --out=$(dirname $OUT)
-cut-files/cube/box-ocarina-cube-sheet1-cut-files.svg :: python3 box_ocarina.py --only=cube --flat --out=$(dirname $OUT)
-cut-files/square-antiprism/box-ocarina-square-antiprism-sheet1-cut-files.svg :: python3 box_ocarina.py --only=square-antiprism --flat --out=$(dirname $OUT)
-cut-files/octahedron/box-ocarina-octahedron-sheet1-cut-files.svg :: python3 box_ocarina.py --only=octahedron --flat --out=$(dirname $OUT)
-cut-files/dodecahedron/box-ocarina-dodecahedron-sheet1-cut-files.svg :: python3 box_ocarina.py --only=dodecahedron --flat --out=$(dirname $OUT)
+cut-files/box/four-hole-ocarina-G4-box-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=box --flat --out=$(dirname $OUT)
+cut-files/stack/four-hole-ocarina-G4-stack-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=stack --flat --out=$(dirname $OUT)
+cut-files/octagon/four-hole-ocarina-octagon-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=octagon --flat --out=$(dirname $OUT)
+cut-files/cube/four-hole-ocarina-cube-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=cube --flat --out=$(dirname $OUT)
+cut-files/square-antiprism/four-hole-ocarina-square-antiprism-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=square-antiprism --flat --out=$(dirname $OUT)
+cut-files/octahedron/four-hole-ocarina-octahedron-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=octahedron --flat --out=$(dirname $OUT)
+cut-files/dodecahedron/four-hole-ocarina-dodecahedron-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=dodecahedron --flat --out=$(dirname $OUT)
 
 # --- the previews, from the cut files ---
-previews/box/box-ocarina-G4-box-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/box/box-ocarina-G4-box-sheet1-cut-files.svg $OUT
-previews/stack/box-ocarina-G4-stack-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/stack/box-ocarina-G4-stack-sheet1-cut-files.svg $OUT
-previews/octagon/box-ocarina-octagon-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/octagon/box-ocarina-octagon-sheet1-cut-files.svg $OUT
-previews/cube/box-ocarina-cube-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/cube/box-ocarina-cube-sheet1-cut-files.svg $OUT
-previews/square-antiprism/box-ocarina-square-antiprism-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/square-antiprism/box-ocarina-square-antiprism-sheet1-cut-files.svg $OUT
-previews/octahedron/box-ocarina-octahedron-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/octahedron/box-ocarina-octahedron-sheet1-cut-files.svg $OUT
-previews/dodecahedron/box-ocarina-dodecahedron-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/dodecahedron/box-ocarina-dodecahedron-sheet1-cut-files.svg $OUT
+previews/box/four-hole-ocarina-G4-box-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/box/four-hole-ocarina-G4-box-sheet1-cut-files.svg $OUT
+previews/stack/four-hole-ocarina-G4-stack-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/stack/four-hole-ocarina-G4-stack-sheet1-cut-files.svg $OUT
+previews/octagon/four-hole-ocarina-octagon-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/octagon/four-hole-ocarina-octagon-sheet1-cut-files.svg $OUT
+previews/cube/four-hole-ocarina-cube-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/cube/four-hole-ocarina-cube-sheet1-cut-files.svg $OUT
+previews/square-antiprism/four-hole-ocarina-square-antiprism-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/square-antiprism/four-hole-ocarina-square-antiprism-sheet1-cut-files.svg $OUT
+previews/octahedron/four-hole-ocarina-octahedron-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/octahedron/four-hole-ocarina-octahedron-sheet1-cut-files.svg $OUT
+previews/dodecahedron/four-hole-ocarina-dodecahedron-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/dodecahedron/four-hole-ocarina-dodecahedron-sheet1-cut-files.svg $OUT
 
 # --- the page ---
 viewer.js :: python3 page_assets.py --viewer-to=$OUT
 turn.html :: python3 page_assets.py --turn-to=$OUT
-plans/box-ocarina-G4-top-plate.svg :: python3 page_assets.py --plans-to=$(dirname $OUT)
-plans/box-ocarina-G4-fingering.svg :: python3 page_assets.py --plans-to=$(dirname $OUT)
+plans/four-hole-ocarina-G4-top-plate.svg :: python3 page_assets.py --plans-to=$(dirname $OUT)
+plans/four-hole-ocarina-G4-fingering.svg :: python3 page_assets.py --plans-to=$(dirname $OUT)
 index.html :: python3 ../lasermade-tools/md2html.py README.md $OUT

@@ -268,7 +268,7 @@ def main():
         m = mouth_for(heard, V)
         print(f'\nheard {heard:g}Hz with every hole closed: the window acts as if '
               f'--mouth={m:.3f}')
-        print(f'  python3 box_ocarina.py --mouth={m:.3f} --out=cut-files   # recut to that')
+        print(f'  python3 four_hole_ocarinas.py --mouth={m:.3f} --out=cut-files   # recut to that')
     return 0
 
 

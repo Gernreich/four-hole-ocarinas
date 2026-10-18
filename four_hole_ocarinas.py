@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Cut files for a four-hole ocarina in G4, English fingering, in 3mm ply.
 
-    python3 box_ocarina.py --no-write          # the checks, write nothing
-    python3 box_ocarina.py --out=DIR           # every build into DIR/<build>/
-    python3 box_ocarina.py --only=box --out=DIR
-    python3 box_ocarina.py --only=box --flat --out=DIR   # no subfolder
-    python3 box_ocarina.py --mouth=1.2 ...     # the window correction, as the model
+    python3 four_hole_ocarinas.py --no-write          # the checks, write nothing
+    python3 four_hole_ocarinas.py --out=DIR           # every build into DIR/<build>/
+    python3 four_hole_ocarinas.py --only=box --out=DIR
+    python3 four_hole_ocarinas.py --only=box --flat --out=DIR   # no subfolder
+    python3 four_hole_ocarinas.py --mouth=1.2 ...     # the window correction, as the model
 
 The acoustics are ocarina_model.py's: the cavity's volume and the four
 holes' sizes. This file only builds what that asks for. An ocarina's holes
@@ -926,7 +926,7 @@ def main():
                 os.makedirs(d, exist_ok=True)
                 for k, s in enumerate(sheets, 1):
                     what = ', '.join(sorted({p.name for p, _, _ in s['parts']}))
-                    f = os.path.join(d, f'box-ocarina-{name}-sheet{k}-cut-files.svg')
+                    f = os.path.join(d, f'four-hole-ocarina-{name}-sheet{k}-cut-files.svg')
                     open(f, 'w').write(svg_sheet(name, k, len(sheets), s, what))
                     print(f'  wrote {os.path.basename(f)}  {s["w"]:.0f} x {s["h"]:.0f}mm, '
                           f'{len(s["parts"])} parts')
@@ -945,7 +945,7 @@ def main():
             os.makedirs(d, exist_ok=True)
             for k, s in enumerate(sheets, 1):
                 what = ', '.join(sorted({p.name for p, _, _ in s['parts']}))
-                f = os.path.join(d, f'box-ocarina-G4-{name}-sheet{k}-cut-files.svg')
+                f = os.path.join(d, f'four-hole-ocarina-G4-{name}-sheet{k}-cut-files.svg')
                 open(f, 'w').write(svg_sheet(name, k, len(sheets), s, what))
                 print(f'  wrote {os.path.basename(f)}  {s["w"]:.0f} x {s["h"]:.0f}mm, '
                       f'{len(s["parts"])} parts')
