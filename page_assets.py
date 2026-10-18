@@ -265,8 +265,8 @@ def main():
                          '[--turn-to=FILE] | --artifact OUT.html')
     if tt or not a:
         page = SFP.TURN_PAGE.replace('<title>Square-bore flute in 3D</title>',
-                                     '<title>Box ocarina in 3D</title>')
-        assert 'Box ocarina' in page, 'the square flute\'s turn page changed'
+                                     '<title>Four-hole ocarinas in 3D</title>')
+        assert 'Four-hole ocarinas' in page, 'the square flute\'s turn page changed'
         open(tt[0] if tt else os.path.join(HERE, 'turn.html'), 'w').write(page)
     V, kw, ratios, diams = M.design()
     three, infos = {}, {}

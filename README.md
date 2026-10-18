@@ -1,4 +1,4 @@
-# Box ocarina
+# Four-hole ocarinas
 
 <!-- readme-only -->
 **[Read the writeup](https://gernreich.github.io/box-ocarina/)** ·
