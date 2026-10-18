@@ -342,7 +342,10 @@ that plays sharp cannot be closed up, so file in small steps.
 **File the splitting edge by hand.** The window's far edge, the one away from the
 beak, is where the air splits, and it needs a clean bevel of about 30° that a laser
 cannot cut. File it on the outside face, the face the bird sits on, while the top is
-still a flat plate on the bench.
+still a flat plate on the bench. **A blue line across the top marks where to file
+to**: 5.2mm past the window, where a 30° bevel through the 3mm plate meets the
+outside face. File from the window's edge back to the line, keeping the edge
+itself sharp at the inside face.
 
 **The duct is a fill engrave**, the window's 14mm width, about 1mm deep in one colour
 or 0.5mm in each of two (see the mouthpiece, under [The builds](#the-builds)). The depth
@@ -364,17 +367,17 @@ beak. Press-fit the rest, then seal every seam with shellac, inside where you ca
 everywhere: a Helmholtz resonator leaks its note out of any gap.
 
 Run the engraves first, then the cuts. **Red** and **magenta** engrave the duct,
-filled: red the bird's half, magenta the nest's, either or both. **Blue** engraves the
-corner numbers, as single lines. Then **orange** cuts the window and the holes, and
+filled: red the bird's half, magenta the nest's, either or both. **Blue** engraves
+single lines: the bevel guide on the top and the corner numbers on every other plate. Then **orange** cuts the window and the holes, and
 **black** frees the parts. Red and magenta are
 outside the house order, whose one engrave colour is blue: the two halves need a
 colour each so that either can be left off. The plates are drawn inside face up, so
 the numbers land on the inside, except the top, drawn outside face up for its half
-of the duct.
+of the duct and the bevel guide.
 
 ## Tuning
 
-1. File the splitting edge, then glue the bird on, its end flush with the window's
+1. File the splitting edge back to the blue line, then glue the bird on, its end flush with the window's
    near edge so the duct opens straight on to it, and the chin layer under the beak,
    its end against the body.
 2. Press the solid together by its corner numbers, every plate to the corners that
@@ -430,6 +433,8 @@ convex solid as its faces' planes and joints every edge at its own angle. It che
 - each hand's holes lie under that hand, worked out from the geometry
 - the duct runs from the beak's tip to the window, its two halves lined up in the
   bird and the top, and the top carries no numbers
+- the bevel guide sits where a 30° bevel meets the outside face, 5.2mm past the
+  window, over the cavity and clear of the holes
 - every edge is finger-jointed with as many 6mm cells as fit
 - along every joint, no point lies in two plates: from 1152 points on the cube
   to 2313 on the icosahedron, through each finger from the outside edge to the
@@ -458,7 +463,7 @@ in swept-curve, so it expects both repositories cloned beside this one.
 
 The cube's top plate, from outside and to scale, beak on the left:
 
-![The cube's top plate from outside, to scale, its edges cut into fingers: the beak on the left with the bird's footprint dashed over it and the duct in magenta, the rectangular window at the start of the cavity, whose walls are dotted beneath the plate, and the four round holes, L1 of 11.8mm and L2 of 11.3mm on the upper side, R1 of 7.0mm and R2 of 4.2mm on the lower](plans/four-hole-ocarina-top-plate.svg)
+![The cube's top plate from outside, to scale, its edges cut into fingers: the beak on the left with the bird's footprint dashed over it and the duct in magenta, the rectangular window at the start of the cavity with a short blue line across the plate just past it, where the bevel filed on its far edge should reach, whose walls are dotted beneath the plate, and the four round holes, L1 of 11.8mm and L2 of 11.3mm on the upper side, R1 of 7.0mm and R2 of 4.2mm on the lower](plans/four-hole-ocarina-top-plate.svg)
 
 ## Every cut sheet
 

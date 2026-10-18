@@ -89,6 +89,10 @@ BEAK, BEAK_W = 18.0, 24.0
 # and TIP_ROUND deep, on the top plate, the bird and the chin layer alike,
 # so the three plies round off as one (the author, 2026-10-17)
 TIP_ROUND, TIP_STEPS = 8.0, 32
+# the splitting edge's bevel, filed by hand on the top's outside face; a
+# blue line there marks where the bevel meets the face (the author,
+# 2026-10-18)
+BEVEL = 30.0
 # the hole rows, from the cavity's mouth-end wall, and the two hands'
 # columns, centre to centre: set to fit the 54mm inside of the G4 cube that
 # was a build for a day. The box's were 30, 52 and 36mm
@@ -326,7 +330,7 @@ def build_solid(kind, diams):
             o = rounded(o, 0.0)
         note = {'top': 'the window' + ('' if kind in FACE_HOLES else ' and the four holes')
                        + '; file the window\'s far edge to a 30 degree bevel on the '
-                       'outside face before the bird goes on'}.get(
+                       'outside face, back to the blue line, before the bird goes on'}.get(
                     f.name, 'fingers on every edge') + (', the corners nipped' if nip else '')
         p = Part(f.name if f.name != 'top' else 'top plate', next(num), o, note)
         p.m = P.matrix(fr)
@@ -338,6 +342,10 @@ def build_solid(kind, diams):
     # is up (-x), so right = forward x up = -y. On the sheet, drawn from
     # outside with v = -y, the right hand's holes are at v > 0
     tp.slot(T, -M.WINDOW_W / 2, T + M.WINDOW_L, M.WINDOW_W / 2)
+    # a BEVEL through the plate, sharp at the inside face, reaches the
+    # outside face T / tan BEVEL past the window's far edge: file to there
+    gx = T + M.WINDOW_L + T / math.tan(math.radians(BEVEL))
+    tp.strokes = [[(gx, -M.WINDOW_W / 2), (gx, M.WINDOW_W / 2)]]
     tp.note += ', the nest\'s half of the duct fill-engraved in its outside face'
     tp.fills.append(duct(T, 0.0))
     tp.ink = NEST_INK
@@ -626,6 +634,17 @@ def solid_checks(kind, parts, info, V0, kw, diams, worst):
          and not hasattr(tp, 'numbers'),
          'the duct runs from the beak\'s tip to the window, in the bird and the top alike',
          f'{T + BEAK:g}mm long, {M.WINDOW_W:g}mm wide')
+    (g0, g1), = tp.strokes
+    gx = g0[0]
+    near = min((math.hypot(max(abs(x - gx), 0), max(abs(y) - M.WINDOW_W / 2, 0)) - d / 2
+                for (i, (x, y)), d in zip(info['places'].values(), diams)
+                if i == info['ft']), default=math.inf)
+    note(abs(gx - T - M.WINDOW_L - T / math.tan(math.radians(BEVEL))) < 1e-9
+         and abs(g1[1] - g0[1] - M.WINDOW_W) < 1e-9 and near >= NUM_CLEAR
+         and in_poly_margin((gx, 0.0), M.WINDOW_W / 2, info['inner'][info['ft']]) >= 0,
+         'the bevel guide marks where a 30 degree bevel meets the outside',
+         f'{gx - T - M.WINDOW_L:.2f}mm past the window, {M.WINDOW_W:g}mm long, over the cavity'
+         + (f', {near:.1f}mm from the nearest hole' if near < math.inf else ''))
     es, cm = info['edges'], info['cellmap']
     kinds = {}
     for E in es:
@@ -768,10 +787,10 @@ def svg_sheet(name, k, n, s, what, key):
             f'The duct is a fill engrave in two inks, run either or both: red {BIRD_INK} '
             f'in the bird\'s underside, magenta {NEST_INK} in the top\'s outside face. One '
             f'alone about 1mm deep, both about 0.5mm each -- set the depth on scrap first. '
-            + (f'Blue {BLUE} engraves the corner numbers, as single lines: the plates '
-               f'lie inside face up, so they mark the inside, and the plates that meet '
-               f'at a corner carry its number; the top, outside face up, has none. '
-               if nums else '')
+            + f'Blue {BLUE} engraves single lines: on the top, which lies outside face up, '
+            f'a line across past the window where the {BEVEL:g} degree bevel filed on its '
+            f'far edge should reach; on every other plate, inside face up, the corner '
+            f'numbers, each carried by the plates that meet at that corner. '
             + f'Then the cuts: orange {ORANGE} cuts the window and the holes, '
             f'and black {BLACK} frees the parts.')
     g = lambda col, items: (

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="588.24mm" height="142.26mm" viewBox="0 0 588.24 142.26">
 <title>Four-hole ocarina in D4, hexagonal-prism, sheet 1 of 1</title>
-<desc>1 user unit = 1mm. Four-hole ocarina in D4, English fingering, hexagonal-prism, sheet 1 of 1: bird, bottom, chin layer, mouth wall, top plate, wall. 3mm ply, drawn for a 0.13mm kerf. The duct is a fill engrave in two inks, run either or both: red #ff0000 in the bird's underside, magenta #ff00ff in the top's outside face. One alone about 1mm deep, both about 0.5mm each -- set the depth on scrap first. Blue #0000ff engraves the corner numbers, as single lines: the plates lie inside face up, so they mark the inside, and the plates that meet at a corner carry its number; the top, outside face up, has none. Then the cuts: orange #ff8000 cuts the window and the holes, and black #000000 frees the parts.</desc>
+<desc>1 user unit = 1mm. Four-hole ocarina in D4, English fingering, hexagonal-prism, sheet 1 of 1: bird, bottom, chin layer, mouth wall, top plate, wall. 3mm ply, drawn for a 0.13mm kerf. The duct is a fill engrave in two inks, run either or both: red #ff0000 in the bird's underside, magenta #ff00ff in the top's outside face. One alone about 1mm deep, both about 0.5mm each -- set the depth on scrap first. Blue #0000ff engraves single lines: on the top, which lies outside face up, a line across past the window where the 30 degree bevel filed on its far edge should reach; on every other plate, inside face up, the corner numbers, each carried by the plates that meet at that corner. Then the cuts: orange #ff8000 cuts the window and the holes, and black #000000 frees the parts.</desc>
   <g fill="#ff0000" stroke="none">
     <path d="M 583.172,10.065 L 583.172,24.065 L 563.674,24.065 L 563.497,23.680 L 563.331,23.286 L 563.174,22.882 L 563.029,22.469 L 562.894,22.048 L 562.770,21.619 L 562.658,21.184 L 562.556,20.742 L 562.467,20.295 L 562.389,19.842 L 562.323,19.386 L 562.268,18.926 L 562.226,18.463 L 562.196,17.998 L 562.178,17.532 L 562.172,17.065 L 562.178,16.598 L 562.196,16.132 L 562.226,15.667 L 562.268,15.204 L 562.323,14.744 L 562.389,14.288 L 562.467,13.835 L 562.556,13.388 L 562.658,12.946 L 562.770,12.511 L 562.894,12.082 L 563.029,11.661 L 563.174,11.248 L 563.331,10.844 L 563.497,10.450 L 563.674,10.065 Z"/>
   </g>
@@ -9,6 +9,7 @@
     <path d="M 26.065,50.065 L 26.065,64.065 L 6.567,64.065 L 6.390,63.680 L 6.224,63.286 L 6.068,62.882 L 5.922,62.469 L 5.787,62.048 L 5.663,61.619 L 5.551,61.184 L 5.450,60.742 L 5.360,60.295 L 5.282,59.842 L 5.216,59.386 L 5.162,58.926 L 5.119,58.463 L 5.089,57.998 L 5.071,57.532 L 5.065,57.065 L 5.071,56.598 L 5.089,56.132 L 5.119,55.667 L 5.162,55.204 L 5.216,54.744 L 5.282,54.288 L 5.360,53.835 L 5.450,53.388 L 5.551,52.946 L 5.663,52.511 L 5.787,52.082 L 5.922,51.661 L 6.068,51.248 L 6.224,50.844 L 6.390,50.450 L 6.567,50.065 Z"/>
   </g>
   <g fill="none" stroke="#0000ff" stroke-width="0.2">
+    <path d="M 38.261,50.065 L 38.261,64.065"/>
     <path d="M 145.102,12.524 L 145.134,11.489 L 147.134,14.954"/>
     <path d="M 146.619,15.251 L 147.693,14.631"/>
     <path d="M 147.513,11.132 L 147.502,10.122 L 148.361,9.626 L 149.231,10.140 L 149.591,10.764 L 149.073,13.834 L 150.791,12.842"/>

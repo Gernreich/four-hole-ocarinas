@@ -100,6 +100,8 @@ def plan_svg(parts, info, diams, title):
          f'<path d="{d(tp.fills[0])}" fill="{B.NEST_INK}" fill-opacity=".55"/>']
     s += [f'<path d="{d(c[1])}" fill="#ffffff" stroke="#a85800" stroke-width=".6"/>'
           for c in tp.cuts if c[0] == 'rect']
+    s += [f'<path d="{d(st)[:-2]}" fill="none" stroke="{B.BLUE}" stroke-width=".5"/>'
+          for st in tp.strokes]
     t = f'{FONT} text-anchor="middle"'
     for (h, (i, (u, v))), dia in zip(info['places'].items(), diams):
         s.append(f'<circle cx="{u + x0:.2f}" cy="{v + y0:.2f}" r="{dia / 2:.2f}" fill="#ffffff" '
@@ -114,8 +116,9 @@ def plan_svg(parts, info, diams, title):
             f'scale, beak on the left, its edges cut into fingers: the bird\'s footprint '
             f'dashed, the duct under it in magenta, the nest\'s half engraved in this face and '
             f'the bird\'s matching it above, the window, the four finger holes named for '
-            f'their fingers with their diameters, and the cavity\'s walls dotted beneath. The '
-            f'right hand\'s holes are at the bottom of the drawing: the player sees the other '
+            f'their fingers with their diameters, the blue line past the window that marks '
+            f'where the splitting edge\'s bevel should reach, and the cavity\'s walls dotted '
+            f'beneath. The right hand\'s holes are at the bottom of the drawing: the player sees the other '
             f'face.</desc>\n' + '\n'.join(s) + '\n</svg>\n')
 
 
