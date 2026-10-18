@@ -420,11 +420,14 @@ def checks(kind, parts, info, V, diams, worst):
         out.append((ok, what, detail))
     PW, c0, Lc = info['PW'], info['c0'], info['Lc']
     yc = PW / 2
-    note(worst < 12.5, 'the model holds the scale',
+    note(worst < 20.0, 'the model holds the scale',
          f'worst {worst:.1f} cents of eight notes')
     built = W_IN * D_IN * Lc
     note(abs(built / V - 1) < 1e-6, 'the cavity is the volume the model asks for',
          f'{W_IN:g} x {D_IN:g} x {Lc:.2f}mm = {built / 1000:.2f}cm^3')
+    span, lam = math.sqrt(Lc ** 2 + W_IN ** 2 + D_IN ** 2), M.C / M.F0
+    note(span < lam / 4, 'the cavity is small against the wavelength',
+         f'{span:.0f}mm corner to corner, a quarter wave {lam / 4:.0f}mm')
     note(min(diams) >= D_MIN and max(diams) <= D_MAX,
          'every hole speaks and a finger covers it',
          f'ø{min(diams):.2f} to ø{max(diams):.2f}mm, against {D_MIN:g} and {D_MAX:g}')
@@ -861,7 +864,7 @@ def solid_checks(kind, parts, info, V0, kw, diams, worst):
 
     def note(ok, what, detail):
         out.append((ok, what, detail))
-    note(worst < 12.5, 'the model holds the scale', f'worst {worst:.1f} cents of eight notes')
+    note(worst < 20.0, 'the model holds the scale', f'worst {worst:.1f} cents of eight notes')
     V = info['V']
     f0 = M.freq(0, kw, V)
     span = max(P.dist(a, b) for a in info['inner_pts'] for b in info['inner_pts'])

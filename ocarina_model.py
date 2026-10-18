@@ -9,7 +9,7 @@ from G4 to G5.
     python3 ocarina_model.py --search        # the fingering patterns, ranked
 
 AN OCARINA IS A VESSEL, NOT A TUBE. Its cavity is small against the
-wavelength -- about 100mm across at G4, whose wavelength is 880mm -- so the
+wavelength -- about 140mm across at G4, whose wavelength is 880mm -- so the
 air inside is a spring and the air in each opening is a mass on it. Every
 opening is a neck of conductance
 
@@ -33,12 +33,23 @@ THE FINGERING. Four holes give sixteen fingerings, and eight of them have to
 be a scale. John Taylor's English system (1964) does it; no published source
 gives its hole sizes, so the eight here are found by search: the pattern
 below, with the four conductances the minimax that pattern allows;
---search reruns the search. The tightest pattern found gets every note within 12.3 cents of equal
-temperament, and no pattern the search found does better. What binds is
-the bottom of the scale: C5 opens the A4 hole and the B4 hole together, and
-the two add up to more conductance than C5 wants, so A4 and B4 sit 12.3
-cents flat and C5 12.3 sharp. Breath bends an ocarina by
-more than that.
+--search reruns the search and lists 53. The pattern is not the tightest.
+That one, every note within 12.3 cents, needs one hole far bigger than the
+others, 1.72 K_w, and so caps the window: at a window big enough to suit
+the larger solids its biggest hole would be 17mm, past a fingertip. The
+pattern here opens all four holes at the top, which shares the conductance
+out, so its biggest hole is 1.07 K_w. It gives the window room, starts the
+scale as the tightest one does, ends with every hole open, and takes ten
+finger moves up the scale. It costs tuning: every note is within 19.2 cents
+of equal temperament, B4, C5, F#5 and G5 the furthest. Breath bends an
+ocarina by that much (the author chose it, 2026-10-18).
+
+THE WINDOW is as big as the holes allow: WINDOW_W x WINDOW_L, kept at
+the 2:1 of the first design, makes the biggest hole 11.8mm, a millimetre
+under the 12mm that leaves filing room below the 13mm a finger covers.
+Every build shares it. Big ocarinas are given big windows, since a low note
+through a small window asks for a slow, weak jet; the window was 10 x 5mm
+until 2026-10-18.
 
 THE WINDOW IS THE UNCALIBRATED PART, as in the square flute. Its end
 correction is Rayleigh's, but the jet across it lengthens it, by an amount
@@ -63,20 +74,22 @@ CHROMATIC = ['G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#']
 
 # --- the openings (mm) -------------------------------------------------------
 WALL = 3.0                         # every opening is in the 3mm top plate
-WINDOW_W, WINDOW_L = 10.0, 5.0     # across x along the jet; the duct's width
+WINDOW_W, WINDOW_L = 14.0, 7.0     # across x along the jet; the duct's width
 MOUTH = 1.0                        # scales the window's end correction
 RAYLEIGH = 8 / (3 * math.pi)       # 0.849 r, a flanged end
 
-# THE HOLES, smallest first, each named for the finger that covers it. The
-# right hand takes the two small holes and plays the bottom of the scale; the
-# left the two big ones and the top. Index fingers on the row nearer the
+# THE HOLES, each named for the finger that covers it. The right hand takes
+# the two small holes and plays the bottom of the scale; the left the two big
+# ones and the top. Index fingers on the row nearer the
 # mouthpiece, middle fingers on the row past it.
 HOLES = ['R2', 'R1', 'L1', 'L2']
 FINGER = {'R2': 'right middle', 'R1': 'right index',
           'L1': 'left index', 'L2': 'left middle'}
-# 1 = open, in the order of HOLES. The tightest of the patterns the search
-# found, and of those, the one with fewest finger changes up the scale: 11.
-PATTERN = ['0000', '1000', '0100', '1100', '1010', '1110', '1101', '1011']
+# 1 = open, in the order of HOLES. Not the tightest the search finds (that is
+# 0000 1000 0100 1100 1010 1110 1101 1011, 12.3 cents, the pattern until
+# 2026-10-18) but the one whose biggest hole lets the window grow most: see
+# THE FINGERING above.
+PATTERN = ['0000', '1000', '0100', '1100', '1001', '1101', '0111', '1111']
 
 
 def conductance(area, t, ec=1.0):
@@ -248,7 +261,7 @@ def main():
     print(f'G4 = {F0:.2f}Hz, air at {T_C:g}C ({C / 1000:.1f} m/s), '
           f'window {WINDOW_W:g} x {WINDOW_L:g}mm in {WALL:g}mm, mouth x{MOUTH:g}')
     print(f'window conductance {kw:.3f}mm, cavity {V / 1000:.2f}cm^3')
-    print('\nholes, smallest first:')
+    print('\nholes:')
     for h, r, d in zip(HOLES, ratios, diams):
         print(f'  {h}  {FINGER[h]:13} {r:6.4f} K_w   ø{d:5.2f}mm')
     print('\nthe scale:')
