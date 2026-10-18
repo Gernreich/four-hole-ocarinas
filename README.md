@@ -51,10 +51,10 @@ their shape holds.
 | `box` | finger-jointed on all twelve edges | 60 × 18 × 93.6mm, 101cm³ | G4, 392.0Hz | 99.6 × 66.0 × 24mm | 8 | 1 |
 | `stack` | laminated stack | 60 × 18 × 93.6mm, 101cm³ | G4, 392.0Hz | 105.6 × 72.0 × 24mm | 10 | 1 |
 | `octagon` | regular octagonal prism, finger-jointed on all 24 edges | 269cm³ | B3 −47 cents, 240.3Hz | 110 × 110 × 36mm | 12 | 1 |
-| `cube` | cube, finger-jointed on all 12 edges | 288cm³ | A#3 −5 cents, 232.4Hz | 72 × 72 × 72mm | 8 | 1 |
-| `square-antiprism` | square antiprism, finger-jointed on all 16 edges | 279cm³ | A#3 +22 cents, 236.0Hz | 101.8 × 101.8 × 60.5mm | 12 | 1 |
+| `cube` | cube, finger-jointed on all 12 edges | 288cm³ | A♯3 −5 cents, 232.4Hz | 72 × 72 × 72mm | 8 | 1 |
+| `square-antiprism` | square antiprism, finger-jointed on all 16 edges | 279cm³ | A♯3 +22 cents, 236.0Hz | 101.8 × 101.8 × 60.5mm | 12 | 1 |
 | `octahedron` | regular octahedron, finger-jointed on all 12 edges | 127cm³ | F4 −1 cent, 349.1Hz | 83.1 × 72.0 × 58.8mm | 10 | 1 |
-| `dodecahedron` | regular dodecahedron, finger-jointed on all 30 edges | 283cm³ | A#3 +8 cents, 234.2Hz | 99.1 × 94.2 × 80.2mm | 14 | 1 |
+| `dodecahedron` | regular dodecahedron, finger-jointed on all 30 edges | 283cm³ | A♯3 +8 cents, 234.2Hz | 99.1 × 94.2 × 80.2mm | 14 | 1 |
 
 In the box and the solids the bird and the chin layer are glued and the rest is
 press-fit; the stack is glued throughout.
@@ -256,8 +256,9 @@ blow the cut ocarina and read its pitch. Then
 python3 ocarina_model.py --heard=380   # the pitch you heard, in Hz
 ```
 
-prints the `--mouth` that explains it, and the command to redraw both builds with
-it. A first build that sounds 50 cents flat is not a failure; it is the measurement.
+prints the `--mouth` that explains it, and the command to redraw every build with
+it. It reads the pitch as the box's or the stack's, whose cavity the model was sized
+for: a solid's closed note says how it speaks, not what the window's correction is. A first build that sounds 50 cents flat is not a failure; it is the measurement.
 
 **The solids are a step further from anything measured.** Their window is the G4
 alto's, 10 × 5mm, on cavities 1.3 to 2.8 times as big. Big ocarinas are usually
@@ -282,8 +283,12 @@ held in the fingers.
 
 **Cut it in 3mm Baltic birch plywood**, at a 0.13mm kerf. The fingers are the square
 flute's size or a little over: each edge is split into equal cells, 6.24mm along the
-box, 6.67mm across it and 6.00mm up the corners, with no play, so the fit comes from
-the kerf compensation alone. Glue the bird on the top, the chin layer under the
+box, 6.67mm across it and 6.00mm up the corners, and 6.00 to 7.20mm on the solids,
+with no play, so the fit comes from the kerf compensation alone. **If your laser's
+kerf is not 0.13mm, redraw the sheets for its own** with `--kerf=`: a press-fit that
+comes out loose wants a wider kerf, one too tight to close a narrower one. Each
+0.05mm more makes every finger 0.05mm tighter against each side of its slot: the
+finger is drawn 0.05mm wider and the slot 0.05mm narrower. Glue the bird on the top, the chin layer under the
 beak, and every layer of the stack. Press-fit
 the box, then seal every seam with shellac, inside where you can reach and outside
 everywhere: a Helmholtz resonator leaks its note out of any gap.
@@ -299,9 +304,12 @@ not numbered, and the 3D view shows where each of their parts goes.
 1. File the splitting edge, then glue the bird on, its end flush with the window's
    near edge so the duct opens straight on to it, and the chin layer under the beak,
    its end against the body.
-2. Press the box together, or glue up the stack.
-3. With every hole closed, play G4. If it is out by more than breath will bend, run
-   `--heard` and note the `--mouth` for the next cut.
+2. Press the box together, or glue up the stack. A solid goes together by its corner
+   numbers, every plate to the corners that carry its numbers; fill the square
+   antiprism's and the octahedron's open corners with glue or wood filler.
+3. With every hole closed, play the closed note: G4 on the box and the stack, and on
+   a solid the note in the table of builds. If the box or the stack is out by more
+   than breath will bend, run `--heard` and note the `--mouth` for the next cut.
 4. Open each hole alone, smallest first, and file it up to the model's pitch for
    it: `R2` alone 436.9Hz, `R1` 490.4Hz, `L1` 555.8Hz and `L2` 646.1Hz. The
    scale's other notes are sums of these four and follow from them. The solids
@@ -322,6 +330,7 @@ python3 ocarina_model.py --heard=380           # the correction a cut ocarina im
 python3 ocarina_model.py --search              # the fingering patterns, ranked
 python3 four_hole_ocarinas.py --no-write              # the generator's checks, writing nothing
 python3 four_hole_ocarinas.py --out=cut-files         # all seven builds
+python3 four_hole_ocarinas.py --kerf=0.18 --out=mine   # for a laser with a 0.18mm kerf
 python3 page_assets.py                         # viewer.js, turn.html and the two plans
 ```
 
@@ -415,3 +424,27 @@ Each picture is a display rendering; click it for the cut file.
 **`dodecahedron`** · regular dodecahedron, finger-jointed on all 30 edges, cavity 283cm³ · 14 parts on 1 sheet
 
 [![dodecahedron, sheet 1 of 1: a pentagon with the beak and the window in orange; eleven regular pentagons with fingers on all five edges, four of them with a finger hole in orange and one with a long shallow notch where the beak passes over it; the bird with the duct in blue and the chin layer](previews/dodecahedron/four-hole-ocarina-dodecahedron-sheet1-cut-files.svg)](cut-files/dodecahedron/four-hole-ocarina-dodecahedron-sheet1-cut-files.svg)
+
+## Files
+
+| | |
+|---|---|
+| `cut-files/box/four-hole-ocarina-G4-box-sheet1-cut-files.svg` | the box, finger-jointed |
+| `cut-files/stack/four-hole-ocarina-G4-stack-sheet1-cut-files.svg` | the laminated stack |
+| `cut-files/octagon/four-hole-ocarina-octagon-sheet1-cut-files.svg` | the octagonal prism |
+| `cut-files/cube/four-hole-ocarina-cube-sheet1-cut-files.svg` | the cube |
+| `cut-files/square-antiprism/four-hole-ocarina-square-antiprism-sheet1-cut-files.svg` | the square antiprism |
+| `cut-files/octahedron/four-hole-ocarina-octahedron-sheet1-cut-files.svg` | the octahedron |
+| `cut-files/dodecahedron/four-hole-ocarina-dodecahedron-sheet1-cut-files.svg` | the dodecahedron |
+| `previews/` | display renderings of every sheet — **not** cut files |
+| `plans/four-hole-ocarina-G4-top-plate.svg` · `plans/four-hole-ocarina-G4-fingering.svg` | the box's top plate to scale, and the fingering chart — display drawings, **not** cut files |
+| `viewer.js` | the 3D view of every build, loaded by the published page |
+| `turn.html` | the same 3D view on a page of its own, for framing elsewhere |
+| `ocarina_model.py` | the acoustic model |
+| `four_hole_ocarinas.py` | the generator, its checks and every cut file |
+| `polyhedron.py` | the solids, and their joints at any angle |
+| `page_assets.py` | builds `viewer.js`, `turn.html` and the plans |
+| `README.md` · `index.html` | this writeup and its published page; the markdown is the source |
+| `.repro` | the command that draws each generated file |
+
+Released under [CC0 1.0](LICENSE).

@@ -99,7 +99,7 @@ pre,.tw{break-inside:avoid}h1{break-after:avoid}}
 <body>
 <button class="tog" type="button">theme</button>
 <div class="wrap">
-<nav><b>Contents</b><a class="l1" href="#four-hole-ocarinas">Four-hole ocarinas</a><a class="l2" href="#the-builds">The builds</a><a class="l2" href="#turn-it-in-3d">Turn it in 3D</a><a class="l2" href="#fingering">Fingering</a><a class="l2" href="#what-the-model-says">What the model says</a><a class="l2" href="#before-you-cut">Before you cut</a><a class="l2" href="#tuning">Tuning</a><a class="l2" href="#regenerating-it">Regenerating it</a><a class="l2" href="#every-cut-sheet">Every cut sheet</a></nav>
+<nav><b>Contents</b><a class="l1" href="#four-hole-ocarinas">Four-hole ocarinas</a><a class="l2" href="#the-builds">The builds</a><a class="l2" href="#turn-it-in-3d">Turn it in 3D</a><a class="l2" href="#fingering">Fingering</a><a class="l2" href="#what-the-model-says">What the model says</a><a class="l2" href="#before-you-cut">Before you cut</a><a class="l2" href="#tuning">Tuning</a><a class="l2" href="#regenerating-it">Regenerating it</a><a class="l2" href="#every-cut-sheet">Every cut sheet</a><a class="l2" href="#files">Files</a></nav>
 <main>
 <h1 id="four-hole-ocarinas">Four-hole ocarinas</h1>
 <p><strong><a href="https://github.com/Gernreich/four-hole-ocarinas">Read the README</a></strong></p>
@@ -166,7 +166,7 @@ pre,.tw{break-inside:avoid}h1{break-after:avoid}}
 <td><code>cube</code></td>
 <td>cube, finger-jointed on all 12 edges</td>
 <td>288cm³</td>
-<td>A#3 −5 cents, 232.4Hz</td>
+<td>A♯3 −5 cents, 232.4Hz</td>
 <td>72 × 72 × 72mm</td>
 <td>8</td>
 <td>1</td>
@@ -175,7 +175,7 @@ pre,.tw{break-inside:avoid}h1{break-after:avoid}}
 <td><code>square-antiprism</code></td>
 <td>square antiprism, finger-jointed on all 16 edges</td>
 <td>279cm³</td>
-<td>A#3 +22 cents, 236.0Hz</td>
+<td>A♯3 +22 cents, 236.0Hz</td>
 <td>101.8 × 101.8 × 60.5mm</td>
 <td>12</td>
 <td>1</td>
@@ -193,7 +193,7 @@ pre,.tw{break-inside:avoid}h1{break-after:avoid}}
 <td><code>dodecahedron</code></td>
 <td>regular dodecahedron, finger-jointed on all 30 edges</td>
 <td>283cm³</td>
-<td>A#3 +8 cents, 234.2Hz</td>
+<td>A♯3 +8 cents, 234.2Hz</td>
 <td>99.1 × 94.2 × 80.2mm</td>
 <td>14</td>
 <td>1</td>
@@ -458,19 +458,19 @@ pre,.tw{break-inside:avoid}h1{break-after:avoid}}
 <h2 id="before-you-cut">Before you cut</h2>
 <p><strong>The window's end correction is not measured.</strong> The jet blowing across the window lengthens it, by an amount found only in simulation so far: a 2009 simulation of an ocarina (<a href="https://arxiv.org/abs/0911.3567">Kobayashi and others</a>) put it well above the textbook figure. It is the one term every other number rests on: the cavity is sized to the window, and every hole is sized against it. With every hole closed, blow the cut ocarina and read its pitch. Then</p>
 <pre class="sh"><code>python3 ocarina_model.py --heard=380   # the pitch you heard, in Hz</code></pre>
-<p>prints the <code>--mouth</code> that explains it, and the command to redraw both builds with it. A first build that sounds 50 cents flat is not a failure; it is the measurement.</p>
+<p>prints the <code>--mouth</code> that explains it, and the command to redraw every build with it. It reads the pitch as the box's or the stack's, whose cavity the model was sized for: a solid's closed note says how it speaks, not what the window's correction is. A first build that sounds 50 cents flat is not a failure; it is the measurement.</p>
 <p><strong>The solids are a step further from anything measured.</strong> Their window is the G4 alto's, 10 × 5mm, on cavities 1.3 to 2.8 times as big. Big ocarinas are usually given bigger windows, and a small one on a big cavity may speak weakly or breathily. Their pitch does not matter here, but whether they sound does: cut the octahedron, the nearest to the box, before the others.</p>
 <p><strong>The holes can only go up.</strong> A hole that plays flat can be opened with a file. A hole that plays sharp cannot be closed up, so file in small steps.</p>
 <p><strong>File the splitting edge by hand.</strong> The window's far edge, the one away from the beak, is where the air splits, and it needs a clean bevel of about 30° that a laser cannot cut. File it on the outside face, the face the bird sits on, while the top is still a flat plate on the bench.</p>
 <p><strong>The duct is a fill engrave</strong>, about 1mm deep and the window's 10mm width. The depth is a power setting, so find it on scrap first.</p>
 <p><strong>The smallest hole is 2.95mm.</strong> It is right for the note, but at the kerf it is the one most likely to come out ragged or choked with char. Clear it with a 3mm drill held in the fingers.</p>
-<p><strong>Cut it in 3mm Baltic birch plywood</strong>, at a 0.13mm kerf. The fingers are the square flute's size or a little over: each edge is split into equal cells, 6.24mm along the box, 6.67mm across it and 6.00mm up the corners, with no play, so the fit comes from the kerf compensation alone. Glue the bird on the top, the chin layer under the beak, and every layer of the stack. Press-fit the box, then seal every seam with shellac, inside where you can reach and outside everywhere: a Helmholtz resonator leaks its note out of any gap.</p>
+<p><strong>Cut it in 3mm Baltic birch plywood</strong>, at a 0.13mm kerf. The fingers are the square flute's size or a little over: each edge is split into equal cells, 6.24mm along the box, 6.67mm across it and 6.00mm up the corners, and 6.00 to 7.20mm on the solids, with no play, so the fit comes from the kerf compensation alone. <strong>If your laser's kerf is not 0.13mm, redraw the sheets for its own</strong> with <code>--kerf=</code>: a press-fit that comes out loose wants a wider kerf, one too tight to close a narrower one. Each 0.05mm more makes every finger 0.05mm tighter against each side of its slot: the finger is drawn 0.05mm wider and the slot 0.05mm narrower. Glue the bird on the top, the chin layer under the beak, and every layer of the stack. Press-fit the box, then seal every seam with shellac, inside where you can reach and outside everywhere: a Helmholtz resonator leaks its note out of any gap.</p>
 <p>Run the colours <strong>blue, orange, black</strong>: blue engraves the duct, filled, and the solids' corner numbers, as single lines, orange cuts the window and the holes (and the stack's cavity), and black frees the parts. The solids' plates are drawn inside face up, so the numbers land on the inside; the box and the stack are not numbered, and the 3D view shows where each of their parts goes.</p>
 <h2 id="tuning">Tuning</h2>
 <ol type="1">
 <li>File the splitting edge, then glue the bird on, its end flush with the window's near edge so the duct opens straight on to it, and the chin layer under the beak, its end against the body.</li>
-<li>Press the box together, or glue up the stack.</li>
-<li>With every hole closed, play G4. If it is out by more than breath will bend, run <code>--heard</code> and note the <code>--mouth</code> for the next cut.</li>
+<li>Press the box together, or glue up the stack. A solid goes together by its corner numbers, every plate to the corners that carry its numbers; fill the square antiprism's and the octahedron's open corners with glue or wood filler.</li>
+<li>With every hole closed, play the closed note: G4 on the box and the stack, and on a solid the note in the table of builds. If the box or the stack is out by more than breath will bend, run <code>--heard</code> and note the <code>--mouth</code> for the next cut.</li>
 <li>Open each hole alone, smallest first, and file it up to the model's pitch for it: <code>R2</code> alone 436.9Hz, <code>R1</code> 490.4Hz, <code>L1</code> 555.8Hz and <code>L2</code> 646.1Hz. The scale's other notes are sums of these four and follow from them. The solids play lower but by the same steps: on the octagon <code>R2</code> alone is 267.9Hz, <code>R1</code> 300.7Hz, <code>L1</code> 340.7Hz and <code>L2</code> 396.1Hz; on the cube 259.0, 290.7, 329.5 and 383.0Hz; on the square antiprism 263.0, 295.2, 334.6 and 389.0Hz; on the octahedron 389.1, 436.7, 495.0 and 575.4Hz; on the dodecahedron 261.0, 293.0, 332.1 and 386.0Hz. Tune the solids from whatever the closed note turns out to be: each hole alone sounds 1.115, 1.251, 1.418 and 1.648 times it.</li>
 <li>Seal with shellac once it plays in tune.</li>
 </ol>
@@ -481,6 +481,7 @@ python3 ocarina_model.py --heard=380           # the correction a cut ocarina im
 python3 ocarina_model.py --search              # the fingering patterns, ranked
 python3 four_hole_ocarinas.py --no-write              # the generator&#39;s checks, writing nothing
 python3 four_hole_ocarinas.py --out=cut-files         # all seven builds
+python3 four_hole_ocarinas.py --kerf=0.18 --out=mine   # for a laser with a 0.18mm kerf
 python3 page_assets.py                         # viewer.js, turn.html and the two plans</code></pre>
 <p><code>ocarina_model.py</code> is the Helmholtz model above. For a fingering pattern it finds the four conductances by a pattern search that minimises the worst note's error in cents. <code>--search</code> asks which pattern, from 400 random starts: it found 53 that give eight different fingerings, and the one used here heads the list, at 12.3 cents and 11 finger moves up the scale.</p>
 <p><code>four_hole_ocarinas.py</code> builds all seven from what the model asks for and checks them before writing anything. For the box and the stack:</p>
@@ -549,6 +550,82 @@ python3 page_assets.py                         # viewer.js, turn.html and the tw
 <p><a href="cut-files/octahedron/four-hole-ocarina-octahedron-sheet1-cut-files.svg"><img src="previews/octahedron/four-hole-ocarina-octahedron-sheet1-cut-files.svg" alt="octahedron, sheet 1 of 1: a triangle with the beak and the window in orange; seven equilateral triangles with fingers on all three edges and their corners cut off, two of them with two finger holes each in orange and one with a long shallow notch where the beak passes over it; the bird with the duct in blue and the chin layer" /></a></p>
 <p><strong><code>dodecahedron</code></strong> · regular dodecahedron, finger-jointed on all 30 edges, cavity 283cm³ · 14 parts on 1 sheet</p>
 <p><a href="cut-files/dodecahedron/four-hole-ocarina-dodecahedron-sheet1-cut-files.svg"><img src="previews/dodecahedron/four-hole-ocarina-dodecahedron-sheet1-cut-files.svg" alt="dodecahedron, sheet 1 of 1: a pentagon with the beak and the window in orange; eleven regular pentagons with fingers on all five edges, four of them with a finger hole in orange and one with a long shallow notch where the beak passes over it; the bird with the duct in blue and the chin layer" /></a></p>
+<h2 id="files">Files</h2>
+<div class="tw">
+<table>
+<tbody>
+<tr>
+<td><code>cut-files/box/four-hole-ocarina-G4-box-sheet1-cut-files.svg</code></td>
+<td>the box, finger-jointed</td>
+</tr>
+<tr>
+<td><code>cut-files/stack/four-hole-ocarina-G4-stack-sheet1-cut-files.svg</code></td>
+<td>the laminated stack</td>
+</tr>
+<tr>
+<td><code>cut-files/octagon/four-hole-ocarina-octagon-sheet1-cut-files.svg</code></td>
+<td>the octagonal prism</td>
+</tr>
+<tr>
+<td><code>cut-files/cube/four-hole-ocarina-cube-sheet1-cut-files.svg</code></td>
+<td>the cube</td>
+</tr>
+<tr>
+<td><code>cut-files/square-antiprism/four-hole-ocarina-square-antiprism-sheet1-cut-files.svg</code></td>
+<td>the square antiprism</td>
+</tr>
+<tr>
+<td><code>cut-files/octahedron/four-hole-ocarina-octahedron-sheet1-cut-files.svg</code></td>
+<td>the octahedron</td>
+</tr>
+<tr>
+<td><code>cut-files/dodecahedron/four-hole-ocarina-dodecahedron-sheet1-cut-files.svg</code></td>
+<td>the dodecahedron</td>
+</tr>
+<tr>
+<td><code>previews/</code></td>
+<td>display renderings of every sheet — <strong>not</strong> cut files</td>
+</tr>
+<tr>
+<td><code>plans/four-hole-ocarina-G4-top-plate.svg</code> · <code>plans/four-hole-ocarina-G4-fingering.svg</code></td>
+<td>the box's top plate to scale, and the fingering chart — display drawings, <strong>not</strong> cut files</td>
+</tr>
+<tr>
+<td><code>viewer.js</code></td>
+<td>the 3D view of every build, loaded by the published page</td>
+</tr>
+<tr>
+<td><code>turn.html</code></td>
+<td>the same 3D view on a page of its own, for framing elsewhere</td>
+</tr>
+<tr>
+<td><code>ocarina_model.py</code></td>
+<td>the acoustic model</td>
+</tr>
+<tr>
+<td><code>four_hole_ocarinas.py</code></td>
+<td>the generator, its checks and every cut file</td>
+</tr>
+<tr>
+<td><code>polyhedron.py</code></td>
+<td>the solids, and their joints at any angle</td>
+</tr>
+<tr>
+<td><code>page_assets.py</code></td>
+<td>builds <code>viewer.js</code>, <code>turn.html</code> and the plans</td>
+</tr>
+<tr>
+<td><code>README.md</code> · <code>index.html</code></td>
+<td>this writeup and its published page; the markdown is the source</td>
+</tr>
+<tr>
+<td><code>.repro</code></td>
+<td>the command that draws each generated file</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Released under <a href="LICENSE">CC0 1.0</a>.</p>
 </main>
 </div>
 <script>

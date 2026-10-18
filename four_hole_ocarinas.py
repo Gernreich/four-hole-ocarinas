@@ -1013,6 +1013,7 @@ def svg_sheet(name, k, n, s, what):
 
 
 def main():
+    global KERF
     out, only, write, flat = None, None, True, False
     for x in sys.argv[1:]:
         if x == '--no-write':
@@ -1023,6 +1024,9 @@ def main():
             out = x.split('=', 1)[1]
         elif x.startswith('--mouth='):
             M.MOUTH = float(x.split('=', 1)[1])
+        elif x.startswith('--kerf='):
+            # the square flute's packer reads its own KERF, so both are set
+            KERF = SF.set_kerf(x)
         elif x.startswith('--only='):
             only = x.split('=', 1)[1]
             if only not in BUILDS:
@@ -1030,7 +1034,7 @@ def main():
                                  + ', '.join(BUILDS) + '.')
         else:
             raise SystemExit(f'error: {x} is not a flag this generator reads. '
-                             f'It takes --out=, --only=, --flat, --mouth= and --no-write.')
+                             f'It takes --out=, --only=, --flat, --mouth=, --kerf= and --no-write.')
     if write and not out:
         raise SystemExit('error: --out=DIR, or --no-write to run the checks only.')
     V, kw, ratios, diams = M.design()
