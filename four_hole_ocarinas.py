@@ -1,31 +1,31 @@
 #!/usr/bin/env python3
-"""Cut files for a four-hole ocarina in G4, English fingering, in 3mm ply.
+"""Cut files for four-hole ocarinas, English fingering, in 3mm ply.
 
     python3 four_hole_ocarinas.py --no-write          # the checks, write nothing
     python3 four_hole_ocarinas.py --out=DIR           # every build into DIR/<build>/
-    python3 four_hole_ocarinas.py --only=box --out=DIR
-    python3 four_hole_ocarinas.py --only=box --flat --out=DIR   # no subfolder
+    python3 four_hole_ocarinas.py --only=cube --out=DIR
+    python3 four_hole_ocarinas.py --only=cube --flat --out=DIR   # no subfolder
     python3 four_hole_ocarinas.py --mouth=1.2 ...     # the window correction, as the model
+    python3 four_hole_ocarinas.py --kerf=0.18 ...     # for a laser with that kerf
 
 The acoustics are ocarina_model.py's: the cavity's volume and the four
 holes' sizes. This file only builds what that asks for. An ocarina's holes
 go wherever the fingers fall, since a Helmholtz resonator hears their size
 and not their place, so the layout here is the hands', not the model's.
 
-THE TWO BUILDS share the cavity, W_IN x D_IN across and deep and as long as
-the volume needs, and every opening:
+EVERY BUILD IS A SOLID, built by polyhedron.py and finger-jointed on every
+edge at whatever angle its faces meet (see BUILDS). The cube is the one
+sized to the model: its edge holds the volume G4 asks for (cube_edge), so
+it plays G4, and it is the build whose closed note measures the window.
+The others hold what their shape holds and play in the key that gives.
+Until 2026-10-18 the G4 build was a box 60 x 18mm inside and as long as the
+volume needed, finger-jointed or laminated as a stack; at the 14 x 7mm
+window it ran 144mm, near enough a quarter wave to act partly as a tube,
+and the author made it a cube and dropped the stack.
 
-  box     a box finger-jointed on all twelve edges: top, bottom, two side
-          walls and two end walls, every edge carrying as many fingers as
-          fit at the square flute's 6mm (see joint_cells)
-  stack   a laminated stack: a bottom layer, six frame layers with the
-          cavity cut out of them, and the top, glued
+All are tuned at the window and the holes.
 
-Both are tuned at the window and the holes. The box had a sliding far plug
-to tune with until 2026-10-17, when the author asked for as many finger
-joints as possible: the ends became jointed walls, and the plug went.
-
-FROM THE MOUTH END, the same in both:
+FROM THE MOUTH END, the same in every build:
 
   beak     the top plate run on past the end, BEAK long and BEAK_W wide:
            what the lips close on
@@ -40,9 +40,11 @@ FROM THE MOUTH END, the same in both:
            the square flute, and the beak had nothing under it
   window   the true sound hole, WINDOW_W x WINDOW_L, against the cavity's
            mouth-end wall, so the jet crosses it over the cavity
-  holes    two rows across the plate: the index fingers' row ROW_1 past the
-           window, the middle fingers' ROW_2 past that, each hand's pair in
-           a column COLUMNS apart
+  holes    on the cube, the octagon and the antiprism, two rows across the
+           top: the index fingers' row ROW_1 past the window, the middle
+           fingers' ROW_2 past that, each hand's pair in a column COLUMNS
+           apart; the octahedron and the dodecahedron give them faces of
+           their own (see build_solid)
 
 THE SPLITTING EDGE is the window's far edge, and wants the bevel a laser
 cannot cut, as on the square flute: file it, about 30 degrees, on the face
@@ -52,8 +54,8 @@ right hand's holes are on the LEFT, because the player sees the other face.
 
 The finger's size, the kerf and the sheet packing are the square flute's,
 imported from square_flute.py beside this repository, which imports the path
-writer from swept-curve's ribbon_bore.py in turn. The joint itself is drawn
-here, since the flute's runs along two edges and this one closes a box.
+writer from swept-curve's ribbon_bore.py in turn. The joint is
+polyhedron.py's, cut for each edge's own angle.
 """
 import math
 import os
@@ -64,8 +66,8 @@ sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(HERE, '..', 'square-flute'))
 sys.path.insert(0, os.path.join(HERE, '..', 'swept-curve'))
 import ocarina_model as M                                      # noqa: E402
-# the square flute's box: its finger joint, plates, discs and packer, imported
-# so the two instruments are cut with one joint
+# the square flute's plates, finger size, kerf and packer, imported so the
+# two instruments are cut alike
 import square_flute as SF                                      # noqa: E402
 import polyhedron as P                                         # noqa: E402
 from square_flute import Part, rect, pack                     # noqa: E402
@@ -83,40 +85,41 @@ BLUE, ORANGE, BLACK = SF.BLUE, SF.ORANGE, SF.BLACK
 # numbers keep, and green and cyan are cut stages, so these two are new.
 BIRD_INK, NEST_INK = '#ff0000', '#ff00ff'
 
-W_IN = 60.0          # the cavity across: room for two columns of holes
-D_IN = 18.0          # and deep: six 3mm frame layers in the stack
-SIDE = 6.0           # the stack's frame, all round
 BEAK, BEAK_W = 18.0, 24.0
 # the beak's front, where the lips go: a half-ellipse across its whole width
 # and TIP_ROUND deep, on the top plate, the bird and the chin layer alike,
 # so the three plies round off as one (the author, 2026-10-17)
 TIP_ROUND, TIP_STEPS = 8.0, 32
-ROW_1, ROW_2 = 30.0, 52.0    # hole rows, from the cavity's mouth-end wall
-COLUMNS = 36.0               # the two hands' columns, centre to centre
+# the hole rows, from the cavity's mouth-end wall, and the two hands'
+# columns, centre to centre: they fit the G4 cube's 54mm inside with room to
+# spare. The box's were 30, 52 and 36mm, until it became the cube
+ROW_1, ROW_2 = 20.0, 42.0
+COLUMNS = 34.0
 D_MIN, D_MAX = 2.5, 13.0     # a hole that still speaks; one a finger covers
 HOLE_GAP = 3.0               # ply between neighbouring holes
 
 BUILDS = {
-    'box': 'finger-jointed box',
-    'stack': 'laminated stack',
-    'octagon': 'regular octagonal prism, finger-jointed',
-    'cube': 'cube, finger-jointed',
+    'cube': 'cube, finger-jointed, sized to G4',
+    'octagon': 'uniform octagonal prism, finger-jointed',
     'square-antiprism': 'square antiprism, finger-jointed',
     'octahedron': 'regular octahedron, finger-jointed',
     'dodecahedron': 'regular dodecahedron, finger-jointed',
 }
-# The second set, since 2026-10-17, and those after it: solids, built by polyhedron.py,
-# whose cavity is what their shape holds and whose key follows from it. The
-# holes are sized against the window, not the cavity, so every fingering
-# and every interval is the first set's; only the key moves.
-#   octagon         flats across and height, outside: bigger than the box on
-#                   all three axes, at the author's asking
-OCT_FLATS, OCT_HEIGHT = 110.0, 36.0
-# The other solids, the same day, every edge a whole number of 6mm fingers:
-#   cube, square-antiprism  72mm, so the top square takes the window and
-#                   the four holes on the octagon's grid; the antiprism's
-#                   square is a quarter turn from the one below it, with
-#                   eight triangles between
+# Solids, built by polyhedron.py, since 2026-10-17. The cube's edge is
+# whatever holds the volume G4 asks for; the others' cavities are what their
+# shape holds, and their key follows from it. The holes are sized against
+# the window, not the cavity, so every fingering and every interval is the
+# cube's; only the key moves.
+#   octagon         OCT_FLATS across the flats, outside, and as tall as a
+#                   wall is wide, so every wall is square and the prism is
+#                   uniform, as the cube is; it was 36mm tall until
+#                   2026-10-18
+OCT_FLATS = 110.0
+OCT_HEIGHT = OCT_FLATS * math.tan(math.pi / 8)
+# The other solids, every edge a whole number of 6mm fingers:
+#   square-antiprism  72mm, so the top square takes the window and the four
+#                   holes on the cube's grid; its square is a quarter turn
+#                   from the one below it, with eight triangles between
 #   octahedron      standing on a triangle, every edge OCTA_EDGE; the top is
 #                   too small for four holes, so each hand has a triangle of
 #                   its own, the index finger's hole nearer the beak
@@ -126,26 +129,17 @@ OCT_FLATS, OCT_HEIGHT = 110.0, 36.0
 # Four plates meet at the antiprism's and the octahedron's corners, and
 # NIP cuts each corner back that far, square to its bisector, so that the
 # two sharing only the corner stay apart.
-CUBE_EDGE = 72.0
 SAP_EDGE = 72.0
 OCTA_EDGE = 72.0
 DODECA_EDGE = 36.0
 NIP = {'square-antiprism': 4.25, 'octahedron': 4.75}
-SOLIDS = ('octagon', 'cube', 'square-antiprism', 'octahedron', 'dodecahedron')
 FACE_HOLES = ('octahedron', 'dodecahedron')
 
 
-def cavity_length(V):
-    return V / (W_IN * D_IN)
-
-
-def hole_places(PW):
-    """(x, y) of each hole in HOLES order, x from the cavity's mouth-end
-    wall. The right hand at y > PW/2: on the sheet, and on the outside face
-    with the beak up, that is the viewer's left and the player's right."""
-    yc = PW / 2
-    return {'R2': (ROW_2, yc + COLUMNS / 2), 'R1': (ROW_1, yc + COLUMNS / 2),
-            'L1': (ROW_1, yc - COLUMNS / 2), 'L2': (ROW_2, yc - COLUMNS / 2)}
+def cube_edge(V):
+    """The cube's outside edge whose cavity holds V: two plates more than the
+    inside's cube root."""
+    return V ** (1 / 3) + 2 * T
 
 
 def rounded(poly, yc):
@@ -204,281 +198,7 @@ def duct(c0, yc):
     return rounded(rect(-BEAK, yc - M.WINDOW_W / 2, c0, yc + M.WINDOW_W / 2), yc)
 
 
-def beaked(outline, x0, PW):
-    """A plate outline closing along its mouth end, x = x0, with the beak
-    let into that end: BEAK_W wide, centred, BEAK long."""
-    assert outline[0] == (x0, 0) and outline[-1] == (x0, PW)
-    yc = PW / 2
-    return outline + [(x0, yc + BEAK_W / 2), (x0 - BEAK, yc + BEAK_W / 2),
-                      (x0 - BEAK, yc - BEAK_W / 2), (x0, yc - BEAK_W / 2)]
-
-
-# --- the box's joint -----------------------------------------------------------
-
-def joint_cells(L):
-    """How many fingers an edge with L of inner length takes: the most an odd
-    count allows with none under FINGER, the square flute's 6mm. Odd, so both
-    ends of the run belong to the same plate and the pattern is the same read
-    from either end; at 6mm, because that is the joint whose fit is known."""
-    n = int(L // FINGER)
-    return n if n % 2 else n - 1
-
-
-def run(L, owned, out=()):
-    """One edge's cells, as (s0, s1, depth) from the edge's start: the run of
-    L between the two corner cubes, cut into joint_cells(L), at depth 0 where
-    this plate owns the cell and T where its neighbour's finger comes in.
-    owned(i) says which; a cell overlapping any (a, b) span in `out` is
-    owned whatever owned() says, and that span is pushed out past the edge by
-    its third member: the top plate's beak."""
-    n = joint_cells(L)
-    w = L / n
-    segs = []
-    for i in range(n):
-        a, b = T + i * w, T + (i + 1) * w
-        mine = owned(i) or any(a < s1 and b > s0 for s0, s1, _ in out)
-        segs.append((a, b, 0.0 if mine else T))
-    for s0, s1, d in out:
-        cut = []
-        for a, b, dep in segs:
-            if b <= s0 or a >= s1:
-                cut.append((a, b, dep))
-                continue
-            if a < s0:
-                cut.append((a, s0, dep))
-            cut.append((max(a, s0), min(b, s1), -d))
-            if b > s1:
-                cut.append((s1, b, dep))
-        segs = cut
-    return segs
-
-
-def jointed(A, B, edges, corners):
-    """A plate A x B whose four edges are finger runs: edges[k] is run()'s
-    list for edge k, walked anticlockwise on the sheet from (0, 0) -- v = 0,
-    u = A, v = B, u = 0 -- and corners[k] says whether this plate owns the
-    corner cube at the start of edge k. An owned corner is the plate's own
-    square corner; one it does not own is a T x T notch."""
-    starts = [(0, 0), (A, 0), (A, B), (0, B)]
-    dirs = [(1, 0), (0, 1), (-1, 0), (0, -1)]
-    norms = [(0, 1), (-1, 0), (0, -1), (1, 0)]
-    lens = [A, B, A, B]
-    pts = []
-    for k in range(4):
-        (px, py), (dx, dy), (nx, ny), L = starts[k], dirs[k], norms[k], lens[k]
-        at = lambda s, d: (px + s * dx + d * nx, py + s * dy + d * ny)
-        pts += [at(0, 0), at(T, 0)] if corners[k] else [at(T, T)]
-        for a, b, d in edges[k]:
-            pts += [at(a, d), at(b, d)]
-        pts += [at(L - T, 0), at(L, 0)] if corners[(k + 1) % 4] else [at(L - T, T)]
-    return simplify(pts)
-
-
-def simplify(pts):
-    """Drop repeated points and points on a straight run: offset() moves a
-    vertex along the sum of its edges' normals, which doubles the step at a
-    point between two collinear edges."""
-    out = []
-    for p in pts:
-        p = (round(p[0], 6), round(p[1], 6))
-        if not out or p != out[-1]:
-            out.append(p)
-    if out[0] == out[-1]:
-        out.pop()
-    changed = True
-    while changed:
-        changed = False
-        for i in range(len(out)):
-            a, b, c = out[i - 1], out[i], out[(i + 1) % len(out)]
-            if (b[0] - a[0]) * (c[1] - b[1]) - (b[1] - a[1]) * (c[0] - b[0]) == 0:
-                out.pop(i)
-                changed = True
-                break
-    return out
-
-
-def box_parts(Lc, PW, Hz, num):
-    """The six plates of a box Lc x W_IN x D_IN inside, jointed on every edge.
-    Each edge's cells alternate between its two plates, and the corner cubes
-    go to the side walls, so every bit of every edge belongs to exactly one
-    plate:
-
-      top, bottom   the even cells of all four edges (each run starts and
-                    ends with one); the top also keeps the cells under the
-                    beak at the mouth end, so the beak runs on from solid ply
-                    and the duct crosses no seam
-      side walls    the odd cells along the top and bottom, the even cells
-                    up the ends, and all four corners
-      end walls     the odd cells all round, less those under the beak
-
-    Each plate is placed by p.m, a 3x4 matrix from its own (u, v, out of the
-    sheet) to the box's (x along from the mouth end, y across, z up), for
-    the 3D view and the check that the plates tile the box."""
-    Lx = Lc + 2 * T
-    even, odd = (lambda i: i % 2 == 0), (lambda i: i % 2 == 1)
-    beak = ((PW - BEAK_W) / 2, (PW + BEAK_W) / 2, BEAK)
-    tb = lambda b: [run(Lc, even), run(W_IN, even), run(Lc, even),
-                    run(W_IN, even, (beak,) if b else ())]
-    side = [run(Lc, odd), run(D_IN, even), run(Lc, odd), run(D_IN, even)]
-    end = lambda b: [run(W_IN, lambda i: odd(i) and not (
-        T + i * W_IN / joint_cells(W_IN) < beak[1] and
-        T + (i + 1) * W_IN / joint_cells(W_IN) > beak[0]) if b else odd(i)),
-        run(D_IN, odd), run(W_IN, odd), run(D_IN, odd)]
-    none, every = [False] * 4, [True] * 4
-    spec = [
-        # the top is drawn outside face up, as the laser engraves it, so its
-        # own v runs across the box the other way and its w inward; until
-        # 2026-10-18 it was placed inside face up, which the 3D view showed
-        # with the hands' holes swapped
-        ('top plate', jointed(Lx, PW, tb(True), none),
-         [[1, 0, 0, 0], [0, -1, 0, PW], [0, 0, -1, Hz]]),
-        ('bottom plate', jointed(Lx, PW, tb(False), none),
-         [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0]]),
-        ('side wall', jointed(Lx, Hz, side, every),
-         [[1, 0, 0, 0], [0, 0, 1, 0], [0, -1, 0, Hz]]),
-        ('side wall', jointed(Lx, Hz, side, every),
-         [[1, 0, 0, 0], [0, 0, 1, PW - T], [0, -1, 0, Hz]]),
-        ('end wall', jointed(PW, Hz, end(True), none),
-         [[0, 0, 1, 0], [-1, 0, 0, PW], [0, -1, 0, Hz]]),
-        ('end wall', jointed(PW, Hz, end(False), none),
-         [[0, 0, 1, Lx - T], [-1, 0, 0, PW], [0, -1, 0, Hz]]),
-    ]
-    notes = {'top plate': 'the window and the four holes; file the window\'s far edge '
-                          'to a 30 degree bevel on the outside face before the bird goes on',
-             'bottom plate': 'plain', 'side wall': 'fingers on all four edges',
-             'end wall': 'fingers on all four edges'}
-    parts = []
-    for name, outline, m in spec:
-        p = Part(name, next(num), outline, notes[name])
-        p.m = m
-        parts.append(p)
-    parts[4].note = 'the mouth end: no fingers into the top under the beak'
-    return parts
-
-
-def build(kind, V, diams):
-    """Every part of one build, in its own flat coordinates: x along the
-    ocarina from the mouth end of the body (the beak runs to -BEAK), y
-    across it."""
-    Lc = cavity_length(V)
-    if kind == 'box':
-        PW = W_IN + 2 * T
-        c0 = T                                  # the cavity's mouth-end wall
-        total = c0 + Lc + T
-    else:
-        PW = W_IN + 2 * SIDE
-        c0 = SIDE
-        total = c0 + Lc + SIDE
-    yc = PW / 2
-    places = {h: (c0 + x, y) for h, (x, y) in hole_places(PW).items()}
-    parts = []
-    num = iter(range(1, 100))
-
-    def top_plate(outline):
-        p = Part('top plate', next(num), rounded(outline, yc),
-                 'the window and the four holes, and the nest\'s half of the duct '
-                 'fill-engraved in its outside face; file the window\'s far edge to a '
-                 '30 degree bevel on the outside face before the bird goes on')
-        p.slot(c0, yc - M.WINDOW_W / 2, c0 + M.WINDOW_L, yc + M.WINDOW_W / 2)
-        p.fills.append(duct(c0, yc))
-        p.ink = NEST_INK
-        for h, d in zip(M.HOLES, diams):
-            p.hole(*places[h], d)
-        return p
-
-    if kind == 'box':
-        box = box_parts(Lc, PW, D_IN + 2 * T, num)
-        top = top_plate(box[0].outline)
-        top.m = box[0].m
-        parts += [top] + box[1:]
-    else:
-        parts.append(top_plate(beaked(rect(0, 0, total, PW), 0, PW)))
-        parts[-1].m = [[1, 0, 0, 0], [0, -1, 0, PW], [0, 0, -1, D_IN + 2 * T]]
-        parts.append(Part('bottom layer', next(num), rect(0, 0, total, PW), 'plain'))
-        for k in range(int(round(D_IN / T))):
-            p = Part('frame layer', next(num), rect(0, 0, total, PW),
-                     'the cavity cut out')
-            p.slot(c0, SIDE, c0 + Lc, SIDE + W_IN)
-            parts.append(p)
-    p = Part('bird', next(num), mouthpiece(c0, yc),
-             'the bird\'s half of the duct fill-engraved in its underside')
-    p.fills.append(duct(c0, yc))
-    p.ink = BIRD_INK
-    parts.append(p)
-    # under the beak only: the body starts at x = 0
-    parts.append(Part('chin layer', next(num), mouthpiece(0, yc),
-                      'glued under the beak, its end against the body'))
-    return parts, dict(total=total, PW=PW, c0=c0, Lc=Lc, places=places)
-
-
 # --- checks -----------------------------------------------------------------
-
-def checks(kind, parts, info, V, diams, worst):
-    out = []
-
-    def note(ok, what, detail):
-        out.append((ok, what, detail))
-    PW, c0, Lc = info['PW'], info['c0'], info['Lc']
-    yc = PW / 2
-    note(worst < 20.0, 'the model holds the scale',
-         f'worst {worst:.1f} cents of eight notes')
-    built = W_IN * D_IN * Lc
-    note(abs(built / V - 1) < 1e-6, 'the cavity is the volume the model asks for',
-         f'{W_IN:g} x {D_IN:g} x {Lc:.2f}mm = {built / 1000:.2f}cm^3')
-    span, lam = math.sqrt(Lc ** 2 + W_IN ** 2 + D_IN ** 2), M.C / M.F0
-    note(span < lam / 4, 'the cavity is small against the wavelength',
-         f'{span:.0f}mm corner to corner, a quarter wave {lam / 4:.0f}mm')
-    note(min(diams) >= D_MIN and max(diams) <= D_MAX,
-         'every hole speaks and a finger covers it',
-         f'ø{min(diams):.2f} to ø{max(diams):.2f}mm, against {D_MIN:g} and {D_MAX:g}')
-    web = min(min(x - d / 2 - (c0 + M.WINDOW_L), c0 + Lc - (x + d / 2),
-                  y - d / 2 - (yc - W_IN / 2), yc + W_IN / 2 - (y + d / 2))
-              for (x, y), d in zip(info['places'].values(), diams))
-    note(web >= MIN_WEB, 'every hole opens into the cavity, clear of its walls',
-         f'nearest wall or window {web:.1f}mm off')
-    pl = list(zip(info['places'].values(), diams))
-    gap = min(math.hypot(a[0] - b[0], a[1] - b[1]) - (da + db) / 2
-              for i, (a, da) in enumerate(pl) for b, db in pl[i + 1:])
-    note(gap >= HOLE_GAP, 'ply left between neighbouring holes', f'narrowest {gap:.1f}mm')
-    note(c0 + M.WINDOW_L < c0 + Lc and M.WINDOW_W < W_IN,
-         'the window opens into the cavity at its mouth-end wall',
-         f'{M.WINDOW_W:g} x {M.WINDOW_L:g}mm from x = {c0:g}')
-    bird = next(p for p in parts if p.name == 'bird')
-    top = next(p for p in parts if p.name == 'top plate')
-    fx = [q[0] for q in bird.fills[0]]
-    note(min(fx) == -BEAK and max(fx) == c0 == bird.x0 + bird.w
-         and top.fills == bird.fills,
-         'the duct runs from the beak\'s tip to the window, in the bird and the top alike',
-         f'{c0 + BEAK:g}mm long, {M.WINDOW_W:g}mm wide')
-    m = top.m
-    right = [m[1][0] * x + m[1][1] * y + m[1][3] < PW / 2
-             for h, (x, y) in info['places'].items() if h.startswith('R')]
-    note(m[2][2] < 0 and all(right),
-         'the top lies outside face up, and each hand\'s holes lie under that hand',
-         'the nest\'s duct engraves the outside; held holes forward, beak up')
-    chin = [p for p in parts if p.name == 'chin layer']
-    note(len(chin) == 1 and chin[0].x0 == -BEAK and chin[0].x0 + chin[0].w == 0
-         and chin[0].h == BEAK_W,
-         'the chin layer fills the beak and stops at the body',
-         f'{BEAK:g} x {BEAK_W:g}mm; the mouthpiece {3 * T:g}mm thick')
-    if kind == 'box':
-        n = [joint_cells(L) for L in (Lc, W_IN, D_IN)]
-        w = min(L / k for L, k in zip((Lc, W_IN, D_IN), n))
-        note(all(k >= 3 for k in n) and w >= FINGER,
-             'every edge is finger-jointed, as many as fit',
-             f'{n[0]} cells along, {n[1]} across, {n[2]} up; narrowest {w:.2f}mm')
-        bad, seen = tiling(parts, info)
-        note(not bad, 'the six plates fill every edge and corner once',
-             f'{seen} cells and corners, ' + (f'{len(bad)} wrong: {bad[0]}' if bad else 'each in one plate'))
-    sheets = pack(parts)
-    note(all(s['w'] <= BED[0] and s['h'] <= BED[1] for s in sheets),
-         'every sheet fits the bed',
-         f'{len(sheets)} sheet(s), largest '
-         f'{max(s["w"] for s in sheets):.0f} x {max(s["h"] for s in sheets):.0f}mm')
-    placed = sum(len(s['parts']) for s in sheets)
-    note(placed == len(parts), 'every part is on a sheet', f'{placed} of {len(parts)}')
-    return out, sheets
-
 
 def inside(pt, poly):
     """Even-odd point in polygon."""
@@ -491,9 +211,9 @@ def inside(pt, poly):
 
 
 def owners(parts, q):
-    """The plates whose solid holds the box-coordinate point q: q taken back
-    into each plate's own frame through its matrix, which is a signed
-    permutation, so its transpose undoes it."""
+    """The plates whose solid holds the world point q: q taken back into
+    each plate's own frame through its matrix, whose axes are orthonormal,
+    so its transpose undoes it."""
     hit = []
     for p in parts:
         m = getattr(p, 'm', None)
@@ -506,48 +226,15 @@ def owners(parts, q):
     return hit
 
 
-def tiling(parts, info):
-    """Every finger cell of all twelve edges, and all eight corner cubes,
-    sampled at its centre and at points near its ends: each must be in
-    exactly one plate. A cell in two is a collision on assembly; in none, a
-    gap to seal. Also one point in each face's middle, which must be in that
-    face's plate alone."""
-    Lx, PW, Hz = info['total'], info['PW'], D_IN + 2 * T
-    h = T / 2
-    pts = []
-    axes = [(0, Lx), (1, PW), (2, Hz)]
-    for ax, L in axes:
-        others = [a for a, _ in axes if a != ax]
-        for c0 in (h, (Lx, PW, Hz)[others[0]] - h):
-            for c1 in (h, (Lx, PW, Hz)[others[1]] - h):
-                n = joint_cells(L - 2 * T)
-                w = (L - 2 * T) / n
-                for i in range(n):
-                    for f in (0.1, 0.5, 0.9):
-                        q = [0, 0, 0]
-                        q[ax], q[others[0]], q[others[1]] = T + (i + f) * w, c0, c1
-                        pts.append((f'{"xyz"[ax]}-edge cell {i}', q))
-    for x in (h, Lx - h):
-        for y in (h, PW - h):
-            for z in (h, Hz - h):
-                pts.append(('corner', [x, y, z]))
-    for q in ([Lx / 2, PW / 2, h], [Lx / 2, PW / 2, Hz - h], [Lx / 2, h, Hz / 2],
-              [h, PW / 2 + BEAK_W, Hz / 2], [Lx - h, PW / 2, Hz / 2]):
-        pts.append(('face', q))
-    bad = [f'{what} at ({q[0]:.1f}, {q[1]:.1f}, {q[2]:.1f}) in {owners(parts, q) or "none"}'
-           for what, q in pts if len(owners(parts, q)) != 1]
-    return bad, len(pts)
-
-
 # --- the solids ----------------------------------------------------------------
 
-def build_solid(kind, diams):
+def build_solid(kind, diams, V):
     """Every part of a solid build. The world is the solid's own: z up, the
     hole face on top, the mouth face looking down -x, so the beak runs out
     along -x from the middle of the top's mouth edge. Each part carries its
     frame as p.m, the matrix from its own (u, v, inward) to the world."""
     faces = {'octagon': lambda: P.octagonal_prism(OCT_FLATS, OCT_HEIGHT),
-             'cube': lambda: P.cube(CUBE_EDGE),
+             'cube': lambda: P.cube(cube_edge(V)),
              'square-antiprism': lambda: P.square_antiprism(SAP_EDGE),
              'octahedron': lambda: P.octahedron(OCTA_EDGE),
              'dodecahedron': lambda: P.dodecahedron(DODECA_EDGE)}[kind]()
@@ -668,8 +355,8 @@ def build_solid(kind, diams):
                 'the bird\'s half of the duct fill-engraved in its underside')
     bird.fills.append(duct(T, 0.0))
     bird.ink = BIRD_INK
-    # the bird faces down, as the box's does: its own w = 0, the face the
-    # duct is engraved in, lies on the top plate, so it is turned over
+    # the bird faces down: its own w = 0, the face the duct is engraved
+    # in, lies on the top plate, so it is turned over
     # about U, which its outline and duct, both symmetric across, allow
     bird.m = P.matrix((O, U, P.mul(V, -1), P.mul(W, -1)))
     chin = Part('chin layer', next(num), mouthpiece(-back, 0.0),
@@ -866,6 +553,10 @@ def solid_checks(kind, parts, info, V0, kw, diams, worst):
         out.append((ok, what, detail))
     note(worst < 20.0, 'the model holds the scale', f'worst {worst:.1f} cents of eight notes')
     V = info['V']
+    if kind == 'cube':
+        note(abs(V / V0 - 1) < 1e-6, 'the cavity is the volume the model asks for',
+             f'{cube_edge(V0):.2f}mm edge, {cube_edge(V0) - 2 * T:.2f}mm inside, '
+             f'{V / 1000:.2f}cm^3')
     f0 = M.freq(0, kw, V)
     span = max(P.dist(a, b) for a in info['inner_pts'] for b in info['inner_pts'])
     lam = M.C / f0
@@ -886,7 +577,14 @@ def solid_checks(kind, parts, info, V0, kw, diams, worst):
     pl = [(world(*ixy), d) for ixy, d in zip(info['places'].values(), diams)]
     gap = min(P.dist(a, b) - (da + db) / 2
               for i, (a, da) in enumerate(pl) for b, db in pl[i + 1:])
-    note(gap >= HOLE_GAP, 'ply left between neighbouring holes', f'narrowest {gap:.1f}mm')
+    # and between the window and any hole on the top with it
+    wgap = min((math.hypot(max(T - x, 0, x - T - M.WINDOW_L),
+                           max(abs(y) - M.WINDOW_W / 2, 0)) - d / 2
+                for (i, (x, y)), d in zip(info['places'].values(), diams)
+                if i == info['ft']), default=math.inf)
+    note(min(gap, wgap) >= HOLE_GAP, 'ply left between neighbouring holes and the window',
+         f'narrowest {gap:.1f}mm'
+         + (f', {wgap:.1f}mm from the window' if wgap < math.inf else ''))
     # the hands, from the geometry rather than the names: right = forward x up
     fwd = info['faces'][info['ft']].n
     up = (-1.0, 0.0, 0.0)
@@ -960,6 +658,12 @@ def solid_checks(kind, parts, info, V0, kw, diams, worst):
 CORNER_R, CORNER_STEP = 5.0, 0.4
 
 
+def note_name(f):
+    """The equal-tempered note nearest f, as A4 = 440Hz names it."""
+    n = round(12 * math.log2(f / 440) + 69)
+    return ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'][n % 12] + str(n // 12 - 1)
+
+
 def corner_scan(parts, info):
     """Every point of a grid round each corner that lies in the walls --
     inside the solid, within T of its outside -- and how many of them lie in
@@ -1014,7 +718,7 @@ def mouthpiece_scan(parts, step=0.5):
 
 # --- sheets ------------------------------------------------------------------
 
-def svg_sheet(name, k, n, s, what):
+def svg_sheet(name, k, n, s, what, key):
     orange, black, nums = [], [], []
     fills = {BIRD_INK: [], NEST_INK: []}
     for p, sx, sy in s['parts']:
@@ -1032,7 +736,7 @@ def svg_sheet(name, k, n, s, what):
             fills[p.ink].append(path(mv(f)))
         for st in getattr(p, 'strokes', []):
             nums.append(path(mv(st), close=False))
-    desc = (f'1 user unit = 1mm. Four-hole ocarina in G4, English fingering, {name}, '
+    desc = (f'1 user unit = 1mm. Four-hole ocarina in {key}, English fingering, {name}, '
             f'sheet {k} of {n}: {what}. 3mm ply, drawn for a {KERF:g}mm kerf. '
             f'The duct is a fill engrave in two inks, run either or both: red {BIRD_INK} '
             f'in the bird\'s underside, magenta {NEST_INK} in the top\'s outside face. One '
@@ -1041,9 +745,8 @@ def svg_sheet(name, k, n, s, what):
                f'lie inside face up, so they mark the inside, and the plates that meet '
                f'at a corner carry its number; the top, outside face up, has none. '
                if nums else '')
-            + f'Then the cuts: orange {ORANGE} cuts the window'
-            + (', the holes and the cavity' if name == 'stack' else ' and the holes')
-            + f', and black {BLACK} frees the parts.')
+            + f'Then the cuts: orange {ORANGE} cuts the window and the holes, '
+            f'and black {BLACK} frees the parts.')
     g = lambda col, items: (
         f'  <g fill="none" stroke="{col}" stroke-width="0.2">\n'
         + ''.join(f'    {i}\n' if i.startswith('<') else f'    <path d="{i}"/>\n'
@@ -1051,7 +754,7 @@ def svg_sheet(name, k, n, s, what):
     return (f'<?xml version="1.0" encoding="utf-8"?>\n'
             f'<svg xmlns="http://www.w3.org/2000/svg" width="{s["w"]:.2f}mm" '
             f'height="{s["h"]:.2f}mm" viewBox="0 0 {s["w"]:.2f} {s["h"]:.2f}">\n'
-            f'<title>Four-hole ocarina in G4, {name}, sheet {k} of {n}</title>\n'
+            f'<title>Four-hole ocarina in {key}, {name}, sheet {k} of {n}</title>\n'
             f'<desc>{desc}</desc>\n'
             + ''.join(f'  <g fill="{ink}" stroke="none">\n'
                       + ''.join(f'    <path d="{d}"/>\n' for d in ds) + '  </g>\n'
@@ -1091,32 +794,13 @@ def main():
     for name, how in BUILDS.items():
         if only and name != only:
             continue
-        if name in SOLIDS:
-            parts, info = build_solid(name, diams)
-            res, sheets, f0 = solid_checks(name, parts, info, V, kw, diams, worst)
-            print(f'\n{name}: {how}, cavity {info["V"] / 1000:.1f}cm^3, '
-                  f'G4\'s fingering a {1200 * math.log2(f0 / M.F0):+.0f} cents from G4: '
-                  f'{f0:.1f}Hz with every hole closed')
-            print('  holes: ' + ', '.join(f'{h} ø{d:.2f}' for h, d in zip(M.HOLES, diams)))
-            for ok, what, detail in res:
-                print(f'  {"pass" if ok else "FAIL"}  {what:52} {detail}')
-                bad += not ok
-            if write and not bad:
-                d = out if flat else os.path.join(out, name)
-                os.makedirs(d, exist_ok=True)
-                for k, s in enumerate(sheets, 1):
-                    what = ', '.join(sorted({p.name for p, _, _ in s['parts']}))
-                    f = os.path.join(d, f'four-hole-ocarina-{name}-sheet{k}-cut-files.svg')
-                    open(f, 'w').write(svg_sheet(name, k, len(sheets), s, what))
-                    print(f'  wrote {os.path.basename(f)}  {s["w"]:.0f} x {s["h"]:.0f}mm, '
-                          f'{len(s["parts"])} parts')
-            continue
-        parts, info = build(name, V, diams)
-        print(f'\n{name}: {how}, cavity {W_IN:g} x {D_IN:g} x {info["Lc"]:.1f}mm, '
-              f'{V / 1000:.2f}cm^3; body {info["total"]:.1f} x {info["PW"]:.1f}mm, '
-              f'beak {BEAK:g}mm more')
+        parts, info = build_solid(name, diams, V)
+        res, sheets, f0 = solid_checks(name, parts, info, V, kw, diams, worst)
+        key = note_name(f0)
+        print(f'\n{name}: {how}, cavity {info["V"] / 1000:.1f}cm^3, '
+              f'G4\'s fingering a {round(1200 * math.log2(f0 / M.F0)) + 0:+d} cents from G4: '
+              f'{f0:.1f}Hz with every hole closed, {key}')
         print('  holes: ' + ', '.join(f'{h} ø{d:.2f}' for h, d in zip(M.HOLES, diams)))
-        res, sheets = checks(name, parts, info, V, diams, worst)
         for ok, what, detail in res:
             print(f'  {"pass" if ok else "FAIL"}  {what:52} {detail}')
             bad += not ok
@@ -1125,8 +809,8 @@ def main():
             os.makedirs(d, exist_ok=True)
             for k, s in enumerate(sheets, 1):
                 what = ', '.join(sorted({p.name for p, _, _ in s['parts']}))
-                f = os.path.join(d, f'four-hole-ocarina-G4-{name}-sheet{k}-cut-files.svg')
-                open(f, 'w').write(svg_sheet(name, k, len(sheets), s, what))
+                f = os.path.join(d, f'four-hole-ocarina-{name}-sheet{k}-cut-files.svg')
+                open(f, 'w').write(svg_sheet(name, k, len(sheets), s, what, key))
                 print(f'  wrote {os.path.basename(f)}  {s["w"]:.0f} x {s["h"]:.0f}mm, '
                       f'{len(s["parts"])} parts')
     if bad:

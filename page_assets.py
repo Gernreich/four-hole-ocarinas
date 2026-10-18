@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""The published page's moving parts, built from the generator's own build()
+"""The published page's moving parts, built from the generator's own build_solid()
 so the page cannot disagree with the cut files. The writeup is README.md,
 built into index.html by md2html.py like every page here; this adds what
 markdown cannot carry.
@@ -7,7 +7,7 @@ markdown cannot carry.
     python3 page_assets.py                     # viewer.js, turn.html and plans/*.svg
     python3 page_assets.py --artifact OUT.html # the whole page, one file
 
-  viewer.js    the 3D view of both builds, loaded on the page through a
+  viewer.js    the 3D view of every build, loaded on the page through a
                page-only line in README.md
   turn.html    viewer.js on a page of its own, for the hub to frame
   plans/       the top plate drawn to scale, and the fingering chart, as
@@ -38,65 +38,10 @@ T = B.T
 FONT = 'font-family="Helvetica, Arial, sans-serif"'
 
 
-def solids(kind, parts, info):
-    """Every part as a flat outline, its holes, and where it stands: a 3x4
-    matrix taking the part's own (x, y, extrusion) to the ocarina's (x along,
-    y across, z up), and the way it moves when the view is exploded.
-    Physical outlines, before the kerf: this is the ocarina, not the sheet."""
-    PW, D, W = info['PW'], B.D_IN, B.W_IN
-    plate = lambda z0: [[1, 0, 0, 0], [0, 1, 0, -PW / 2], [0, 0, 1, z0]]
-    out = []
-    k_side = k_end = k_frame = 0
-    for p in parts:
-        holes = []
-        for c in p.cuts:
-            if c[0] == 'rect':
-                holes.append({'p': [[round(x, 3), round(y, 3)] for x, y in c[1]]})
-            else:
-                holes.append({'c': [round(c[1], 3), round(c[2], 3), round(c[3], 3)]})
-        n = p.name
-        flip = False
-        if getattr(p, 'm', None):
-            # a box plate places itself; the view centres y on the box
-            m = [list(r) for r in p.m]
-            m[1][3] -= PW / 2
-            out_dir = {'top plate': [0, 0, 1.2], 'bottom plate': [0, 0, -1],
-                       'side wall': [0, 1 if k_side else -1, 0],
-                       'end wall': [-1.4 if k_end == 0 else 1.4, 0, 0]}[n]
-            e = out_dir
-            k_side += n == 'side wall'
-            k_end += n == 'end wall'
-            g = 'plate' if n.endswith('plate') else 'wall'
-        elif n in ('bottom plate', 'bottom layer'):
-            m, e, g = plate(0), [0, 0, -1], 'plate'
-        elif n == 'frame layer':
-            m = plate(T + k_frame * T)
-            e = [0, 0, -0.75 + 0.25 * k_frame]
-            k_frame += 1
-            g = 'wall'
-        elif n == 'bird':
-            # the duct is on its underside, hidden from above: exploded, it
-            # comes out toward the viewer and turns over, as the square
-            # flute's bird does
-            m, e, g, flip = plate(2 * T + D), [0, -1.6, 1.6], 'bird', True
-        elif n == 'chin layer':                    # under the beak
-            m, e, g = plate(D), [-0.6, 0, -1.6], 'bird'
-        else:
-            raise ValueError(f'no place for a {n}')
-        out.append({'o': [[round(x, 3), round(y, 3)] for x, y in p.outline],
-                    'h': holes, 'm': [[round(v, 4) for v in r] for r in m],
-                    'e': e, 'g': g, 'name': n,
-                    'f': [[[round(x, 3), round(y, 3)] for x, y in f] for f in p.fills],
-                    'fc': getattr(p, 'ink', None),
-                    'flip': flip, 'zc': round(m[2][3] + m[2][2] * T / 2, 3)})
-    return {'parts': out, 'len': round(info['total'], 1), 'top': round(2 * T + D, 2),
-            'cav': f'{W:g} × {D:g} × {info["Lc"]:.1f}mm'}
-
-
 def solid_solids(parts, info):
-    """A solid build's parts for the view: each places itself by p.m, moved
-    so the solid's mouth face sits at x = 0 like the box's, and comes apart
-    along its face's outward normal; the bird turns over as the box's does."""
+    """A build's parts for the view: each places itself by p.m, moved so the
+    solid's mouth face sits at x = 0, and comes apart along its face's
+    outward normal; the bird turns over, as the square flute's does."""
     faces = info['faces']
     shift = -min(v[0] for f in faces for v in f.verts)
     zmax = max(v[2] for f in faces for v in f.verts)
@@ -134,44 +79,44 @@ def solid_solids(parts, info):
             'cav': f'{info["V"] / 1000:.0f}cm³'}
 
 
-def plan_svg(info, diams, title):
-    """The top plate from above, to scale, beak on the left: the bird's
-    footprint dashed, the duct in magenta, the window, the four holes with
-    their names and sizes, and the cavity's walls dotted under the plate.
-    Fixed colours on a white ground, like the previews."""
-    PW, c0, Lc, total = info['PW'], info['c0'], info['Lc'], info['total']
-    yc, y0, x0 = PW / 2, 6.0, B.BEAK + 4
-    X = lambda x: x + x0
-    Y = lambda y: y + y0
-    o = [(X(x), Y(y)) for x, y in
-         B.rounded(B.beaked([(0, 0), (total, 0), (total, PW), (0, PW)], 0, PW), yc)]
-    d = lambda pts: 'M ' + ' L '.join(f'{X(x):.2f},{Y(y):.2f}' for x, y in pts) + ' Z'
-    s = [f'<rect x="0" y="0" width="{X(total) + 6:.1f}" height="{Y(PW) + 6:.1f}" fill="#ffffff"/>',
-         '<path d="M ' + ' L '.join(f'{x:.2f},{y:.2f}' for x, y in o)
-         + ' Z" fill="#e7dcc4" stroke="#1d232b" stroke-width=".4"/>',
-         f'<rect x="{X(c0):.2f}" y="{Y(yc - B.W_IN / 2):.2f}" width="{Lc:.2f}" height="{B.W_IN:g}" '
-         f'fill="none" stroke="#8a7350" stroke-width=".5" stroke-dasharray="1 1"/>',
-         f'<path d="{d(B.mouthpiece(c0, yc))}" fill="none" stroke="#1d232b" stroke-width=".5" '
+def plan_svg(parts, info, diams, title):
+    """The cube's top plate from outside, to scale, beak on the left, as it
+    lies on the sheet: the bird's footprint dashed, the duct in magenta, the
+    window, the four holes with their names and sizes, and the cavity's walls
+    dotted under the plate. Fixed colours on a white ground, like the
+    previews."""
+    tp = parts[info['ft']]
+    us = [u for u, v in tp.outline]
+    vs = [v for u, v in tp.outline]
+    x0, y0 = 6 - min(us), 6 - min(vs)
+    W, H = max(us) - min(us) + 12, max(vs) - min(vs) + 12
+    d = lambda pts: 'M ' + ' L '.join(f'{u + x0:.2f},{v + y0:.2f}' for u, v in pts) + ' Z'
+    s = [f'<rect x="0" y="0" width="{W:.1f}" height="{H:.1f}" fill="#ffffff"/>',
+         f'<path d="{d(tp.outline)}" fill="#e7dcc4" stroke="#1d232b" stroke-width=".4"/>',
+         f'<path d="{d(info["inner"][info["ft"]])}" fill="none" stroke="#8a7350" '
+         f'stroke-width=".5" stroke-dasharray="1 1"/>',
+         f'<path d="{d(B.mouthpiece(T, 0.0))}" fill="none" stroke="#1d232b" stroke-width=".5" '
          f'stroke-dasharray="2 1.5"/>',
-         f'<path d="{d(B.duct(c0, yc))}" fill="{B.NEST_INK}" fill-opacity=".55"/>',
-         f'<rect x="{X(c0):.2f}" y="{Y(yc - M.WINDOW_W / 2):.2f}" width="{M.WINDOW_L:g}" '
-         f'height="{M.WINDOW_W:g}" fill="#ffffff" stroke="#a85800" stroke-width=".6"/>']
+         f'<path d="{d(tp.fills[0])}" fill="{B.NEST_INK}" fill-opacity=".55"/>']
+    s += [f'<path d="{d(c[1])}" fill="#ffffff" stroke="#a85800" stroke-width=".6"/>'
+          for c in tp.cuts if c[0] == 'rect']
     t = f'{FONT} text-anchor="middle"'
-    for (h, (x, y)), d in zip(info['places'].items(), diams):
-        s.append(f'<circle cx="{X(x):.2f}" cy="{Y(y):.2f}" r="{d / 2:.2f}" fill="#ffffff" '
+    for (h, (i, (u, v))), dia in zip(info['places'].items(), diams):
+        s.append(f'<circle cx="{u + x0:.2f}" cy="{v + y0:.2f}" r="{dia / 2:.2f}" fill="#ffffff" '
                  f'stroke="#a85800" stroke-width=".6"/>')
-        dy = -d / 2 - 2.5 if y < yc else d / 2 + 6
-        s.append(f'<text x="{X(x):.2f}" y="{Y(y) + dy:.2f}" font-size="4.5" fill="#1d232b" {t}>'
-                 f'{h} ø{d:.1f}</text>')
+        dy = -dia / 2 - 2 if v < 0 else dia / 2 + 5
+        s.append(f'<text x="{u + x0:.2f}" y="{v + y0 + dy:.2f}" font-size="4" fill="#1d232b" {t}>'
+                 f'{h} ø{dia:.1f}</text>')
     return (f'<?xml version="1.0" encoding="utf-8"?>\n'
-            f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {X(total) + 6:.0f} {Y(PW) + 6:.0f}">\n'
+            f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W:.0f} {H:.0f}">\n'
             f'<title>{title}</title>\n'
-            f'<desc>Display drawing, not a cut file. The top plate from outside, to scale, beak '
-            f'on the left: the bird\'s footprint dashed, the duct under it in magenta, the nest\'s '
-            f'half engraved in this face and the bird\'s matching it above, the window, '
-            f'the four finger holes named for their fingers with their diameters, and the '
-            f'cavity\'s walls dotted beneath. The right hand\'s holes are at the bottom of the '
-            f'drawing: the player sees the other face.</desc>\n' + '\n'.join(s) + '\n</svg>\n')
+            f'<desc>Display drawing, not a cut file. The cube\'s top plate from outside, to '
+            f'scale, beak on the left, its edges cut into fingers: the bird\'s footprint '
+            f'dashed, the duct under it in magenta, the nest\'s half engraved in this face and '
+            f'the bird\'s matching it above, the window, the four finger holes named for '
+            f'their fingers with their diameters, and the cavity\'s walls dotted beneath. The '
+            f'right hand\'s holes are at the bottom of the drawing: the player sees the other '
+            f'face.</desc>\n' + '\n'.join(s) + '\n</svg>\n')
 
 
 def chart_svg(diams, title):
@@ -206,7 +151,7 @@ def chart_svg(diams, title):
             f'Black is covered, white is open.</desc>\n' + '\n'.join(s) + '\n</svg>\n')
 
 
-MARKUP = '<section class="viewer" id="turn" aria-label="Turn it in 3D">\n  <div class="vbar" role="group" aria-label="Build">__BUTTONS__</div>\n  <div class="stage" id="stage"><canvas id="cv" aria-label="The selected build in 3D. Drag to turn, scroll or pinch to zoom."></canvas>\n    <p class="vinfo" id="vinfo"></p></div>\n  <div class="vctl">\n    <label for="explode">Explode</label><input id="explode" type="range" min="0" max="1" step="0.01" value="0">\n    <button type="button" id="vreset">Reset view</button>\n    <label class="chk"><input type="checkbox" id="xray"> See through the walls</label>\n    <label class="chk"><input type="checkbox" id="nums" checked> Corner numbers</label>\n  </div>\n  <details class="note vhow"><summary>How to use this view</summary><p>Drag to turn, scroll or pinch to zoom. The parts are the generator\'s own outlines before the kerf, so this is the ocarina as built: the box finger-jointed on all twelve edges, every finger flush to the outside; the five solids jointed on every edge at their own angles; the stack\'s six frame layers round the cavity; the window and the four holes in the top; and the beak, the bird glued over it and the chin layer under it. The duct is drawn blue, and exploded, the bird comes out toward you and turns over so the duct faces up.</p></details>\n</section>'
+MARKUP = '<section class="viewer" id="turn" aria-label="Turn it in 3D">\n  <div class="vbar" role="group" aria-label="Build">__BUTTONS__</div>\n  <div class="stage" id="stage"><canvas id="cv" aria-label="The selected build in 3D. Drag to turn, scroll or pinch to zoom."></canvas>\n    <p class="vinfo" id="vinfo"></p></div>\n  <div class="vctl">\n    <label for="explode">Explode</label><input id="explode" type="range" min="0" max="1" step="0.01" value="0">\n    <button type="button" id="vreset">Reset view</button>\n    <label class="chk"><input type="checkbox" id="xray"> See through the walls</label>\n    <label class="chk"><input type="checkbox" id="nums" checked> Corner numbers</label>\n  </div>\n  <details class="note vhow"><summary>How to use this view</summary><p>Drag to turn, scroll or pinch to zoom. The parts are the generator\'s own outlines before the kerf, so this is the ocarina as built: five solids, each finger-jointed on every edge at its own angle; the window in the top, the four holes in the top or on faces of their own; and the beak, the bird glued over it and the chin layer under it. The duct is drawn in its two engrave colours, red on the bird and magenta on the top, and exploded, the bird comes out toward you and turns over so its half faces up.</p></details>\n</section>'
 
 
 NUM_JS = '''  let labels = [];
@@ -323,21 +268,19 @@ def main():
         assert 'Four-hole ocarinas' in page, 'the square flute\'s turn page changed'
         open(tt[0] if tt else os.path.join(HERE, 'turn.html'), 'w').write(page)
     V, kw, ratios, diams = M.design()
-    three, infos = {}, {}
+    three = {}
     for name in B.BUILDS:
-        if name in B.SOLIDS:
-            parts, info = B.build_solid(name, diams)
-            three[name] = solid_solids(parts, info)
-            continue
-        parts, info = B.build(name, V, diams)
-        three[name], infos[name] = solids(name, parts, info), info
+        parts, info = B.build_solid(name, diams, V)
+        three[name] = solid_solids(parts, info)
+        if name == 'cube':
+            cube = parts, info
     if vt or not a:
         open(vt[0] if vt else os.path.join(HERE, 'viewer.js'), 'w').write(viewer_js(three))
     if pt or not a:
         d = pt[0] if pt else os.path.join(HERE, 'plans')
         os.makedirs(d, exist_ok=True)
         open(os.path.join(d, PLANS[0]), 'w').write(
-            plan_svg(infos['box'], diams, 'The box\'s top plate from outside, to scale'))
+            plan_svg(*cube, diams, 'The cube\'s top plate from outside, to scale'))
         open(os.path.join(d, PLANS[1]), 'w').write(
             chart_svg(diams, 'Fingering chart, G4 to G5'))
     print(f'  wrote viewer.js: {len(three)} builds; plans: {", ".join(PLANS)}')

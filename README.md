@@ -2,18 +2,19 @@
 
 <!-- readme-only -->
 **[Read the writeup](https://gernreich.github.io/four-hole-ocarinas/)** ·
-**[Turn all seven builds in 3D](https://gernreich.github.io/four-hole-ocarinas/#turn-it-in-3d)**
+**[Turn all five builds in 3D](https://gernreich.github.io/four-hole-ocarinas/#turn-it-in-3d)**
 
 <!-- page-only **[Read the README](https://github.com/Gernreich/four-hole-ocarinas)** -->
 
-A four-hole ocarina in G4, in 3mm plywood: a rectangular box with a beak to blow
-into, four finger holes in its top, and the English fingering, which gets a whole
-octave out of four holes. All closed it sounds G4; the fingerings below give the
-G major scale up to G5, and five more notes besides.
+Four-hole ocarinas in 3mm plywood, each a solid finger-jointed on every edge at
+whatever angle its faces meet: a cube, a uniform octagonal prism, a square antiprism,
+a regular octahedron and a regular dodecahedron. Each has a beak to blow into, a
+window, four finger holes and the English fingering, which gets a whole octave out
+of four holes.
 
-Five more are solids, finger-jointed on every edge at whatever angle their faces
-meet: a regular octagonal prism, a cube, a square antiprism, a regular octahedron
-and a regular dodecahedron. They take the same window, holes and fingering, so every
+The cube is sized to the model: all closed it sounds G4, and the fingerings below
+give the G major scale up to G5, and three of the five notes between that the scale
+leaves out. The other four take the same window, holes and fingering, so every
 interval is the same; only their cavities differ, and with them the key.
 
 Output is millimetre-true — `1 user unit = 1mm` with a physical `width`/`height` — so
@@ -25,10 +26,10 @@ acoustic model whose window term is not measured, and the first one cut will set
 
 <table>
 <tr>
-<td align="center"><a href="cut-files/box/four-hole-ocarina-G4-box-sheet1-cut-files.svg"><img src="previews/box/four-hole-ocarina-G4-box-sheet1-cut-files.svg" alt="One sheet of parts: a top plate with a short beak at one end, its tip rounded, a small rectangular window beside the beak and four round holes of four sizes, every edge notched for finger joints; a matching bottom plate without the beak; two side walls and two end walls with fingers on all four edges, one end wall plain along part of its top edge where the beak goes; and two small pieces for the mouthpiece, rounded at one end like the beak, one with a red band across it for the bird's half of the duct, and a magenta band on the top plate's beak for the nest's half" width="100%"></a></td>
+<td align="center"><a href="cut-files/cube/four-hole-ocarina-cube-sheet1-cut-files.svg"><img src="previews/cube/four-hole-ocarina-cube-sheet1-cut-files.svg" alt="One sheet of parts: six squares notched for finger joints on every edge, one of them the top, with a short beak at one end, its tip rounded, a rectangular window beside the beak and four round holes of four sizes; one square plain along part of an edge where the beak goes; and two small pieces for the mouthpiece, rounded at one end like the beak, one with a red band across it for the bird's half of the duct, and a magenta band on the top's beak for the nest's half" width="100%"></a></td>
 </tr>
 <tr>
-<td align="center"><sub>box · the whole ocarina on one 580 × 104mm sheet</sub></td>
+<td align="center"><sub>cube · the whole G4 ocarina on one 454 × 70mm sheet</sub></td>
 </tr>
 </table>
 
@@ -41,50 +42,46 @@ generator and tool, indexed.
 
 ## The builds
 
-Seven builds in six sets. The first set is two ways to build the same G4 ocarina:
-its cavity, window and four holes are identical, and only the walls round the
-cavity differ. The other five sets are the solids, which play in whatever key
-their shape holds.
+Five builds, every one a solid: the cube is sized to sound G4, and the other four
+play in whatever key their shape holds.
 
 | Build | Construction | Cavity | Key, all closed | Body | Parts | Sheets |
 |---|---|---|---|---|---|---|
-| `box` | finger-jointed on all twelve edges | 60 × 18 × 143.6mm, 155cm³ | G4, 392.0Hz | 149.6 × 66.0 × 24mm | 8 | 1 |
-| `stack` | laminated stack | 60 × 18 × 143.6mm, 155cm³ | G4, 392.0Hz | 155.6 × 72.0 × 24mm | 10 | 1 |
-| `octagon` | regular octagonal prism, finger-jointed on all 24 edges | 269cm³ | D4 +24 cents, 297.7Hz | 110 × 110 × 36mm | 12 | 1 |
-| `cube` | cube, finger-jointed on all 12 edges | 288cm³ | D4 −34 cents, 287.9Hz | 72 × 72 × 72mm | 8 | 1 |
+| `cube` | cube, finger-jointed on all 12 edges | 155cm³ | G4, 392.0Hz | 59.7 × 59.7 × 59.7mm | 8 | 1 |
+| `octagon` | uniform octagonal prism, finger-jointed on all 24 edges | 354cm³ | C4 −16 cents, 259.3Hz | 110 × 110 × 45.6mm | 12 | 1 |
 | `square-antiprism` | square antiprism, finger-jointed on all 16 edges | 279cm³ | D4 −7 cents, 292.4Hz | 101.8 × 101.8 × 60.5mm | 12 | 1 |
 | `octahedron` | regular octahedron, finger-jointed on all 12 edges | 127cm³ | A4 −30 cents, 432.5Hz | 83.1 × 72.0 × 58.8mm | 10 | 1 |
 | `dodecahedron` | regular dodecahedron, finger-jointed on all 30 edges | 283cm³ | D4 −21 cents, 290.1Hz | 99.1 × 94.2 × 80.2mm | 14 | 1 |
 
-In the box and the solids the bird and the chin layer are glued and the rest is
-press-fit; the stack is glued throughout.
+The bird and the chin layer are glued, and the rest is press-fit.
 
-The body is length × width × depth; the beak runs 18mm past it at the mouth end, the
-bird stands 3mm on the top over it, and the chin layer hangs 3mm under it.
+The body is length × width × height, the octagon's across its flats; the beak runs 18mm
+past it at the mouth end, the bird stands 3mm on the top over it, and the chin layer
+hangs 3mm under it.
 
-- **The box** is six plates finger-jointed on all twelve edges, every finger flush to
-  the outside faces. Each edge carries as many fingers as fit at the square flute's
-  6mm: 23 cells along the box, 9 across it and 3 up each corner, alternating between
-  the two plates that meet there. The corner cubes belong to the side walls. The one
-  gap in the pattern is under the beak: the mouth-end wall sends no fingers up into
-  the top there, so the beak runs on from solid ply and the duct crosses no seam.
-- **The stack** is a bottom layer, six frame layers with the cavity cut out of them,
-  and the top, all glued.
-- **The octagon** is a regular octagonal prism, 110mm across the flats and 36mm
-  tall: two regular octagons, top and bottom, and eight walls 45.6mm wide. It is
-  wider and taller than the box, and shorter. The walls meet each other at 135 degrees
+- **The cube** is six 59.7mm squares, eight or nine fingers to an edge, sized so that
+  its cavity, 53.7mm on a side, holds the 155cm³ that G4 asks for. The top and
+  bottom own the corners, and the window and the four holes are on the top. Under
+  the beak the face below sends no fingers up into the top, so the beak runs on from
+  solid ply and the duct crosses no seam; every build does the same. Until
+  2026-10-18 the G4 build was a long box, 60 × 18mm inside and as long as the volume
+  needed, finger-jointed or glued up as a laminated stack. At the 14 × 7mm window
+  it ran 144mm, 157mm corner to corner inside against a quarter wavelength of 221mm,
+  close enough that it would start to act like a tube; the cube is 93mm corner to
+  corner. So the box became a cube and the stack went, and every build is a regular
+  or uniform solid.
+- **The octagon** is a uniform octagonal prism, 110mm across the flats and as tall
+  as a wall is wide, 45.6mm: two regular octagons, top and bottom, and eight 45.6mm
+  squares. It was 36mm tall until 2026-10-18, a prism but not a uniform one. It holds
+  the most air, so it plays lowest, C4. The walls meet each other at 135 degrees
   with six fingers to an edge, and the top and bottom at 90 with seven; the top and
   bottom own the corners. The holes and the window are in the top, the beak runs out
   from the middle of one wall's top edge, and that wall sends no fingers up into the
-  top, as the box's end wall does not.
-- **The cube** is six 72mm squares, twelve 6mm fingers or eleven to an edge. It
-  is the box made regular, and built as a solid, not as the box is: the top and
-  bottom own the corners, and the window and the four holes are on the top, on the
-  octagon's grid.
+  top, as on the cube.
 - **The square antiprism** is two 72mm squares, top and bottom, a quarter turn apart,
   and eight equilateral triangles between them, 60.5mm tall. Squares meet triangles
   at 103.8 degrees with eleven fingers to an edge, and triangles meet each other at
-  127.5 with twelve. The window and the holes are on the top square, on the same
+  127.5 with twelve. The window and the holes are on the top square, on the cube's
   grid. The triangle under the beak slopes away beneath it, so it stops 3.1mm short
   of the top there, clear of the beak's underside, and the chin layer is cut 1.5mm
   shorter to clear the slope.
@@ -95,8 +92,8 @@ bird stands 3mm on the top over it, and the chin layer hangs 3mm under it.
   either side, with the index finger's hole nearer the beak and both holes placed as
   far from the triangle's walls and from each other as they will go. The triangle
   under the beak stops 3.2mm short there, and the chin layer is 2.1mm shorter. It
-  holds the least air of the solids, less than the box, so it plays highest, a fifth
-  above the others and 30 cents below A4.
+  holds the least air, less than the cube, so it plays highest, A4 −30 cents, a
+  fifth over the antiprism and the dodecahedron.
 - **The dodecahedron** stands on one of its twelve regular pentagons, every edge
   36mm, every joint at 116.6 degrees with five or six fingers. The top pentagon
   carries the window, and each hole has a pentagon of its own, where it is furthest
@@ -148,10 +145,9 @@ fingers step back 3mm × sin of the angle, the joints close on the outside, and 
 corners are checked in 3D. Boxes does not make the octagonal prism or the
 antiprism.
 
-None of the builds has anything to slide, so all are tuned at the window and the holes. The box
-had a press-fit end plug to tune with until it was jointed on every edge.
+None of the builds has anything to slide, so all are tuned at the window and the holes.
 
-All seven carry the same mouthpiece: the top plate runs on past the body as a beak 24mm
+All five carry the same mouthpiece: the top plate runs on past the body as a beak 24mm
 wide. One layer, the bird, is glued over it and one, the chin layer, under it, so the
 mouthpiece is three plies, 9mm thick, with the duct near its middle. The duct is
 14mm wide, the window's width, and runs from the beak's tip to the window. Only the bird is needed for the sound; the chin layer gives the
@@ -180,7 +176,7 @@ simulate the jet, so which voices best is for a test cut to show.
 ## Turn it in 3D
 
 <!-- readme-only -->
-All seven builds turn in 3D on the [published page](https://gernreich.github.io/four-hole-ocarinas/#turn-it-in-3d),
+All five builds turn in 3D on the [published page](https://gernreich.github.io/four-hole-ocarinas/#turn-it-in-3d),
 which GitHub does not run: drag to turn it, pull it apart into its parts, or see
 through the walls into the cavity.
 
@@ -224,15 +220,14 @@ three of them give the notes it lacks closely enough to use: C♯5, D♯5 and F5
 | L1 L2 | 689.2Hz | F5 | −23.2c |
 | R2 L1 L2 | 718.5Hz | F5 | +49.0c |
 
-The five solids take these fingerings unchanged. A hole's pitch
-rises by the same ratio whatever cavity it opens, so each solid plays this major
-scale and these cents from its own closed note: D4 +24 cents on the octagon, D4 −34
-on the cube, D4 −7 on the square antiprism, A4 −30 on the octahedron and D4 −21 on
-the dodecahedron.
+The other four builds take these fingerings unchanged. A hole's pitch rises by the
+same ratio whatever cavity it opens, so each plays this major scale and these cents
+from its own closed note: C4 −16 cents on the octagon, D4 −7 on the square
+antiprism, A4 −30 on the octahedron and D4 −21 on the dodecahedron.
 
 ## What the model says
 
-**An ocarina is a vessel, not a tube.** Its cavity is about 150mm across at most and the
+**An ocarina is a vessel, not a tube.** The cube's cavity is 93mm corner to corner and the
 wavelength at G4 is 880mm, so the air inside acts as one spring and the air in each
 opening as a mass on it: a Helmholtz resonator. The pitch depends on the cavity's
 volume and on how much air each opening lets through, its conductance, and **not at
@@ -250,7 +245,7 @@ out. Open holes add to the window's in parallel, so every note asks for a sum:
 | `L2` | left middle | 1.016 × | 11.32mm |
 
 The window is 14 × 7mm, with a conductance of 7.85mm. G4 from that window asks for a
-cavity of 155.1cm³, which is the 60 × 18 × 143.6mm the box and the stack have.
+cavity of 155.1cm³, which is the cube's 53.7mm inside, 59.7mm outside.
 
 **The window is as big as the holes allow.** The top note, an octave over the closed
 one, needs the open holes to pass three times the window's conductance, so the holes
@@ -294,15 +289,17 @@ python3 ocarina_model.py --heard=380   # the pitch you heard, in Hz
 ```
 
 prints the `--mouth` that explains it, and the command to redraw every build with
-it. It reads the pitch as the box's or the stack's, whose cavity the model was sized
-for: a solid's closed note says how it speaks, not what the window's correction is. A first build that sounds 50 cents flat is not a failure; it is the measurement.
+it. It reads the pitch as the cube's, the build the model was sized for: another
+solid's closed note says how it speaks, not what the window's correction is. With a
+new `--mouth` the cube is redrawn at whatever edge holds the new volume. A first build that sounds 50 cents flat is not a failure; it is the measurement.
 
-**The solids are a step further from anything measured.** They share the box's 14 ×
-7mm window on cavities 0.8 to 1.9 times its size, so the four bigger ones play about
-a fourth below it, D4 against G4, through the same window. The window is as big as the holes
-allow, but whether it is big enough for them to speak strongly is for a test to show.
-Their pitch does not matter here, but whether they sound does: cut the octahedron,
-the nearest to the box, before the others.
+**Cut the cube first.** It is the build the model was sized for, and its closed
+note measures the window. The other four are a step further from anything
+measured: they share its 14 × 7mm window on cavities 0.8 to 2.3 times its size, so
+three play a fourth or a fifth below it through the same window. The window is as
+big as the holes allow, but whether it is big enough for them to speak strongly is
+for a test to show. Their pitch does not matter here, but whether they sound does:
+of the four, cut the octahedron, the nearest to the cube, first.
 
 **The holes can only go up.** A hole that plays flat can be opened with a file. A hole
 that plays sharp cannot be closed up, so file in small steps.
@@ -322,46 +319,43 @@ ragged or choked with char. Clear it with a 4mm drill held in the fingers, which
 takes off the char and nothing more.
 
 **Cut it in 3mm Baltic birch plywood**, at a 0.13mm kerf. The fingers are the square
-flute's size or a little over: each edge is split into equal cells, 6.24mm along the
-box, 6.67mm across it and 6.00mm up the corners, and 6.00 to 7.20mm on the solids,
-with no play, so the fit comes from the kerf compensation alone. **If your laser's
+flute's size or a little over: each edge is split into equal cells, 6.00 to 7.59mm
+wide, with no play, so the fit comes from the kerf compensation alone. **If your laser's
 kerf is not 0.13mm, redraw the sheets for its own** with `--kerf=`: a press-fit that
 comes out loose wants a wider kerf, one too tight to close a narrower one. Each
 0.05mm more makes every finger 0.05mm tighter against each side of its slot: the
-finger is drawn 0.05mm wider and the slot 0.05mm narrower. Glue the bird on the top, the chin layer under the
-beak, and every layer of the stack. Press-fit
-the box, then seal every seam with shellac, inside where you can reach and outside
+finger is drawn 0.05mm wider and the slot 0.05mm narrower. Glue the bird on the top and the chin layer under the
+beak. Press-fit the rest, then seal every seam with shellac, inside where you can reach and outside
 everywhere: a Helmholtz resonator leaks its note out of any gap.
 
 Run the engraves first, then the cuts. **Red** and **magenta** engrave the duct,
 filled: red the bird's half, magenta the nest's, either or both. **Blue** engraves the
-solids' corner numbers, as single lines. Then **orange** cuts the window and the
-holes (and the stack's cavity), and **black** frees the parts. Red and magenta are
+corner numbers, as single lines. Then **orange** cuts the window and the holes, and
+**black** frees the parts. Red and magenta are
 outside the house order, whose one engrave colour is blue: the two halves need a
-colour each so that either can be left off. The solids' plates are drawn inside face
-up, so the numbers land on the inside, except the top, drawn outside face up for its
-half of the duct; the box and the stack are not numbered, and the 3D view shows where
-each of their parts goes.
+colour each so that either can be left off. The plates are drawn inside face up, so
+the numbers land on the inside, except the top, drawn outside face up for its half
+of the duct.
 
 ## Tuning
 
 1. File the splitting edge, then glue the bird on, its end flush with the window's
    near edge so the duct opens straight on to it, and the chin layer under the beak,
    its end against the body.
-2. Press the box together, or glue up the stack. A solid goes together by its corner
-   numbers, every plate to the corners that carry its numbers; fill the square
-   antiprism's and the octahedron's open corners with glue or wood filler.
-3. With every hole closed, play the closed note: G4 on the box and the stack, and on
-   a solid the note in the table of builds. If the box or the stack is out by more
-   than breath will bend, run `--heard` and note the `--mouth` for the next cut.
+2. Press the solid together by its corner numbers, every plate to the corners that
+   carry its numbers; fill the square antiprism's and the octahedron's open corners
+   with glue or wood filler.
+3. With every hole closed, play the closed note: G4 on the cube, and on the others
+   the note in the table of builds. If the cube is out by more than breath will
+   bend, run `--heard` and note the `--mouth` for the next cut.
 4. Open each hole alone, smallest first, and file it up to the model's pitch for
    it: `R2` alone 441.6Hz, `R1` 488.4Hz, `L2` 556.6Hz and `L1` 564.6Hz. The
-   scale's other notes are sums of these four and follow from them. The solids
-   play in their own keys but by the same steps: on the octagon `R2` alone is 335.4Hz,
-   `R1` 371.0Hz, `L2` 422.8Hz and `L1` 428.8Hz; on the cube 324.3, 358.7, 408.8 and
-   414.6Hz; on the square antiprism 329.4, 364.4, 415.2 and 421.2Hz; on the
-   octahedron 487.2, 538.9, 614.1 and 622.9Hz; on the dodecahedron 326.8, 361.5,
-   411.9 and 417.8Hz. Tune the solids from whatever the closed note turns out to be:
+   scale's other notes are sums of these four and follow from them. Those are the
+   cube's. The others play in their own keys but by the same steps: on the octagon
+   `R2` alone is 292.1Hz, `R1` 323.0Hz, `L2` 368.1Hz and `L1` 373.4Hz; on the square
+   antiprism 329.4, 364.4, 415.2 and 421.2Hz; on the octahedron 487.2, 538.9, 614.1
+   and 622.9Hz; on the dodecahedron 326.8, 361.5, 411.9 and 417.8Hz. Tune any of
+   them from whatever its closed note turns out to be:
    each hole alone sounds 1.127, 1.246, 1.420 and 1.440 times it.
 5. Seal with shellac once it plays in tune.
 
@@ -373,7 +367,7 @@ python3 ocarina_model.py --mouth=1.2           # with a different window correct
 python3 ocarina_model.py --heard=380           # the correction a cut ocarina implies
 python3 ocarina_model.py --search              # the fingering patterns, ranked
 python3 four_hole_ocarinas.py --no-write              # the generator's checks, writing nothing
-python3 four_hole_ocarinas.py --out=cut-files         # all seven builds
+python3 four_hole_ocarinas.py --out=cut-files         # all five builds
 python3 four_hole_ocarinas.py --kerf=0.18 --out=mine   # for a laser with a 0.18mm kerf
 python3 page_assets.py                         # viewer.js, turn.html and the two plans
 ```
@@ -384,37 +378,22 @@ four conductances by a pattern search that minimises the worst note's error in c
 different fingerings. The tightest heads the list, at 12.3 cents and 11 finger moves
 up the scale; the one used here is at 19.2 cents and 10 moves, chosen for its holes.
 
-`four_hole_ocarinas.py` builds all seven from what the model asks for and checks them
-before writing anything. For the box and the stack:
+`four_hole_ocarinas.py` builds all five from what the model asks for and checks them
+before writing anything. The solids are built by `polyhedron.py`, which takes any
+convex solid as its faces' planes and joints every edge at its own angle. It checks:
 
 - the model holds the scale within 20 cents
-- the cavity is the volume the model asks for, and small against a quarter wavelength:
-  157mm corner to corner against 221mm
+- the cube's cavity is the volume the model asks for
+- the cavity is small against a quarter wavelength, so it rings as one chamber:
+  93mm corner to corner against 221mm in the cube
 - every hole speaks and a finger covers it: from 2.5 to 13mm across
-- every hole opens into the cavity, clear of its walls and the window
-- ply left between neighbouring holes
-- the window opens into the cavity at its mouth-end wall
-- the duct runs from the beak's tip to the window, its two halves lined up in the
-  bird and the top
-- the top plate is drawn outside face up, so the nest's half of the duct engraves the
-  outside, and each hand's holes lie under that hand
-- the chin layer fills the beak's underside and stops at the body
-- in the box, every edge is finger-jointed with as many 6mm cells as fit, and the
-  six plates fill every cell of all twelve edges and all eight corners exactly once:
-  433 cells and corners checked, each found in one plate
-- every sheet fits the bed, and every part is on a sheet
-
-The solids are built by `polyhedron.py`, which takes any convex solid as its faces'
-planes and joints every edge at its own angle. For them it checks:
-
-- the model holds the scale, the same as the first set's
-- the cavity is small against a quarter wavelength, so it rings as one chamber
-- every hole and the window open into the cavity, and ply is left between holes
+- every hole and the window open into the cavity, and ply is left between the holes
+  and between the holes and the window
 - each hand's holes lie under that hand, worked out from the geometry
 - the duct runs from the beak's tip to the window, its two halves lined up in the
   bird and the top, and the top carries no numbers
 - every edge is finger-jointed with as many 6mm cells as fit
-- along every joint, no point lies in two plates: from 1224 points on the cube
+- along every joint, no point lies in two plates: from 936 points on the cube
   to 1656 on the square antiprism, through each finger from the outside edge to the
   inner corner
 - every joint closes except within a finger of a corner, where the shellac goes
@@ -439,29 +418,21 @@ in swept-curve, so it expects both repositories cloned beside this one.
 
 `.repro` holds the exact command for every generated file here.
 
-The top plate, from outside and to scale, beak on the left:
+The cube's top plate, from outside and to scale, beak on the left:
 
-![The box's top plate from outside, to scale: the beak on the left with the bird's footprint dashed over it and the duct in magenta, the small rectangular window at the start of the cavity, whose walls are dotted beneath the plate, and the four round holes, L1 of 11.8mm and L2 of 11.3mm on the upper side, R1 of 7.0mm and R2 of 4.2mm on the lower](plans/four-hole-ocarina-G4-top-plate.svg)
+![The cube's top plate from outside, to scale, its edges cut into fingers: the beak on the left with the bird's footprint dashed over it and the duct in magenta, the rectangular window at the start of the cavity, whose walls are dotted beneath the plate, and the four round holes, L1 of 11.8mm and L2 of 11.3mm on the upper side, R1 of 7.0mm and R2 of 4.2mm on the lower](plans/four-hole-ocarina-G4-top-plate.svg)
 
 ## Every cut sheet
 
 Each picture is a display rendering; click it for the cut file.
 
-**`box`** · finger-jointed on all twelve edges, cavity 60 × 18 × 143.6mm · 8 parts on 1 sheet
-
-[![box, sheet 1 of 1: the parts laid out for the laser, the window and holes in orange, outlines in black, the duct in red on the bird and magenta on the top](previews/box/four-hole-ocarina-G4-box-sheet1-cut-files.svg)](cut-files/box/four-hole-ocarina-G4-box-sheet1-cut-files.svg)
-
-**`stack`** · laminated stack, cavity 60 × 18 × 143.6mm · 10 parts on 1 sheet
-
-[![stack, sheet 1 of 1: the parts laid out for the laser, the window, holes and six cavity cut-outs in orange, outlines in black, the duct in red on the bird and magenta on the top](previews/stack/four-hole-ocarina-G4-stack-sheet1-cut-files.svg)](cut-files/stack/four-hole-ocarina-G4-stack-sheet1-cut-files.svg)
-
-**`octagon`** · regular octagonal prism, finger-jointed on all 24 edges, cavity 269cm³ · 12 parts on 1 sheet
-
-[![octagon, sheet 1 of 1: two regular octagons with fingers on every edge, one with the beak, the window and four holes in orange; eight rectangular walls with fingers on all four edges, one plain along part of an edge where the beak goes; the bird with its half of the duct in red, the other half in magenta on the beak and the chin layer](previews/octagon/four-hole-ocarina-octagon-sheet1-cut-files.svg)](cut-files/octagon/four-hole-ocarina-octagon-sheet1-cut-files.svg)
-
-**`cube`** · cube, finger-jointed on all 12 edges, cavity 288cm³ · 8 parts on 1 sheet
+**`cube`** · cube, finger-jointed on all 12 edges, cavity 155cm³, G4 · 8 parts on 1 sheet
 
 [![cube, sheet 1 of 1: six squares with fingers on every edge, one with the beak, the window and four holes in orange, one plain along part of an edge where the beak goes; the bird with its half of the duct in red, the other half in magenta on the beak and the chin layer](previews/cube/four-hole-ocarina-cube-sheet1-cut-files.svg)](cut-files/cube/four-hole-ocarina-cube-sheet1-cut-files.svg)
+
+**`octagon`** · uniform octagonal prism, finger-jointed on all 24 edges, cavity 354cm³ · 12 parts on 1 sheet
+
+[![octagon, sheet 1 of 1: two regular octagons with fingers on every edge, one with the beak, the window and four holes in orange; eight square walls with fingers on all four edges, one plain along part of an edge where the beak goes; the bird with its half of the duct in red, the other half in magenta on the beak and the chin layer](previews/octagon/four-hole-ocarina-octagon-sheet1-cut-files.svg)](cut-files/octagon/four-hole-ocarina-octagon-sheet1-cut-files.svg)
 
 **`square-antiprism`** · square antiprism, finger-jointed on all 16 edges, cavity 279cm³ · 12 parts on 1 sheet
 
@@ -479,15 +450,13 @@ Each picture is a display rendering; click it for the cut file.
 
 | | |
 |---|---|
-| `cut-files/box/four-hole-ocarina-G4-box-sheet1-cut-files.svg` | the box, finger-jointed |
-| `cut-files/stack/four-hole-ocarina-G4-stack-sheet1-cut-files.svg` | the laminated stack |
+| `cut-files/cube/four-hole-ocarina-cube-sheet1-cut-files.svg` | the cube, in G4 |
 | `cut-files/octagon/four-hole-ocarina-octagon-sheet1-cut-files.svg` | the octagonal prism |
-| `cut-files/cube/four-hole-ocarina-cube-sheet1-cut-files.svg` | the cube |
 | `cut-files/square-antiprism/four-hole-ocarina-square-antiprism-sheet1-cut-files.svg` | the square antiprism |
 | `cut-files/octahedron/four-hole-ocarina-octahedron-sheet1-cut-files.svg` | the octahedron |
 | `cut-files/dodecahedron/four-hole-ocarina-dodecahedron-sheet1-cut-files.svg` | the dodecahedron |
 | `previews/` | display renderings of every sheet — **not** cut files |
-| `plans/four-hole-ocarina-G4-top-plate.svg` · `plans/four-hole-ocarina-G4-fingering.svg` | the box's top plate to scale, and the fingering chart — display drawings, **not** cut files |
+| `plans/four-hole-ocarina-G4-top-plate.svg` · `plans/four-hole-ocarina-G4-fingering.svg` | the cube's top plate to scale, and the fingering chart — display drawings, **not** cut files |
 | `viewer.js` | the 3D view of every build, loaded by the published page |
 | `turn.html` | the same 3D view on a page of its own, for framing elsewhere |
 | `ocarina_model.py` | the acoustic model |

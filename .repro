@@ -8,19 +8,15 @@
 # by side.
 
 # --- the cut files ---
-cut-files/box/four-hole-ocarina-G4-box-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=box --flat --out=$(dirname $OUT)
-cut-files/stack/four-hole-ocarina-G4-stack-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=stack --flat --out=$(dirname $OUT)
-cut-files/octagon/four-hole-ocarina-octagon-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=octagon --flat --out=$(dirname $OUT)
 cut-files/cube/four-hole-ocarina-cube-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=cube --flat --out=$(dirname $OUT)
+cut-files/octagon/four-hole-ocarina-octagon-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=octagon --flat --out=$(dirname $OUT)
 cut-files/square-antiprism/four-hole-ocarina-square-antiprism-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=square-antiprism --flat --out=$(dirname $OUT)
 cut-files/octahedron/four-hole-ocarina-octahedron-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=octahedron --flat --out=$(dirname $OUT)
 cut-files/dodecahedron/four-hole-ocarina-dodecahedron-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=dodecahedron --flat --out=$(dirname $OUT)
 
 # --- the previews, from the cut files ---
-previews/box/four-hole-ocarina-G4-box-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/box/four-hole-ocarina-G4-box-sheet1-cut-files.svg $OUT
-previews/stack/four-hole-ocarina-G4-stack-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/stack/four-hole-ocarina-G4-stack-sheet1-cut-files.svg $OUT
-previews/octagon/four-hole-ocarina-octagon-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/octagon/four-hole-ocarina-octagon-sheet1-cut-files.svg $OUT
 previews/cube/four-hole-ocarina-cube-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/cube/four-hole-ocarina-cube-sheet1-cut-files.svg $OUT
+previews/octagon/four-hole-ocarina-octagon-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/octagon/four-hole-ocarina-octagon-sheet1-cut-files.svg $OUT
 previews/square-antiprism/four-hole-ocarina-square-antiprism-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/square-antiprism/four-hole-ocarina-square-antiprism-sheet1-cut-files.svg $OUT
 previews/octahedron/four-hole-ocarina-octahedron-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/octahedron/four-hole-ocarina-octahedron-sheet1-cut-files.svg $OUT
 previews/dodecahedron/four-hole-ocarina-dodecahedron-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/dodecahedron/four-hole-ocarina-dodecahedron-sheet1-cut-files.svg $OUT
