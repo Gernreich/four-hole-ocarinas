@@ -87,6 +87,7 @@ def solids(kind, parts, info):
                     'h': holes, 'm': [[round(v, 4) for v in r] for r in m],
                     'e': e, 'g': g, 'name': n,
                     'f': [[[round(x, 3), round(y, 3)] for x, y in f] for f in p.fills],
+                    'fc': getattr(p, 'ink', None),
                     'flip': flip, 'zc': round(m[2][3] + m[2][2] * T / 2, 3)})
     return {'parts': out, 'len': round(info['total'], 1), 'top': round(2 * T + D, 2),
             'cav': f'{W:g} × {D:g} × {info["Lc"]:.1f}mm'}
@@ -121,6 +122,7 @@ def solid_solids(parts, info):
                     'h': holes, 'm': [[round(v, 4) for v in r] for r in m],
                     'e': e, 'g': g, 'name': p.name,
                     'f': [[[round(x, 3), round(y, 3)] for x, y in f] for f in p.fills],
+                    'fc': getattr(p, 'ink', None),
                     'flip': flip, 'zc': round(zc, 3)})
         if hasattr(p, 'numbers'):
             # drawn inside face up for the laser; back into the plate's frame
