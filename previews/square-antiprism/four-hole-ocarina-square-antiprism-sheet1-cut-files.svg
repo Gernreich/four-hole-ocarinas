@@ -9,11 +9,11 @@
      Cut the file in the repository root, not this one. -->
   <rect x="0.0" y="0.0" width="599.23" height="144.36" fill="#ffffff"/>
 <title>Four-hole ocarina in G4, square-antiprism, sheet 1 of 1</title>
-<desc>1 user unit = 1mm. Four-hole ocarina in G4, English fingering, square-antiprism, sheet 1 of 1: bird, bottom, chin layer, mouth triangle, top plate, triangle. 3mm ply, drawn for a 0.13mm kerf. Blue #0000ff engraves the duct, a fill engrave about 1mm deep -- set the depth on scrap first; orange #ff8000 cuts the window, the holes; black #000000 frees the parts. Red #ff0000 line-engraves the corner numbers, lightly, before anything is cut: the plates lie inside face up, so they mark the inside, and the plates that meet at a corner carry its number.</desc>
+<desc>1 user unit = 1mm. Four-hole ocarina in G4, English fingering, square-antiprism, sheet 1 of 1: bird, bottom, chin layer, mouth triangle, top plate, triangle. 3mm ply, drawn for a 0.13mm kerf. Blue #0000ff engraves the duct, a fill engrave about 1mm deep -- set the depth on scrap first; orange #ff8000 cuts the window, the holes; black #000000 frees the parts. Blue also engraves the corner numbers, as single lines: the plates lie inside face up, so they mark the inside, and the plates that meet at a corner carry its number.</desc>
   <g fill="#0000ff" stroke="none">
     <path d="M 165.780,88.195 L 165.780,98.195 L 145.507,98.195 L 145.420,97.900 L 145.339,97.602 L 145.262,97.301 L 145.192,96.996 L 145.126,96.689 L 145.066,96.380 L 145.012,96.068 L 144.964,95.754 L 144.921,95.438 L 144.883,95.121 L 144.852,94.802 L 144.826,94.482 L 144.806,94.161 L 144.791,93.839 L 144.782,93.517 L 144.780,93.195 L 144.782,92.873 L 144.791,92.551 L 144.806,92.229 L 144.826,91.908 L 144.852,91.588 L 144.883,91.269 L 144.921,90.952 L 144.964,90.636 L 145.012,90.322 L 145.066,90.010 L 145.126,89.701 L 145.192,89.394 L 145.262,89.089 L 145.339,88.788 L 145.420,88.490 L 145.507,88.195 Z"/>
   </g>
-  <g fill="none" stroke="#ff0000" stroke-width="1.198">
+  <g fill="none" stroke="#0000ff" stroke-width="1.198">
     <path d="M 89.499,9.229 L 90.471,8.957 L 91.173,9.659 L 90.901,10.631 L 90.392,11.141 L 87.292,11.435 L 88.695,12.838"/>
     <path d="M 91.524,72.121 L 90.121,73.524 L 89.637,71.462"/>
     <path d="M 89.637,71.462 L 88.848,72.251 L 87.745,71.148 L 87.608,70.380 L 88.380,69.608 L 89.148,69.745"/>

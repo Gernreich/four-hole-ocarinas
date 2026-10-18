@@ -74,7 +74,6 @@ T, KERF, FINGER = SF.T, SF.KERF, SF.FINGER
 MIN_WEB = SF.MIN_WEB
 BED, MARGIN = SF.BED, SF.MARGIN
 BLUE, ORANGE, BLACK = SF.BLUE, SF.ORANGE, SF.BLACK
-RED = '#ff0000'                # line-engraves the solids' corner numbers
 
 W_IN = 60.0          # the cavity across: room for two columns of holes
 D_IN = 18.0          # and deep: six 3mm frame layers in the stack
@@ -974,7 +973,7 @@ def mouthpiece_scan(parts, step=0.5):
 # --- sheets ------------------------------------------------------------------
 
 def svg_sheet(name, k, n, s, what):
-    orange, black, fills, red = [], [], [], []
+    orange, black, fills, nums = [], [], [], []
     for p, sx, sy in s['parts']:
         dx, dy = sx - p.x0 + KERF / 2, sy - p.y0 + KERF / 2
         mv = lambda pts: [(x + dx, y + dy) for x, y in pts]
@@ -989,16 +988,16 @@ def svg_sheet(name, k, n, s, what):
         for f in p.fills:
             fills.append(path(mv(f)))
         for st in getattr(p, 'strokes', []):
-            red.append(path(mv(st), close=False))
+            nums.append(path(mv(st), close=False))
     desc = (f'1 user unit = 1mm. Four-hole ocarina in G4, English fingering, {name}, '
             f'sheet {k} of {n}: {what}. 3mm ply, drawn for a {KERF:g}mm kerf. '
             f'Blue {BLUE} engraves the duct, a fill engrave about 1mm deep -- set the '
             f'depth on scrap first; orange {ORANGE} cuts the window, the holes'
             + (' and the cavity' if name == 'stack' else '')
             + f'; black {BLACK} frees the parts.'
-            + (f' Red {RED} line-engraves the corner numbers, lightly, before anything is '
-               f'cut: the plates lie inside face up, so they mark the inside, and the '
-               f'plates that meet at a corner carry its number.' if red else ''))
+            + (f' Blue also engraves the corner numbers, as single lines: the plates '
+               f'lie inside face up, so they mark the inside, and the plates that meet '
+               f'at a corner carry its number.' if nums else ''))
     g = lambda col, items: (
         f'  <g fill="none" stroke="{col}" stroke-width="0.2">\n'
         + ''.join(f'    {i}\n' if i.startswith('<') else f'    <path d="{i}"/>\n'
@@ -1010,7 +1009,7 @@ def svg_sheet(name, k, n, s, what):
             f'<desc>{desc}</desc>\n'
             f'  <g fill="{BLUE}" stroke="none">\n'
             + ''.join(f'    <path d="{d}"/>\n' for d in fills) + '  </g>\n'
-            + (g(RED, red) if red else '') + g(ORANGE, orange) + g(BLACK, black) + '</svg>\n')
+            + (g(BLUE, nums) if nums else '') + g(ORANGE, orange) + g(BLACK, black) + '</svg>\n')
 
 
 def main():

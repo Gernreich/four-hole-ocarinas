@@ -129,7 +129,7 @@ all show its number, so the solid goes together by matching them. The 3D view
 labels every plate's corners with them (the Corner numbers box turns them off);
 pulled apart, it shows each plate with its own. They are numbered from the top down, 1 at the top
 plate's corner beside the beak on the right hand's side. Each number is
-line-engraved on the plate's inside face, where the finished ocarina hides it,
+engraved in single lines on the plate's inside face, where the finished ocarina hides it,
 4mm tall, its top toward its corner, and set in until it clears the joints, the
 holes and the window by 1mm.
 
@@ -288,9 +288,9 @@ beak, and every layer of the stack. Press-fit
 the box, then seal every seam with shellac, inside where you can reach and outside
 everywhere: a Helmholtz resonator leaks its note out of any gap.
 
-Run the colours **blue, red, orange, black**: blue engraves the duct, red
-line-engraves the solids' corner numbers, lightly, orange cuts the window and the
-holes (and the stack's cavity), and black frees the parts. The solids' plates are
+Run the colours **blue, orange, black**: blue engraves the duct, filled, and the
+solids' corner numbers, as single lines, orange cuts the window and the holes (and
+the stack's cavity), and black frees the parts. The solids' plates are
 drawn inside face up, so the numbers land on the inside; the box and the stack are
 not numbered, and the 3D view shows where each of their parts goes.
 

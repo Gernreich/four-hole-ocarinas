@@ -9,11 +9,11 @@
      Cut the file in the repository root, not this one. -->
   <rect x="0.0" y="0.0" width="592.45" height="126.25" fill="#ffffff"/>
 <title>Four-hole ocarina in G4, dodecahedron, sheet 1 of 1</title>
-<desc>1 user unit = 1mm. Four-hole ocarina in G4, English fingering, dodecahedron, sheet 1 of 1: bird, bottom, chin layer, mouth pentagon, pentagon, top plate. 3mm ply, drawn for a 0.13mm kerf. Blue #0000ff engraves the duct, a fill engrave about 1mm deep -- set the depth on scrap first; orange #ff8000 cuts the window, the holes; black #000000 frees the parts. Red #ff0000 line-engraves the corner numbers, lightly, before anything is cut: the plates lie inside face up, so they mark the inside, and the plates that meet at a corner carry its number.</desc>
+<desc>1 user unit = 1mm. Four-hole ocarina in G4, English fingering, dodecahedron, sheet 1 of 1: bird, bottom, chin layer, mouth pentagon, pentagon, top plate. 3mm ply, drawn for a 0.13mm kerf. Blue #0000ff engraves the duct, a fill engrave about 1mm deep -- set the depth on scrap first; orange #ff8000 cuts the window, the holes; black #000000 frees the parts. Blue also engraves the corner numbers, as single lines: the plates lie inside face up, so they mark the inside, and the plates that meet at a corner carry its number.</desc>
   <g fill="#0000ff" stroke="none">
     <path d="M 587.384,12.065 L 587.384,22.065 L 567.111,22.065 L 567.024,21.770 L 566.943,21.472 L 566.867,21.171 L 566.796,20.866 L 566.731,20.559 L 566.671,20.250 L 566.616,19.938 L 566.568,19.624 L 566.525,19.308 L 566.488,18.991 L 566.456,18.672 L 566.430,18.352 L 566.410,18.031 L 566.395,17.709 L 566.387,17.387 L 566.384,17.065 L 566.387,16.743 L 566.395,16.421 L 566.410,16.099 L 566.430,15.778 L 566.456,15.458 L 566.488,15.139 L 566.525,14.822 L 566.568,14.506 L 566.616,14.192 L 566.671,13.880 L 566.731,13.571 L 566.796,13.264 L 566.867,12.959 L 566.943,12.658 L 567.024,12.360 L 567.111,12.065 Z"/>
   </g>
-  <g fill="none" stroke="#ff0000" stroke-width="1.185">
+  <g fill="none" stroke="#0000ff" stroke-width="1.185">
     <path d="M 73.963,33.198 L 73.963,35.182 L 72.163,34.066"/>
     <path d="M 72.163,34.066 L 72.163,35.182 L 70.603,35.182 L 69.963,34.735 L 69.963,33.644 L 70.603,33.198"/>
     <path d="M 54.204,55.384 L 55.440,59.188 L 55.968,56.157 L 54.081,56.770"/>
