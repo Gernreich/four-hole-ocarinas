@@ -125,8 +125,9 @@ look alike but are not: each has its own pattern of fingers, set by which corner
 are whose, so each goes in one place only. **Every corner of a solid has a number,
 and every plate carries it near each of its own corners**: three numbers on a
 triangle, four on a square, five on a pentagon. The plates that meet at a corner
-all show its number, so the solid goes together by matching them, as in the 3D
-view, which draws them in red. They are numbered from the top down, 1 at the top
+all show its number, so the solid goes together by matching them. The 3D view
+labels every plate's corners with them (the Corner numbers box turns them off);
+pulled apart, it shows each plate with its own. They are numbered from the top down, 1 at the top
 plate's corner beside the beak on the right hand's side. Each number is
 line-engraved on the plate's inside face, where the finished ocarina hides it,
 4mm tall, its top toward its corner, and set in until it clears the joints, the

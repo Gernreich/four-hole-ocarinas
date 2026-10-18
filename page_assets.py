@@ -128,6 +128,7 @@ def solid_solids(parts, info):
             # drawn inside face up for the laser; back into the plate's frame
             out[-1]['n'] = [[[round(x, 3), round(-y, 3)] for x, y in st]
                             for st in B.inside_up(p).strokes]
+            out[-1]['nl'] = [[t, c[0], c[1]] for t, c, _ in p.numbers]
     span = max(v[0] for f in faces for v in f.verts) + shift
     return {'parts': out, 'len': round(span, 1), 'top': round(zmax - zmin, 2),
             'cav': f'{info["V"] / 1000:.0f}cm³'}
@@ -204,7 +205,35 @@ def chart_svg(diams, title):
             f'Black is covered, white is open.</desc>\n' + '\n'.join(s) + '\n</svg>\n')
 
 
-MARKUP = '<section class="viewer" id="turn" aria-label="Turn it in 3D">\n  <div class="vbar" role="group" aria-label="Build">__BUTTONS__</div>\n  <div class="stage" id="stage"><canvas id="cv" aria-label="The selected build in 3D. Drag to turn, scroll or pinch to zoom."></canvas>\n    <p class="vinfo" id="vinfo"></p></div>\n  <div class="vctl">\n    <label for="explode">Explode</label><input id="explode" type="range" min="0" max="1" step="0.01" value="0">\n    <button type="button" id="vreset">Reset view</button>\n    <label class="chk"><input type="checkbox" id="xray"> See through the walls</label>\n  </div>\n  <details class="note vhow"><summary>How to use this view</summary><p>Drag to turn, scroll or pinch to zoom. The parts are the generator\'s own outlines before the kerf, so this is the ocarina as built: the box finger-jointed on all twelve edges, every finger flush to the outside; the five solids jointed on every edge at their own angles; the stack\'s six frame layers round the cavity; the window and the four holes in the top; and the beak, the bird glued over it and the chin layer under it. The duct is drawn blue, and exploded, the bird comes out toward you and turns over so the duct faces up.</p></details>\n</section>'
+MARKUP = '<section class="viewer" id="turn" aria-label="Turn it in 3D">\n  <div class="vbar" role="group" aria-label="Build">__BUTTONS__</div>\n  <div class="stage" id="stage"><canvas id="cv" aria-label="The selected build in 3D. Drag to turn, scroll or pinch to zoom."></canvas>\n    <p class="vinfo" id="vinfo"></p></div>\n  <div class="vctl">\n    <label for="explode">Explode</label><input id="explode" type="range" min="0" max="1" step="0.01" value="0">\n    <button type="button" id="vreset">Reset view</button>\n    <label class="chk"><input type="checkbox" id="xray"> See through the walls</label>\n    <label class="chk"><input type="checkbox" id="nums" checked> Corner numbers</label>\n  </div>\n  <details class="note vhow"><summary>How to use this view</summary><p>Drag to turn, scroll or pinch to zoom. The parts are the generator\'s own outlines before the kerf, so this is the ocarina as built: the box finger-jointed on all twelve edges, every finger flush to the outside; the five solids jointed on every edge at their own angles; the stack\'s six frame layers round the cavity; the window and the four holes in the top; and the beak, the bird glued over it and the chin layer under it. The duct is drawn blue, and exploded, the bird comes out toward you and turns over so the duct faces up.</p></details>\n</section>'
+
+
+NUM_JS = '''  let labels = [];
+  const numTex = new Map();
+  function numLabel(t) {   // a corner number: white on red, facing the camera, a fixed size on screen
+    if (!numTex.has(t)) {
+      const c = document.createElement('canvas'); c.width = 96; c.height = 64;
+      const g = c.getContext('2d');
+      g.fillStyle = '#c62020'; g.beginPath(); g.roundRect(4, 4, 88, 56, 14); g.fill();
+      g.fillStyle = '#ffffff'; g.font = 'bold 40px system-ui, sans-serif';
+      g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(t, 48, 34);
+      const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; numTex.set(t, tex);
+    }
+    const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: numTex.get(t), depthTest: false, sizeAttenuation: false }));
+    sp.scale.set(0.054, 0.036, 1); sp.renderOrder = 10;
+    return sp;
+  }
+  function showNums() {    // on the plates whose outside faces the camera; all of them through the walls
+    const on = document.getElementById('nums').checked, w = new THREE.Vector3(), n = new THREE.Vector3();
+    if (labels.length) scene.updateMatrixWorld(true);
+    labels.forEach(sp => {
+      if (!on) { sp.visible = false; return; }
+      sp.getWorldPosition(w);
+      n.setFromMatrixColumn(sp.parent.matrixWorld, 2).negate();
+      sp.visible = xr.checked || n.dot(camera.position.clone().sub(w)) > 0;
+    });
+  }
+'''
 
 
 def viewer_js(three):
@@ -223,12 +252,24 @@ def viewer_js(three):
                        ".setFromPoints(st.map(q => new THREE.Vector3(q[0], q[1], 3.05))), numMat)));\n" + a)
     a = '  function build(name) {'
     assert a in js, 'the square flute\'s viewer script changed'
-    js = js.replace(a, "  const numMat = new THREE.LineBasicMaterial({ color: 0xd02020 });\n" + a)
+    js = js.replace(a, "  const numMat = new THREE.LineBasicMaterial({ color: 0xd02020 });\n" + NUM_JS + a)
+    # each number also as a label facing the camera, on the plates turned
+    # toward it (all of them, seeing through the walls), off by its checkbox
+    a = '    const d = DATA[name];'
+    assert a in js, 'the square flute\'s viewer script changed'
+    js = js.replace(a, a + '\n    labels = [];')
+    a = "      const m = p.m, M = new THREE.Matrix4();"
+    js = js.replace(a, "      (p.nl || []).forEach(l => { const sp = numLabel(l[0]); sp.position.set(l[1], l[2], -0.6); "
+                       "holder.add(sp); labels.push(sp); });\n" + a)
+    a = '    renderer.render(scene, camera);\n  }'
+    assert js.count(a) == 1, 'the square flute\'s viewer script changed'
+    js = js.replace(a, "    showNums();\n" + a)
     assert "d.cav" in js and 'dist = 380' in js, 'the square flute\'s viewer script changed'
     js += ("  const bb = [...document.querySelectorAll('#turn .vbar button[data-v]')];\n"
            "  bb.forEach(b => b.addEventListener('click', () => {\n"
            "    bb.forEach(x => x.setAttribute('aria-pressed', x === b)); build(b.dataset.v);\n"
            "  }));\n"
+           "  document.getElementById('nums').addEventListener('change', render);\n"
            "  window.addEventListener('resize', size);\n"
            "  build(bb[0].dataset.v); size();\n"
            "})();\n")
