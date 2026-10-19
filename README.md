@@ -382,7 +382,9 @@ of the duct and the bevel guide.
    its end against the body.
 2. Press the solid together by its corner numbers, every plate to the corners that
    carry its numbers; fill the open corners of the square antiprism, the octahedron,
-   the cuboctahedron and the icosahedron with glue or wood filler.
+   the cuboctahedron and the icosahedron with glue or wood filler. Then seal every
+   seam with shellac, so that the notes you tune to are the sealed ocarina's: a
+   leak passes air like one more small hole and raises the pitch.
 3. With every hole closed, play the closed note, the one in the table of builds. If
    it is out by more than breath will bend, run `--heard` with the build's cavity
    and note the `--mouth` for the next cut.
@@ -397,7 +399,7 @@ of the duct and the bevel guide.
    403.8Hz. Tune any of them
    from whatever its closed note turns out to be:
    each hole alone sounds 1.127, 1.246, 1.420 and 1.440 times it.
-5. Seal with shellac once it plays in tune.
+5. Once it plays in tune, shellac the filed holes and the splitting edge.
 
 ## Regenerating it
 
