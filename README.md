@@ -266,7 +266,7 @@ hexagonal prism and the icosahedron, and C♯4 +20 on the cuboctahedron.
 ## What the model says
 
 **An ocarina is a vessel, not a tube.** The cube's cavity is 113mm corner to corner and
-the wavelength at its D4 is 1180mm, so the air inside acts as one spring and the air in each
+the wavelength at its D4 is 1187mm, so the air inside acts as one spring and the air in each
 opening as a mass on it: a Helmholtz resonator. The pitch depends on the cavity's
 volume and on how much air each opening lets through, its conductance, and **not at
 all on where a hole is**. That is why the holes sit wherever the fingers fall.
@@ -381,8 +381,8 @@ of the duct and the bevel guide.
    near edge so the duct opens straight on to it, and the chin layer under the beak,
    its end against the body.
 2. Press the solid together by its corner numbers, every plate to the corners that
-   carry its numbers; fill the square antiprism's and the octahedron's open corners
-   with glue or wood filler.
+   carry its numbers; fill the open corners of the square antiprism, the octahedron,
+   the cuboctahedron and the icosahedron with glue or wood filler.
 3. With every hole closed, play the closed note, the one in the table of builds. If
    it is out by more than breath will bend, run `--heard` with the build's cavity
    and note the `--mouth` for the next cut.
