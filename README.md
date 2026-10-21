@@ -291,7 +291,7 @@ grow with the window. At 14 × 7mm the biggest hole is 11.8mm, a millimetre unde
 12mm that leaves room to file it up before it outgrows the 13mm a fingertip covers.
 Big ocarinas are given big windows: a low note through a small window asks for a slow,
 weak jet. Every build shares this one, so every build shares the holes. It was 10 ×
-5mm until 2026-10-18, with a cavity of 101cm³, and the fingering below kept it there.
+5mm until 2026-10-18, with a cavity of 101cm³, and the tightest fingering, below, kept it there.
 
 **No four holes play a perfect scale.** Two holes opened together always add their
 conductances, and the scale's steps do not add that way. Here C5 opens the A4 hole and
