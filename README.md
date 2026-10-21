@@ -66,7 +66,7 @@ The body is length × width × height, the prisms' length across their flats; th
 past it at the mouth end, the bird stands 3mm on the top over it, and the chin layer
 hangs 3mm under it.
 
-- **The cube** is six 71.4mm squares, ten or eleven fingers to an edge, sized so that
+- **The cube** is six 71.4mm squares, ten or eleven cells to an edge (a cell is one finger, the two plates taking turns), sized so that
   its cavity, 65.4mm on a side, holds 280cm³, as the octahedron does. The top and
   bottom own the corners, and the window and the four holes are on the top. Under
   the beak the face below sends no fingers up into the top, so the beak runs on from
@@ -81,19 +81,19 @@ hangs 3mm under it.
   as a wall is wide, 45.6mm: two regular octagons, top and bottom, and eight 45.6mm
   squares. It was 36mm tall until 2026-10-18, a prism but not a uniform one. It holds
   the most air, so it plays lowest, C4. The walls meet each other at 135 degrees
-  with six fingers to an edge, and the top and bottom at 90 with seven; the top and
+  with six cells to an edge, and the top and bottom at 90 with seven; the top and
   bottom own the corners. The holes and the window are in the top, the beak runs out
   from the middle of one wall's top edge, and that wall sends no fingers up into the
   top, as on the cube.
 - **The square antiprism** is two 72mm squares, top and bottom, a quarter turn apart,
   and eight equilateral triangles between them, 60.5mm tall. Squares meet triangles
-  at 103.8 degrees with eleven fingers to an edge, and triangles meet each other at
+  at 103.8 degrees with eleven cells to an edge, and triangles meet each other at
   127.5 with twelve. The window and the holes are on the top square, on the cube's
   grid. The triangle under the beak slopes away beneath it, so it stops 3.1mm short
   of the top there, clear of the beak's underside, and the chin layer is cut 1.5mm
   shorter to clear the slope.
 - **The octahedron** stands on one of its eight equilateral triangles, every edge
-  91.5mm, every joint at 109.5 degrees with fourteen or fifteen fingers. The edge is
+  91.5mm, every joint at 109.5 degrees with fourteen or fifteen cells. The edge is
   sized for about 280cm³; it was 72mm and 127cm³, a fifth higher, until 2026-10-18. Its top triangle
   is too small for four holes and the window, so it carries only the window, and
   each hand has a triangle of its own: the two that slope away from the top on
@@ -101,13 +101,13 @@ hangs 3mm under it.
   far from the triangle's walls and from each other as they will go. The triangle
   under the beak stops 3.2mm short there, and the chin layer is 2.1mm shorter.
 - **The dodecahedron** stands on one of its twelve regular pentagons, every edge
-  36mm, every joint at 116.6 degrees with five or six fingers. The top pentagon
+  36mm, every joint at 116.6 degrees with five or six cells. The top pentagon
   carries the window, and each hole has a pentagon of its own, where it is furthest
   from that pentagon's walls: the index fingers on the two either side of the
   mouth's pentagon, the middle fingers on the next two round. The pentagon under the
   beak stops 3.4mm short there, and the chin layer is 3.0mm shorter.
 - **The truncated octahedron** stands on one of its six squares, every edge 31.6mm,
-  with four or five fingers to an edge. Squares meet hexagons at 125.3 degrees and
+  with four or five cells to an edge. Squares meet hexagons at 125.3 degrees and
   hexagons meet each other at 109.5; three plates meet at every corner, so the
   corners close. The top square is too small for more than the window, so each hand
   has the hexagon on its side of it, both holes on the one face, the index finger's
@@ -115,16 +115,16 @@ hangs 3mm under it.
   layer is 4.2mm shorter.
 - **The hexagonal prism** is uniform, as the octagon is: two regular hexagons and six
   52mm squares, 90.1mm across the flats and 52mm tall. The walls meet each other at
-  120 degrees with eight fingers to an edge, and the top and bottom at 90 with seven.
+  120 degrees with eight cells to an edge, and the top and bottom at 90 with seven.
   The window and the holes are in the top, on the cube's grid, and the beak runs out
   from the middle of one wall's top edge.
 - **The icosahedron** stands on one of its twenty equilateral triangles, every edge
-  54.5mm, every joint at 138.2 degrees with eight or nine fingers. Five plates meet
+  54.5mm, every joint at 138.2 degrees with eight or nine cells. Five plates meet
   at each corner. Its top triangle carries the window, and each hole has a triangle
   of its own, two on each side, the index finger's nearer the beak. The triangle
   under the beak stops 4.5mm short there, and the chin layer is 6.7mm shorter.
 - **The cuboctahedron** stands on one of its six squares, every edge 54.5mm, every
-  joint at 125.3 degrees with eight or nine fingers. Four plates meet at each corner,
+  joint at 125.3 degrees with eight or nine cells. Four plates meet at each corner,
   as on the antiprism and the octahedron. The window and the holes are on the top
   square, on the cube's grid. Near 280cm³, at a 53.5mm edge, its top left 1.3mm of
   ply between the biggest hole and a wall, under the 1.5mm the generator asks for;
