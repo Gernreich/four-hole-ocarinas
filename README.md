@@ -1,5 +1,7 @@
 # Four-hole ocarinas
 
+**[← All projects](https://gernreich.github.io/)**
+
 <!-- readme-only -->
 **[Read the writeup](https://gernreich.github.io/four-hole-ocarinas/)** ·
 **[Turn all nine builds in 3D](https://gernreich.github.io/four-hole-ocarinas/#turn-it-in-3d)**
@@ -39,7 +41,7 @@ acoustic model whose window term is not measured, and the first one cut will set
 
 Built for **[LaserMadeMusic](https://www.youtube.com/@LaserMadeMusic)**.
 
-**[The rest of the build files](https://gernreich.github.io/)** — every instrument,
+**[The rest of the build files](https://gernreich.github.io/lasermademusic.html)** — every instrument,
 generator and tool, indexed.
 
 **[Download everything as a ZIP](https://github.com/Gernreich/four-hole-ocarinas/archive/refs/heads/main.zip)**
