@@ -4,9 +4,11 @@
 
 <!-- readme-only -->
 **[Read the writeup](https://gernreich.github.io/four-hole-ocarinas/)** ·
-**[Turn all nine builds in 3D](https://gernreich.github.io/four-hole-ocarinas/#turn-it-in-3d)**
+**[Turn all nine builds in 3D](https://gernreich.github.io/four-hole-ocarinas/)**
 
-<!-- page-only **[Read the README](https://github.com/Gernreich/four-hole-ocarinas)** -->
+<!-- page-only **[Read the README](https://github.com/Gernreich/four-hole-ocarinas)** · **[Turn it in 3D on a page of its own](turn.html)** -->
+
+<!-- page-only <div id="turn3d"></div><script src="viewer.js"></script> -->
 
 Four-hole ocarinas in 3mm plywood, each a solid finger-jointed on every edge at
 whatever angle its faces meet: four Platonic solids (the cube, the octahedron, the
@@ -213,11 +215,11 @@ simulate the jet, so which voices best is for a test cut to show.
 ## Turn it in 3D
 
 <!-- readme-only -->
-All nine builds turn in 3D on the [published page](https://gernreich.github.io/four-hole-ocarinas/#turn-it-in-3d),
+All nine builds turn in 3D at the top of the [published page](https://gernreich.github.io/four-hole-ocarinas/),
 which GitHub does not run: drag to turn it, pull it apart into its parts, or see
 through the walls into the cavity.
 
-<!-- page-only <div id="turn3d"></div><script src="viewer.js"></script> -->
+<!-- page-only The 3D view is at [the top of this page](#four-hole-ocarinas). It also opens [on a page of its own](turn.html). -->
 
 ## Fingering
 
