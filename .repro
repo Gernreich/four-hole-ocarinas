@@ -17,6 +17,9 @@ cut-files/truncated-octahedron/four-hole-ocarina-truncated-octahedron-sheet1-cut
 cut-files/hexagonal-prism/four-hole-ocarina-hexagonal-prism-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=hexagonal-prism --flat --out=$(dirname $OUT)
 cut-files/icosahedron/four-hole-ocarina-icosahedron-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=icosahedron --flat --out=$(dirname $OUT)
 cut-files/cuboctahedron/four-hole-ocarina-cuboctahedron-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=cuboctahedron --flat --out=$(dirname $OUT)
+cut-files/rhombic-dodecahedron/four-hole-ocarina-rhombic-dodecahedron-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=rhombic-dodecahedron --flat --out=$(dirname $OUT)
+cut-files/elongated-square-pyramid/four-hole-ocarina-elongated-square-pyramid-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=elongated-square-pyramid --flat --out=$(dirname $OUT)
+cut-files/elongated-square-bipyramid/four-hole-ocarina-elongated-square-bipyramid-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=elongated-square-bipyramid --flat --out=$(dirname $OUT)
 
 # --- the previews, from the cut files ---
 previews/cube/four-hole-ocarina-cube-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/cube/four-hole-ocarina-cube-sheet1-cut-files.svg $OUT
@@ -28,6 +31,9 @@ previews/truncated-octahedron/four-hole-ocarina-truncated-octahedron-sheet1-cut-
 previews/hexagonal-prism/four-hole-ocarina-hexagonal-prism-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/hexagonal-prism/four-hole-ocarina-hexagonal-prism-sheet1-cut-files.svg $OUT
 previews/icosahedron/four-hole-ocarina-icosahedron-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/icosahedron/four-hole-ocarina-icosahedron-sheet1-cut-files.svg $OUT
 previews/cuboctahedron/four-hole-ocarina-cuboctahedron-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/cuboctahedron/four-hole-ocarina-cuboctahedron-sheet1-cut-files.svg $OUT
+previews/rhombic-dodecahedron/four-hole-ocarina-rhombic-dodecahedron-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/rhombic-dodecahedron/four-hole-ocarina-rhombic-dodecahedron-sheet1-cut-files.svg $OUT
+previews/elongated-square-pyramid/four-hole-ocarina-elongated-square-pyramid-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/elongated-square-pyramid/four-hole-ocarina-elongated-square-pyramid-sheet1-cut-files.svg $OUT
+previews/elongated-square-bipyramid/four-hole-ocarina-elongated-square-bipyramid-sheet1-cut-files.svg :: python3 ../lasermade-tools/make-preview.py cut-files/elongated-square-bipyramid/four-hole-ocarina-elongated-square-bipyramid-sheet1-cut-files.svg $OUT
 
 # --- the page ---
 viewer.js :: python3 page_assets.py --viewer-to=$OUT

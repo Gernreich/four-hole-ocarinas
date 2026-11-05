@@ -39,8 +39,8 @@ FROM THE MOUTH END, the same in every build:
            the square flute, and the beak had nothing under it
   window   the true sound hole, WINDOW_W x WINDOW_L, against the cavity's
            mouth-end wall, so the jet crosses it over the cavity
-  holes    on the cube, the two prisms, the antiprism and the
-           cuboctahedron, two rows across the top: the index fingers' row
+  holes    on the cube, the two prisms, the antiprism, the
+           cuboctahedron and the elongated square pyramid, two rows across the top: the index fingers' row
            ROW_1 past the window, the middle fingers' ROW_2 past that, each
            hand's pair in a column COLUMNS apart; the solids in FACE_HOLES
            give them faces of their own (see build_solid)
@@ -111,6 +111,9 @@ BUILDS = {
     'hexagonal-prism': 'uniform hexagonal prism, finger-jointed',
     'icosahedron': 'regular icosahedron, finger-jointed',
     'cuboctahedron': 'cuboctahedron, finger-jointed',
+    'rhombic-dodecahedron': 'rhombic dodecahedron, finger-jointed',
+    'elongated-square-pyramid': 'elongated square pyramid (Johnson J8), finger-jointed',
+    'elongated-square-bipyramid': 'elongated square bipyramid (Johnson J15), finger-jointed',
 }
 # Solids, built by polyhedron.py, since 2026-10-17. Each cavity is what its
 # shape holds, and its key follows from it. The holes are sized against the
@@ -148,8 +151,23 @@ OCT_HEIGHT = OCT_FLATS * math.tan(math.pi / 8)
 #   cuboctahedron   standing on a square, the holes on its grid; 54.5mm, not
 #                   the 53.2mm of 280cm^3, so the biggest hole keeps 2mm of ply
 #                   to a wall after the millimetre it may be filed up
+# Three from a survey of zonohedra and Johnson solids (2026-11-04, the
+# author's pick of the ones that passed every check here at 280cm^3):
+#   rhombic-dodecahedron  a zonohedron standing on a rhombus, every joint
+#                   120 degrees; the top takes the window, and each hand's
+#                   two holes share the rhombus on its side, 22.7mm apart,
+#                   the nearest of any build with holes off the top to the
+#                   grid's 22mm
+#   elongated-square-pyramid  a cube with a square pyramid under it, hung
+#                   point down from its square top, which takes the holes on
+#                   the cube's grid
+#   elongated-square-bipyramid  a cube with a pyramid on each end, standing
+#                   on a triangle; each hand's two holes share the triangle
+#                   on its side, 20mm apart, and the window is 38mm from the
+#                   furthest hole, the closest of all
 # Four plates meet at the antiprism's, the octahedron's and the
-# cuboctahedron's corners and five at the icosahedron's, and NIP cuts each
+# cuboctahedron's corners, at some of the rhombic dodecahedron's and the
+# two Johnson solids', and five at the icosahedron's, and NIP cuts each
 # corner back that far, square to its bisector, so that the plates sharing
 # only the corner stay apart: half a millimetre over the least that clears.
 SAP_EDGE = 72.0
@@ -159,8 +177,14 @@ HEX_EDGE = 52.0
 ICOSA_EDGE = 54.5
 TRUNC_OCTA_EDGE = 31.6
 CUBOCTA_EDGE = 54.5
-NIP = {'square-antiprism': 4.25, 'octahedron': 4.75, 'icosahedron': 3.5, 'cuboctahedron': 3.5}
-FACE_HOLES = ('octahedron', 'dodecahedron', 'icosahedron', 'truncated-octahedron')
+RHOMBIC_EDGE = 48.6
+ESP_EDGE = 66.4
+ESB_EDGE = 62.6
+NIP = {'square-antiprism': 4.25, 'octahedron': 4.75, 'icosahedron': 3.5, 'cuboctahedron': 3.5,
+       'rhombic-dodecahedron': 3.5, 'elongated-square-pyramid': 4.25,
+       'elongated-square-bipyramid': 4.5}
+FACE_HOLES = ('octahedron', 'dodecahedron', 'icosahedron', 'truncated-octahedron',
+              'rhombic-dodecahedron', 'elongated-square-bipyramid')
 
 
 def cube_edge(V):
@@ -268,7 +292,10 @@ def build_solid(kind, diams):
              'truncated-octahedron': lambda: P.truncated_octahedron(TRUNC_OCTA_EDGE),
              'hexagonal-prism': lambda: P.hexagonal_prism(HEX_EDGE),
              'icosahedron': lambda: P.icosahedron(ICOSA_EDGE),
-             'cuboctahedron': lambda: P.cuboctahedron(CUBOCTA_EDGE)}[kind]()
+             'cuboctahedron': lambda: P.cuboctahedron(CUBOCTA_EDGE),
+             'rhombic-dodecahedron': lambda: P.rhombic_dodecahedron(RHOMBIC_EDGE),
+             'elongated-square-pyramid': lambda: P.elongated_square_pyramid(ESP_EDGE),
+             'elongated-square-bipyramid': lambda: P.elongated_square_bipyramid(ESB_EDGE)}[kind]()
     ft = next(i for i, f in enumerate(faces) if f.name == 'top')
     fm = next(i for i, f in enumerate(faces) if f.name.startswith('mouth'))
     top, mouth = faces[ft], faces[fm]

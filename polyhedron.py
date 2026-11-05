@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Convex solids finger-jointed on every edge, at any angle the faces meet:
 the cube, the octagonal and hexagonal prisms, the square antiprism, the
-octahedron, the dodecahedron, the icosahedron, the truncated octahedron and
-the cuboctahedron that four_hole_ocarinas.py builds.
+octahedron, the dodecahedron, the icosahedron, the truncated octahedron,
+the cuboctahedron, the rhombic dodecahedron and two Johnson solids, the
+elongated square pyramid and bipyramid, that four_hole_ocarinas.py builds.
 
 A solid is any convex polyhedron, given as its faces' planes, and every
 plate is that face's polygon, 3mm thick, inward from the outside surface.
@@ -128,12 +129,14 @@ def hexagonal_prism(edge):
     return solid(planes, verts)
 
 
-def stand(verts, edge, name):
+def stand(verts, edge, name, rank=0):
     """A solid from its corners, scaled so every edge is `edge` long, then
     turned so that the face nearest +z lies flat on top and its edge
     nearest -x faces -x squarely, for the beak. Faces are named top, bottom
     if there is one, `name` for the rest, and 'mouth ' + name for the one
-    under the beak."""
+    under the beak. rank=1 takes the top edge whose normal is next nearest
+    -x instead: on a rhombus, the other way round, its edges in the other
+    direction across the beak."""
     e0 = min(dist(a, b) for a, b in itertools.combinations(verts, 2))
     verts = [mul(v, edge / e0) for v in verts]
     n, _ = max(hull(verts), key=lambda p: (round(p[0][2], 9), -p[0][0], -p[0][1]))
@@ -145,9 +148,20 @@ def stand(verts, edge, name):
     top = [v for v in verts if abs(v[2] - zt) < 1e-6]
     c = mul(tuple(map(sum, zip(*top))), 1 / len(top))
     top.sort(key=lambda p: math.atan2(p[1] - c[1], p[0] - c[0]))
-    mids = [mul(add(top[i], top[(i + 1) % len(top)]), 0.5) for i in range(len(top))]
-    m = min(mids, key=lambda p: math.atan2(p[1] - c[1], -(p[0] - c[0])) ** 2)
-    a = math.pi - math.atan2(m[1] - c[1], m[0] - c[0])
+    # each top edge's outward normal in the plane; the one facing most
+    # nearly -x is turned onto -x, so that edge runs square across the
+    # beak. On a regular face the normal points at the edge's midpoint, but
+    # on a rhombus it does not, and only the normal makes the edge square
+    norms = []
+    for i in range(len(top)):
+        p, q = top[i], top[(i + 1) % len(top)]
+        L = math.hypot(q[0] - p[0], q[1] - p[1])
+        nx, ny = (q[1] - p[1]) / L, -(q[0] - p[0]) / L
+        if nx * ((p[0] + q[0]) / 2 - c[0]) + ny * ((p[1] + q[1]) / 2 - c[1]) < 0:
+            nx, ny = -nx, -ny
+        norms.append((nx, ny))
+    m = sorted(norms, key=lambda d: math.atan2(d[1], -d[0]) ** 2)[rank]
+    a = math.pi - math.atan2(m[1], m[0])
     ca, sa = math.cos(a), math.sin(a)
     verts = [(round(x * ca - y * sa, 12), round(x * sa + y * ca, 12), round(z, 12))
              for x, y, z in verts]
@@ -230,6 +244,44 @@ def cuboctahedron(edge):
     for v in itertools.product((1, -1), (1, -1), (0,)):
         verts |= set(itertools.permutations(v))
     return stand(sorted(verts), edge, 'face')
+
+
+def rhombic_dodecahedron(edge):
+    """The rhombic dodecahedron, every edge `edge` long, standing on a
+    rhombus: twelve rhombi, every joint at 120 degrees, three or four to a
+    corner. A zonohedron, the solid swept by four vectors, the cube's body
+    diagonals; its corners are the cube's (+-1, +-1, +-1) and (+-2, 0, 0)
+    in every axis."""
+    verts = list(itertools.product((1, -1), repeat=3))
+    verts += [tuple(2 * s if i == a else 0 for i in range(3)) for a in range(3) for s in (1, -1)]
+    # the rhombus's other edges across the beak: index to middle finger the
+    # same, but the hands 67mm apart instead of 77, and the window 47mm from
+    # the furthest hole instead of 62 (solid_survey.py)
+    return stand(verts, edge, 'rhombus', rank=1)
+
+
+def _square_prism():
+    """A unit cube's corners as a square prism, z from 0 to 1, and the
+    height of a square pyramid with unit edges."""
+    r = 1 / math.sqrt(2)
+    ring = [(r * math.cos(k * math.pi / 2), r * math.sin(k * math.pi / 2)) for k in range(4)]
+    return [(x, y, z) for x, y in ring for z in (0.0, 1.0)], math.sqrt(1 - r * r)
+
+
+def elongated_square_pyramid(edge):
+    """Johnson solid J8, every edge `edge` long: a cube with a square
+    pyramid of four equilateral triangles on its bottom, so it hangs point
+    down from its square top."""
+    verts, h = _square_prism()
+    return stand(verts + [(0.0, 0.0, -h)], edge, 'face')
+
+
+def elongated_square_bipyramid(edge):
+    """Johnson solid J15, every edge `edge` long: a cube with a square
+    pyramid on each end, four squares and eight equilateral triangles,
+    standing on a triangle."""
+    verts, h = _square_prism()
+    return stand(verts + [(0.0, 0.0, -h), (0.0, 0.0, 1 + h)], edge, 'face')
 
 
 def hull(verts):
