@@ -10,7 +10,7 @@
 
 <!-- page-only <div id="turn3d"></div><script src="viewer.js"></script> -->
 
-Four-hole ocarinas in 3mm plywood, each a solid finger-jointed on every edge at
+Four-hole ocarinas in 3 mm plywood, each a solid finger-jointed on every edge at
 whatever angle its faces meet: four Platonic solids (the cube, the octahedron, the
 dodecahedron and the icosahedron), two Archimedean ones (the truncated octahedron and
 the cuboctahedron), two uniform prisms (hexagonal and octagonal), a square
@@ -38,7 +38,7 @@ acoustic model whose window term is not measured, and the first one cut will set
 <td align="center"><a href="cut-files/cube/four-hole-ocarina-cube-sheet1-cut-files.svg"><img src="previews/cube/four-hole-ocarina-cube-sheet1-cut-files.svg" alt="One sheet of parts: six squares notched for finger joints on every edge, one of them the top, with a short beak at one end, its tip rounded, a rectangular window beside the beak and four round holes of four sizes; one square plain along part of an edge where the beak goes; and two small pieces for the mouthpiece, rounded at one end like the beak, one with a red band across it for the bird's half of the duct, and a magenta band on the top's beak for the nest's half" width="100%"></a></td>
 </tr>
 <tr>
-<td align="center"><sub>cube · the whole ocarina on one 525 × 82mm sheet</sub></td>
+<td align="center"><sub>cube · the whole ocarina on one 525 × 82 mm sheet</sub></td>
 </tr>
 </table>
 
@@ -55,119 +55,119 @@ Twelve builds, every one a solid, each playing in whatever key its cavity holds.
 
 | Build | Construction | Cavity | Key, all closed | Body | Parts | Sheets |
 |---|---|---|---|---|---|---|
-| `cube` | cube, finger-jointed on all 12 edges | 280cm³ | D4 −12 cents, 291.7Hz | 71.4 × 71.4 × 71.4mm | 8 | 1 |
-| `octagon` | uniform octagonal prism, finger-jointed on all 24 edges | 354cm³ | C4 −16 cents, 259.3Hz | 110 × 110 × 45.6mm | 12 | 1 |
-| `square-antiprism` | square antiprism, finger-jointed on all 16 edges | 279cm³ | D4 −7 cents, 292.4Hz | 101.8 × 101.8 × 60.5mm | 12 | 1 |
-| `octahedron` | regular octahedron, finger-jointed on all 12 edges | 281cm³ | D4 −14 cents, 291.2Hz | 105.7 × 91.5 × 74.7mm | 10 | 1 |
-| `dodecahedron` | regular dodecahedron, finger-jointed on all 30 edges | 283cm³ | D4 −21 cents, 290.1Hz | 99.1 × 94.2 × 80.2mm | 14 | 1 |
-| `truncated-octahedron` | truncated octahedron, finger-jointed on all 36 edges | 283cm³ | D4 −19 cents, 290.4Hz | 94.8 × 94.8 × 89.4mm | 16 | 1 |
-| `hexagonal-prism` | uniform hexagonal prism, finger-jointed on all 18 edges | 282cm³ | D4 −16 cents, 290.9Hz | 90.1 × 104.0 × 52.0mm | 10 | 1 |
-| `icosahedron` | regular icosahedron, finger-jointed on all 30 edges | 282cm³ | D4 −16 cents, 290.9Hz | 101.8 × 88.2 × 82.4mm | 22 | 1 |
-| `cuboctahedron` | cuboctahedron, finger-jointed on all 24 edges | 303cm³ | C♯4 +20 cents, 280.3Hz | 109.0 × 109.0 × 77.1mm | 16 | 1 |
-| `rhombic-dodecahedron` | rhombic dodecahedron, finger-jointed on all 24 edges | 279cm³ | D4 −9 cents, 292.1Hz | 91.6 × 97.2 × 79.4mm | 14 | 1 |
-| `elongated-square-pyramid` | elongated square pyramid (Johnson J8), finger-jointed on all 16 edges | 280cm³ | D4 −11 cents, 291.8Hz | 66.4 × 66.4 × 113.4mm | 11 | 1 |
-| `elongated-square-bipyramid` | elongated square bipyramid (Johnson J15), finger-jointed on all 20 edges | 280cm³ | D4 −11 cents, 291.8Hz | 123.4 × 62.6 × 87.3mm | 14 | 1 |
+| `cube` | cube, finger-jointed on all 12 edges | 280cm³ | D4 −12 cents, 291.7Hz | 71.4 × 71.4 × 71.4 mm | 8 | 1 |
+| `octagon` | uniform octagonal prism, finger-jointed on all 24 edges | 354cm³ | C4 −16 cents, 259.3Hz | 110 × 110 × 45.6 mm | 12 | 1 |
+| `square-antiprism` | square antiprism, finger-jointed on all 16 edges | 279cm³ | D4 −7 cents, 292.4Hz | 101.8 × 101.8 × 60.5 mm | 12 | 1 |
+| `octahedron` | regular octahedron, finger-jointed on all 12 edges | 281cm³ | D4 −14 cents, 291.2Hz | 105.7 × 91.5 × 74.7 mm | 10 | 1 |
+| `dodecahedron` | regular dodecahedron, finger-jointed on all 30 edges | 283cm³ | D4 −21 cents, 290.1Hz | 99.1 × 94.2 × 80.2 mm | 14 | 1 |
+| `truncated-octahedron` | truncated octahedron, finger-jointed on all 36 edges | 283cm³ | D4 −19 cents, 290.4Hz | 94.8 × 94.8 × 89.4 mm | 16 | 1 |
+| `hexagonal-prism` | uniform hexagonal prism, finger-jointed on all 18 edges | 282cm³ | D4 −16 cents, 290.9Hz | 90.1 × 104.0 × 52.0 mm | 10 | 1 |
+| `icosahedron` | regular icosahedron, finger-jointed on all 30 edges | 282cm³ | D4 −16 cents, 290.9Hz | 101.8 × 88.2 × 82.4 mm | 22 | 1 |
+| `cuboctahedron` | cuboctahedron, finger-jointed on all 24 edges | 303cm³ | C♯4 +20 cents, 280.3Hz | 109.0 × 109.0 × 77.1 mm | 16 | 1 |
+| `rhombic-dodecahedron` | rhombic dodecahedron, finger-jointed on all 24 edges | 279cm³ | D4 −9 cents, 292.1Hz | 91.6 × 97.2 × 79.4 mm | 14 | 1 |
+| `elongated-square-pyramid` | elongated square pyramid (Johnson J8), finger-jointed on all 16 edges | 280cm³ | D4 −11 cents, 291.8Hz | 66.4 × 66.4 × 113.4 mm | 11 | 1 |
+| `elongated-square-bipyramid` | elongated square bipyramid (Johnson J15), finger-jointed on all 20 edges | 280cm³ | D4 −11 cents, 291.8Hz | 123.4 × 62.6 × 87.3 mm | 14 | 1 |
 
 The bird and the chin layer are glued, and the rest is press-fit.
 
-The body is length × width × height, the prisms' length across their flats; the beak runs 18mm
-past it at the mouth end, the bird stands 3mm on the top over it, and the chin layer
-hangs 3mm under it.
+The body is length × width × height, the prisms' length across their flats; the beak runs 18 mm
+past it at the mouth end, the bird stands 3 mm on the top over it, and the chin layer
+hangs 3 mm under it.
 
-- **The cube** is six 71.4mm squares, ten or eleven cells to an edge (a cell is one finger, the two plates taking turns), sized so that
-  its cavity, 65.4mm on a side, holds 280cm³, as the octahedron does. The top and
+- **The cube** is six 71.4 mm squares, ten or eleven cells to an edge (a cell is one finger, the two plates taking turns), sized so that
+  its cavity, 65.4 mm on a side, holds 280cm³, as the octahedron does. The top and
   bottom own the corners, and the window and the four holes are on the top. Under
   the beak the face below sends no fingers up into the top, so the beak runs on from
   solid ply and the duct crosses no seam; every build does the same. Until
-  2026-10-18 the G4 build was a long box, 60 × 18mm inside and as long as the volume
-  needed, finger-jointed or glued up as a laminated stack. At the 14 × 7mm window
-  it ran 144mm, 157mm corner to corner inside against a quarter wavelength of 221mm,
+  2026-10-18 the G4 build was a long box, 60 × 18 mm inside and as long as the volume
+  needed, finger-jointed or glued up as a laminated stack. At the 14 × 7 mm window
+  it ran 144 mm, 157 mm corner to corner inside against a quarter wavelength of 221 mm,
   close enough that it would start to act like a tube. So the box became a cube, at
   first sized to G4, then the same day to 280cm³; the stack went, and every build
   is a regular or uniform solid.
-- **The octagon** is a uniform octagonal prism, 110mm across the flats and as tall
-  as a wall is wide, 45.6mm: two regular octagons, top and bottom, and eight 45.6mm
-  squares. It was 36mm tall until 2026-10-18, a prism but not a uniform one. It holds
+- **The octagon** is a uniform octagonal prism, 110 mm across the flats and as tall
+  as a wall is wide, 45.6 mm: two regular octagons, top and bottom, and eight 45.6 mm
+  squares. It was 36 mm tall until 2026-10-18, a prism but not a uniform one. It holds
   the most air, so it plays lowest, C4. The walls meet each other at 135 degrees
   with six cells to an edge, and the top and bottom at 90 with seven; the top and
   bottom own the corners. The holes and the window are in the top, the beak runs out
   from the middle of one wall's top edge, and that wall sends no fingers up into the
   top, as on the cube.
-- **The square antiprism** is two 72mm squares, top and bottom, a quarter turn apart,
-  and eight equilateral triangles between them, 60.5mm tall. Squares meet triangles
+- **The square antiprism** is two 72 mm squares, top and bottom, a quarter turn apart,
+  and eight equilateral triangles between them, 60.5 mm tall. Squares meet triangles
   at 103.8 degrees with eleven cells to an edge, and triangles meet each other at
   127.5 with twelve. The window and the holes are on the top square, on the cube's
-  grid. The triangle under the beak slopes away beneath it, so it stops 3.1mm short
-  of the top there, clear of the beak's underside, and the chin layer is cut 1.5mm
+  grid. The triangle under the beak slopes away beneath it, so it stops 3.1 mm short
+  of the top there, clear of the beak's underside, and the chin layer is cut 1.5 mm
   shorter to clear the slope.
 - **The octahedron** stands on one of its eight equilateral triangles, every edge
-  91.5mm, every joint at 109.5 degrees with fourteen or fifteen cells. The edge is
-  sized for about 280cm³; it was 72mm and 127cm³, a fifth higher, until 2026-10-18. Its top triangle
+  91.5 mm, every joint at 109.5 degrees with fourteen or fifteen cells. The edge is
+  sized for about 280cm³; it was 72 mm and 127cm³, a fifth higher, until 2026-10-18. Its top triangle
   is too small for four holes and the window, so it carries only the window, and
   each hand has a triangle of its own: the two that slope away from the top on
   either side, with the index finger's hole nearer the beak and both holes placed as
   far from the triangle's walls and from each other as they will go. The triangle
-  under the beak stops 3.2mm short there, and the chin layer is 2.1mm shorter.
+  under the beak stops 3.2 mm short there, and the chin layer is 2.1 mm shorter.
 - **The dodecahedron** stands on one of its twelve regular pentagons, every edge
-  36mm, every joint at 116.6 degrees with five or six cells. The top pentagon
+  36 mm, every joint at 116.6 degrees with five or six cells. The top pentagon
   carries the window, and each hole has a pentagon of its own, where it is furthest
   from that pentagon's walls: the index fingers on the two either side of the
   mouth's pentagon, the middle fingers on the next two round. The pentagon under the
-  beak stops 3.4mm short there, and the chin layer is 3.0mm shorter.
-- **The truncated octahedron** stands on one of its six squares, every edge 31.6mm,
+  beak stops 3.4 mm short there, and the chin layer is 3.0 mm shorter.
+- **The truncated octahedron** stands on one of its six squares, every edge 31.6 mm,
   with four or five cells to an edge. Squares meet hexagons at 125.3 degrees and
   hexagons meet each other at 109.5; three plates meet at every corner, so the
   corners close. The top square is too small for more than the window, so each hand
   has the hexagon on its side of it, both holes on the one face, the index finger's
-  nearer the beak. The hexagon under the beak stops 3.7mm short there, and the chin
-  layer is 4.2mm shorter.
+  nearer the beak. The hexagon under the beak stops 3.7 mm short there, and the chin
+  layer is 4.2 mm shorter.
 - **The hexagonal prism** is uniform, as the octagon is: two regular hexagons and six
-  52mm squares, 90.1mm across the flats and 52mm tall. The walls meet each other at
+  52 mm squares, 90.1 mm across the flats and 52 mm tall. The walls meet each other at
   120 degrees with eight cells to an edge, and the top and bottom at 90 with seven.
   The window and the holes are in the top, on the cube's grid, and the beak runs out
   from the middle of one wall's top edge.
 - **The icosahedron** stands on one of its twenty equilateral triangles, every edge
-  54.5mm, every joint at 138.2 degrees with eight or nine cells. Five plates meet
+  54.5 mm, every joint at 138.2 degrees with eight or nine cells. Five plates meet
   at each corner. Its top triangle carries the window, and each hole has a triangle
   of its own, two on each side, the index finger's nearer the beak. The triangle
-  under the beak stops 4.5mm short there, and the chin layer is 6.7mm shorter.
-- **The cuboctahedron** stands on one of its six squares, every edge 54.5mm, every
+  under the beak stops 4.5 mm short there, and the chin layer is 6.7 mm shorter.
+- **The cuboctahedron** stands on one of its six squares, every edge 54.5 mm, every
   joint at 125.3 degrees with eight or nine cells. Four plates meet at each corner,
   as on the antiprism and the octahedron. The window and the holes are on the top
-  square, on the cube's grid. Near 280cm³, at a 53.5mm edge, its top left 1.3mm of
-  ply between the biggest hole and a wall, under the 1.5mm the generator asks for;
-  at 54.5mm and 303cm³ it leaves 2.3mm, enough to file that hole up by the
-  millimetre allowed. The triangle under the beak stops 3.7mm short there, and the
-  chin layer is 4.2mm shorter.
+  square, on the cube's grid. Near 280cm³, at a 53.5 mm edge, its top left 1.3 mm of
+  ply between the biggest hole and a wall, under the 1.5 mm the generator asks for;
+  at 54.5 mm and 303cm³ it leaves 2.3 mm, enough to file that hole up by the
+  millimetre allowed. The triangle under the beak stops 3.7 mm short there, and the
+  chin layer is 4.2 mm shorter.
 - **The rhombic dodecahedron** is a zonohedron, the solid swept out by the cube's
-  four body diagonals: twelve rhombi, every edge 48.6mm, every joint at 120 degrees
+  four body diagonals: twelve rhombi, every edge 48.6 mm, every joint at 120 degrees
   with seven or eight cells. It stands on a rhombus, which takes only the window, and
   each hand has the rhombus on its side of it, both holes on the one face, the index
-  finger's nearer the beak, 22.6mm apart. A rhombus can meet the beak with either
-  pair of its edges; this one is turned so the hands' holes sit 67mm apart and the
-  furthest is 47mm from the window, against 77 and 62mm the other way round. Three
-  or four plates meet at a corner. The rhombus under the beak stops 3.5mm short
-  there, and the chin layer is 3.5mm shorter.
-- **The elongated square pyramid** is Johnson solid J8: a 66.4mm cube with a square
+  finger's nearer the beak, 22.6 mm apart. A rhombus can meet the beak with either
+  pair of its edges; this one is turned so the hands' holes sit 67 mm apart and the
+  furthest is 47 mm from the window, against 77 and 62 mm the other way round. Three
+  or four plates meet at a corner. The rhombus under the beak stops 3.5 mm short
+  there, and the chin layer is 3.5 mm shorter.
+- **The elongated square pyramid** is Johnson solid J8: a 66.4 mm cube with a square
   pyramid of four equilateral triangles on its bottom, so it hangs point down from
   its square top. The window and the holes are on the top, on the cube's grid, and
   under the beak an upright wall, as on the cube. Walls meet the top at 90 degrees
   with eleven cells, the triangles meet the walls at 144.7 and each other at 109.5
   with ten or eleven. Four plates meet at the pyramid's point and at the four
   corners round its base.
-- **The elongated square bipyramid** is Johnson solid J15: a 62.6mm cube with a
+- **The elongated square bipyramid** is Johnson solid J15: a 62.6 mm cube with a
   square pyramid on each end, four squares and eight equilateral triangles. It
   stands on a triangle, which takes only the window, and each hand has the triangle
-  on its side of it, both holes on the one face, 20mm apart: the nearest index and
-  middle finger of any build, and the window 38mm from the furthest hole, the
+  on its side of it, both holes on the one face, 20 mm apart: the nearest index and
+  middle finger of any build, and the window 38 mm from the furthest hole, the
   nearest of all. Four plates meet at every corner. The square under the beak
-  slopes away steeply, so it stops 5.2mm short there, and the chin layer is 8.5mm
-  shorter, the most of any build: nearly half the 18mm beak.
+  slopes away steeply, so it stops 5.2 mm short there, and the chin layer is 8.5 mm
+  shorter, the most of any build: nearly half the 18 mm beak.
 
 **How the solids' fingers go together.** Where two plates meet at an angle wider
 than 90 degrees, a plate's finger reaches the outside edge, and in its neighbour's
-finger it stops short by 3mm × sin of the angle: 2.12mm at 135 degrees, 2.83mm at
-109.5, 2.00mm at the icosahedron's 138.2. That is the least that keeps the two plates out of each other, and it leaves
+finger it stops short by 3 mm × sin of the angle: 2.12 mm at 135 degrees, 2.83 mm at
+109.5, 2.00 mm at the icosahedron's 138.2. That is the least that keeps the two plates out of each other, and it leaves
 the joint closed along a line, with a shallow V-shaped notch outside each finger and
 a small void at each corner. The shellac fills both.
 
@@ -176,14 +176,14 @@ octahedron, the cuboctahedron, the rhombic dodecahedron or the two Johnson solid
 where four meet, two of the four plates share only the corner, and
 no edge, and run into each other just inside it; on the icosahedron five meet, and
 each shares only the corner with two. So every plate's corners there are cut off
-square to the corner's bisector: 4.25mm in from the corner on the antiprism, 4.75mm
-on the octahedron, 3.5mm on the cuboctahedron, the icosahedron and the rhombic
-dodecahedron, 4.5mm on the elongated square bipyramid and 4.25mm on the elongated
+square to the corner's bisector: 4.25 mm in from the corner on the antiprism, 4.75 mm
+on the octahedron, 3.5 mm on the cuboctahedron, the icosahedron and the rhombic
+dodecahedron, 4.5 mm on the elongated square bipyramid and 4.25 mm on the elongated
 square pyramid, where the least that clears, found by scanning the corners in 3D,
-was 3.75, 4.25, 3.0, 3.0, 3.0, 4.0 and 4.0mm. The pyramid gets a quarter millimetre
-over that, not a half: at 4.5mm its joints stay open 6.1mm from a corner, past the
+was 3.75, 4.25, 3.0, 3.0, 3.0, 4.0 and 4.0 mm. The pyramid gets a quarter millimetre
+over that, not a half: at 4.5 mm its joints stay open 6.1 mm from a corner, past the
 two plate thicknesses the joint check allows. That leaves **a hole at every such corner**, open on the outside up to about
-6mm in from the point on the antiprism and the octahedron. Shellac will not bridge it: fill each with glue or wood filler before
+6 mm in from the point on the antiprism and the octahedron. Shellac will not bridge it: fill each with glue or wood filler before
 sealing. On the cube, the two prisms, the dodecahedron and the truncated
 octahedron, where three plates meet and every pair shares an edge, the corners
 close on the outside.
@@ -203,8 +203,8 @@ face up, and the beak, the window and the holes already place it. Every corner i
 touches is numbered on the plates that meet it there. The corners are numbered from the top down,
 1 at the top plate's corner beside the beak on the right hand's side. Each number is
 engraved in single lines on the plate's inside face, where the finished ocarina hides it,
-4mm tall, its top toward its corner, and set in until it clears the joints, the
-holes and the window by 1mm.
+4 mm tall, its top toward its corner, and set in until it clears the joints, the
+holes and the window by 1 mm.
 
 **Against Boxes' polyhedra.** [Boxes](https://github.com/florianfesti/boxes) has
 a Platonic generator, in its Unstable group, for the tetrahedron, cube, octahedron,
@@ -213,18 +213,18 @@ every side, its fingers shifted off-centre so that an edge mates with a copy of
 itself turned end for end, and every finger a full plate thickness deep, as at 90
 degrees, whatever angle the faces meet at. Here each edge is cut for its own angle,
 each corner is given to one plate, and so the plates differ; in exchange the
-fingers step back 3mm × sin of the angle, the joints close on the outside, and the
+fingers step back 3 mm × sin of the angle, the joints close on the outside, and the
 corners are checked in 3D. Boxes does not make the prisms, the antiprism, the
 two Archimedean solids, the rhombic dodecahedron or the Johnson solids.
 
 None of the builds has anything to slide, so all are tuned at the window and the holes.
 
-All twelve carry the same mouthpiece: the top plate runs on past the body as a beak 24mm
+All twelve carry the same mouthpiece: the top plate runs on past the body as a beak 24 mm
 wide. One layer, the bird, is glued over it and one, the chin layer, under it, so the
-mouthpiece is three plies, 9mm thick, with the duct near its middle. The duct is
-14mm wide, the window's width, and runs from the beak's tip to the window. Only the bird is needed for the sound; the chin layer gives the
+mouthpiece is three plies, 9 mm thick, with the duct near its middle. The duct is
+14 mm wide, the window's width, and runs from the beak's tip to the window. Only the bird is needed for the sound; the chin layer gives the
 lips a thicker mouthpiece and stiffens the beak. The tip, where the lips close, is a
-half-ellipse across the beak's full 24mm and 8mm deep, cut the same on all three plies
+half-ellipse across the beak's full 24 mm and 8 mm deep, cut the same on all three plies
 so they round off as one, and the duct's mouth follows the curve.
 
 **The duct is drawn as a savanna flue, in two colours, so you choose at the laser.**
@@ -236,9 +236,9 @@ in the top plate's outside face, over the beak, the same 14mm-wide footprint lin
 
 | Run | Flue | Depth |
 |---|---|---|
-| red only | bird | about 1mm |
-| magenta only | nest | about 1mm |
-| both | savanna | about 0.5mm each |
+| red only | bird | about 1 mm |
+| magenta only | nest | about 1 mm |
+| both | savanna | about 0.5 mm each |
 
 The three put the airstream at different heights against the splitting edge: just
 above the top plate's surface from a bird flue, just below it from a nest flue, and
@@ -253,8 +253,8 @@ the generator's own build and checks twice: once with the holes on the top's gri
 and once with each hand's holes on the faces at its side. Five were skipped before
 building: a joint under 90 degrees, as on any pyramid on a triangle or on a cupola's
 wide base, would put a finger out through the outside. Seven more fail, all with
-many small faces: at 280cm³ the rhombic triacontahedron's edge is 30.5mm and the
-truncated cuboctahedron's 20.3mm, too small for a hole and its ply, or for a corner
+many small faces: at 280cm³ the rhombic triacontahedron's edge is 30.5 mm and the
+truncated cuboctahedron's 20.3 mm, too small for a hole and its ply, or for a corner
 number. The rhombic icosahedron and the elongated square and pentagonal cupolas and
 orthobicupolas fail too, on room for the holes, the corner numbers or, at the corner
 cuts their corners need, joints left open too far from a corner. Eleven pass.
@@ -265,35 +265,35 @@ window to the furthest hole.
 
 | Build | Index–middle | Left–right | Tilt | Window–hole |
 |---|---|---|---|---|
-| the grid, on the cube and every build with its holes on top | 22mm | 34mm | 0° | 42mm |
-| `elongated-square-bipyramid` | 20mm | 50mm | 71° | 38mm |
-| `rhombic-dodecahedron` | 23mm | 67mm | 60° | 47mm |
-| `truncated-octahedron` | 27mm | 64mm | 55° | 46mm |
-| `icosahedron` | 29mm | 48mm | 71° | 47mm |
-| `octahedron` | 30mm | 72mm | 71° | 58mm |
-| `dodecahedron` | 42mm | 68mm | 63° | 56mm |
+| the grid, on the cube and every build with its holes on top | 22 mm | 34 mm | 0° | 42 mm |
+| `elongated-square-bipyramid` | 20 mm | 50 mm | 71° | 38 mm |
+| `rhombic-dodecahedron` | 23 mm | 67 mm | 60° | 47 mm |
+| `truncated-octahedron` | 27 mm | 64 mm | 55° | 46 mm |
+| `icosahedron` | 29 mm | 48 mm | 71° | 47 mm |
+| `octahedron` | 30 mm | 72 mm | 71° | 58 mm |
+| `dodecahedron` | 42 mm | 68 mm | 63° | 56 mm |
 
-**Nothing beats the grid.** Four holes on one flat top, 22mm apart under each hand,
+**Nothing beats the grid.** Four holes on one flat top, 22 mm apart under each hand,
 is the layout every build that can carry it already has, so a new solid improves on
 it only by being another shape: the elongated square pyramid, a cube on a point,
 plays and fingers exactly as the cube does. **Among the solids whose top is too small
 for it,** the elongated square bipyramid and the rhombic dodecahedron reach best:
-index and middle finger 20 and 23mm apart against 27 to 42mm on the four built, the
+index and middle finger 20 and 23 mm apart against 27 to 42 mm on the four built, the
 rhombic dodecahedron on the gentlest slope of any but the truncated octahedron. The
-gyroelongated square pyramid, with its holes off the top, matches them at 22mm but
-puts the hands 74mm apart on faces tilted 76°.
+gyroelongated square pyramid, with its holes off the top, matches them at 22 mm but
+puts the hands 74 mm apart on faces tilted 76°.
 
 **The window does not move.** On every solid it sits at the top's beak edge, where
 the duct meets it, so what a solid changes is how far the holes are from it and how
 much the face under the beak cuts the chin layer back. The bipyramid has the window
-nearest its holes, 38mm, and pays for it under the beak: its square there slopes so
-steeply that the chin layer loses 8.5mm of the beak's 18.
+nearest its holes, 38 mm, and pays for it under the beak: its square there slopes so
+steeply that the chin layer loses 8.5 mm of the beak's 18.
 
 Others that pass but were not built: the elongated and gyroelongated pentagonal
 pyramids (holes on the top's grid, as the cube), the gyroelongated square pyramid,
 the elongated pentagonal bipyramid, the elongated triangular cupola and
 orthobicupola, and the triangular and square orthobicupolas, every one reaching
-29mm or more from index to middle finger with its holes off the top.
+29 mm or more from index to middle finger with its holes off the top.
 
 ## Turn it in 3D
 
@@ -352,33 +352,33 @@ hexagonal prism and the icosahedron, and C♯4 +20 on the cuboctahedron.
 
 ## What the model says
 
-**An ocarina is a vessel, not a tube.** The cube's cavity is 113mm corner to corner and
-the wavelength at its D4 is 1187mm, so the air inside acts as one spring and the air in each
+**An ocarina is a vessel, not a tube.** The cube's cavity is 113 mm corner to corner and
+the wavelength at its D4 is 1187 mm, so the air inside acts as one spring and the air in each
 opening as a mass on it: a Helmholtz resonator. The pitch depends on the cavity's
 volume and on how much air each opening lets through, its conductance, and **not at
 all on where a hole is**. That is why the holes sit wherever the fingers fall.
 
-Each opening's conductance is its area over its effective length: the 3mm plate it
+Each opening's conductance is its area over its effective length: the 3 mm plate it
 goes through, plus Rayleigh's end correction for a flanged end, once inside and once
 out. Open holes add to the window's in parallel, so every note asks for a sum:
 
 | Hole | Finger | Conductance | Diameter |
 |---|---|---|---|
-| `R2` | right middle | 0.269 × the window's | 4.20mm |
-| `R1` | right index | 0.553 × | 7.04mm |
-| `L1` | left index | 1.074 × | 11.84mm |
-| `L2` | left middle | 1.016 × | 11.32mm |
+| `R2` | right middle | 0.269 × the window's | 4.20 mm |
+| `R1` | right index | 0.553 × | 7.04 mm |
+| `L1` | left index | 1.074 × | 11.84 mm |
+| `L2` | left middle | 1.016 × | 11.32 mm |
 
-The window is 14 × 7mm, with a conductance of 7.85mm. G4 from that window would ask
+The window is 14 × 7 mm, with a conductance of 7.85 mm. G4 from that window would ask
 for a cavity of 155.1cm³; the builds hold 1.8 to 2.3 times that, and play lower.
 
 **The window is as big as the holes allow.** The top note, an octave over the closed
 one, needs the open holes to pass three times the window's conductance, so the holes
-grow with the window. At 14 × 7mm the biggest hole is 11.8mm, a millimetre under the
-12mm that leaves room to file it up before it outgrows the 13mm a fingertip covers.
+grow with the window. At 14 × 7 mm the biggest hole is 11.8 mm, a millimetre under the
+12 mm that leaves room to file it up before it outgrows the 13 mm a fingertip covers.
 Big ocarinas are given big windows: a low note through a small window asks for a slow,
 weak jet. Every build shares this one, so every build shares the holes. It was 10 ×
-5mm until 2026-10-18, with a cavity of 101cm³, and the tightest fingering, below, kept it there.
+5 mm until 2026-10-18, with a cavity of 101cm³, and the tightest fingering, below, kept it there.
 
 **No four holes play a perfect scale.** Two holes opened together always add their
 conductances, and the scale's steps do not add that way. Here C5 opens the A4 hole and
@@ -393,7 +393,7 @@ found for this gives its hole sizes, so the pattern comes from a search over all
 conductances. Of the 53 patterns `ocarina_model.py --search` finds, the tightest holds
 every note within 12.3 cents, and it was the fingering here until 2026-10-18. It needs
 one hole 1.72 times the window's conductance, though, and that caps the window: at the
-14 × 7mm one the bigger solids want, that hole would be 17mm, past a fingertip. This
+14 × 7 mm one the bigger solids want, that hole would be 17 mm, past a fingertip. This
 pattern opens all four holes for the top note, which shares the conductance out, so
 its biggest hole is 1.07 times the window's. It starts the scale as the tightest one
 does, ends with every hole open, and takes ten finger moves up the scale to its eleven.
@@ -419,7 +419,7 @@ any build's closed note will do, since the window is the same on all twelve. A f
 
 **Cut the cube first.** It is the simplest, every joint at 90 degrees, and its
 closed note measures the window as well as any. All twelve are a step from anything
-measured: their 14 × 7mm window is sized to the holes, and the cavities it speaks
+measured: their 14 × 7 mm window is sized to the holes, and the cavities it speaks
 into play a fourth or a fifth below the G4 it would suit. Whether it is big enough
 for them to speak strongly is for a test to show.
 
@@ -430,26 +430,26 @@ that plays sharp cannot be closed up, so file in small steps.
 beak, is where the air splits, and it needs a clean bevel of about 30° that a laser
 cannot cut. File it on the outside face, the face the bird sits on, while the top is
 still a flat plate on the bench. **A blue line across the top marks where to file
-to**: 5.2mm past the window, where a 30° bevel through the 3mm plate meets the
+to**: 5.2 mm past the window, where a 30° bevel through the 3 mm plate meets the
 outside face. File from the window's edge back to the line, keeping the edge
 itself sharp at the inside face.
 
-**The duct is a fill engrave**, the window's 14mm width, about 1mm deep in one colour
-or 0.5mm in each of two (see the mouthpiece, under [The builds](#the-builds)). The depth
+**The duct is a fill engrave**, the window's 14 mm width, about 1 mm deep in one colour
+or 0.5 mm in each of two (see the mouthpiece, under [The builds](#the-builds)). The depth
 is a power setting, so find it on scrap first, and run the engraves before the cuts,
 while the parts still lie where they were drawn.
 
-**The smallest hole is 4.2mm.** At the kerf it is the one most likely to come out
-ragged or choked with char. Clear it with a 4mm drill held in the fingers, which
+**The smallest hole is 4.2 mm.** At the kerf it is the one most likely to come out
+ragged or choked with char. Clear it with a 4 mm drill held in the fingers, which
 takes off the char and nothing more.
 
-**Cut it in 3mm Baltic birch plywood**, at a 0.13mm kerf. The fingers are the square
-flute's size or a little over: each edge is split into equal cells, 6.00 to 7.59mm
+**Cut it in 3 mm Baltic birch plywood**, at a 0.13 mm kerf. The fingers are the square
+flute's size or a little over: each edge is split into equal cells, 6.00 to 7.59 mm
 wide, with no play, so the fit comes from the kerf compensation alone. **If your laser's
-kerf is not 0.13mm, redraw the sheets for its own** with `--kerf=`: a press-fit that
+kerf is not 0.13 mm, redraw the sheets for its own** with `--kerf=`: a press-fit that
 comes out loose wants a wider kerf, one too tight to close a narrower one. Each
-0.05mm more makes every finger 0.05mm tighter against each side of its slot: the
-finger is drawn 0.05mm wider and the slot 0.05mm narrower. Glue the bird on the top and the chin layer under the
+0.05 mm more makes every finger 0.05 mm tighter against each side of its slot: the
+finger is drawn 0.05 mm wider and the slot 0.05 mm narrower. Glue the bird on the top and the chin layer under the
 beak. Press-fit the rest, then seal every seam with shellac, inside where you can reach and outside
 everywhere: a Helmholtz resonator leaks its note out of any gap.
 
@@ -517,17 +517,17 @@ convex solid as its faces' planes and joints every edge at its own angle. It che
 - the model holds the scale within 20 cents
 - the cube's cavity is the 280cm³ asked for
 - the cavity is small against a quarter wavelength, so it rings as one chamber:
-  141mm corner to corner at most, in the elongated square bipyramid, against 296mm
+  141 mm corner to corner at most, in the elongated square bipyramid, against 296 mm
   or more
-- every hole speaks and a finger covers it: from 2.5 to 13mm across
+- every hole speaks and a finger covers it: from 2.5 to 13 mm across
 - every hole and the window open into the cavity, and ply is left between the holes
   and between the holes and the window
 - each hand's holes lie under that hand, worked out from the geometry
 - the duct runs from the beak's tip to the window, its two halves lined up in the
   bird and the top, and the top carries no numbers
-- the bevel guide sits where a 30° bevel meets the outside face, 5.2mm past the
+- the bevel guide sits where a 30° bevel meets the outside face, 5.2 mm past the
   window, over the cavity and clear of the holes
-- every edge is finger-jointed with as many 6mm cells as fit
+- every edge is finger-jointed with as many 6 mm cells as fit
 - along every joint, no point lies in two plates: from 1152 points on the cube
   to 2313 on the icosahedron, through each finger from the outside edge to the
   inner corner
@@ -556,7 +556,7 @@ in swept-curve, so it expects both repositories cloned beside this one.
 
 The cube's top plate, from outside and to scale, beak on the left:
 
-![The cube's top plate from outside, to scale, its edges cut into fingers: the beak on the left with the bird's footprint dashed over it and the duct in magenta, the rectangular window at the start of the cavity with a short blue line across the plate just past it, where the bevel filed on its far edge should reach, whose walls are dotted beneath the plate, and the four round holes, L1 of 11.8mm and L2 of 11.3mm on the upper side, R1 of 7.0mm and R2 of 4.2mm on the lower](plans/four-hole-ocarina-top-plate.svg)
+![The cube's top plate from outside, to scale, its edges cut into fingers: the beak on the left with the bird's footprint dashed over it and the duct in magenta, the rectangular window at the start of the cavity with a short blue line across the plate just past it, where the bevel filed on its far edge should reach, whose walls are dotted beneath the plate, and the four round holes, L1 of 11.8 mm and L2 of 11.3 mm on the upper side, R1 of 7.0 mm and R2 of 4.2 mm on the lower](plans/four-hole-ocarina-top-plate.svg)
 
 ## Every cut sheet
 
