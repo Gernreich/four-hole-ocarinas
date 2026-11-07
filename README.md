@@ -633,6 +633,7 @@ Each picture is a display rendering; click it for the cut file.
 | `ocarina_model.py` | the acoustic model |
 | `four_hole_ocarinas.py` | the generator, its checks and every cut file |
 | `polyhedron.py` | the solids, and their joints at any angle |
+| `four_hole_ocarinas.rs` · `polyhedron.rs` · `Cargo.toml` · `Cargo.lock` | the mitred offset and the solids' joints in Rust, for the Rust generators that borrow them (the panpipes' tube sets and the chanters); the same numbers as the Python, which their `.repro` gates prove |
 | `solid_survey.py` | other solids tried against the generator's checks, and how each reaches the hands |
 | `page_assets.py` | builds `viewer.js`, `turn.html` and the plans |
 | `README.md` · `index.html` | this writeup and its published page; the markdown is the source |
