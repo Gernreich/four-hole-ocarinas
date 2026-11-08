@@ -663,6 +663,21 @@ lasermade-tools' `step-export`, and `.repro` checks them:
 ../lasermade-tools/target/release/step-export viewer.js --name=four-hole-ocarinas
 ```
 
+The files:
+
+- `step/four-hole-ocarinas-cube.step`
+- `step/four-hole-ocarinas-cuboctahedron.step`
+- `step/four-hole-ocarinas-dodecahedron.step`
+- `step/four-hole-ocarinas-elongated-square-bipyramid.step`
+- `step/four-hole-ocarinas-elongated-square-pyramid.step`
+- `step/four-hole-ocarinas-hexagonal-prism.step`
+- `step/four-hole-ocarinas-icosahedron.step`
+- `step/four-hole-ocarinas-octagon.step`
+- `step/four-hole-ocarinas-octahedron.step`
+- `step/four-hole-ocarinas-rhombic-dodecahedron.step`
+- `step/four-hole-ocarinas-square-antiprism.step`
+- `step/four-hole-ocarinas-truncated-octahedron.step`
+
 ## Credits
 
 Made by Michael Gernreich with [Claude](https://www.anthropic.com/claude) (Anthropic), working in Claude Code, which co-wrote the code and the documentation. Commits Claude made carry a `Co-Authored-By: Claude` line.
