@@ -686,6 +686,22 @@ The generator also writes every build as a parametric SolidCraft design, in
 one number rebuilds the rest: type a note and the ocarina resizes to sound it, its
 joints re-counted and its holes re-sized.
 
+The designs, each built with `solidcraft-cli run FILE --save NAME.sc` and the `.sc` opened in SolidCraft:
+
+- `solidcraft/four-hole-ocarina-cube.solidcraft.json`
+- `solidcraft/four-hole-ocarina-cuboctahedron.solidcraft.json`
+- `solidcraft/four-hole-ocarina-dodecahedron.solidcraft.json`
+- `solidcraft/four-hole-ocarina-elongated-square-bipyramid.solidcraft.json`
+- `solidcraft/four-hole-ocarina-elongated-square-pyramid.solidcraft.json`
+- `solidcraft/four-hole-ocarina-hexagonal-prism.solidcraft.json`
+- `solidcraft/four-hole-ocarina-icosahedron.solidcraft.json`
+- `solidcraft/four-hole-ocarina-octagon.solidcraft.json`
+- `solidcraft/four-hole-ocarina-octahedron.solidcraft.json`
+- `solidcraft/four-hole-ocarina-rhombic-dodecahedron.solidcraft.json`
+- `solidcraft/four-hole-ocarina-square-antiprism.solidcraft.json`
+- `solidcraft/four-hole-ocarina-truncated-octahedron.solidcraft.json`
+- `solidcraft/four-hole-ocarina-cube.cavity.json`, the cube's cavity check
+
 ### The cube
 
 | Parameter | Default | What it is |
