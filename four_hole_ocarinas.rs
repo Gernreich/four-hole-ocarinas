@@ -603,7 +603,7 @@ pub fn build_faces(kind: &str, faces: Vec<Face>, diams: &[f64], face_holes: bool
 // Every corner of a solid has a number, and every plate engraves it near each
 // of its own corners, on its inside face: the plates that meet at a corner
 // all carry its number, so the solid goes together by matching them. The
-// digits are the trumpet tooling's single-stroke ones (bore_split.py's G), x
+// digits are the trumpet tooling's single-stroke ones (its tools/glyphs.rs), x
 // across and y up, in a cell 0.62 of the height wide.
 pub fn digit(ch: char) -> &'static [&'static [(f64, f64)]] {
     match ch {
