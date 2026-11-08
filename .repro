@@ -41,3 +41,18 @@ turn.html :: target/release/page_assets --turn-to=$OUT
 plans/four-hole-ocarina-top-plate.svg :: target/release/page_assets --plans-to=$(dirname $OUT)
 plans/four-hole-ocarina-fingering.svg :: target/release/page_assets --plans-to=$(dirname $OUT)
 index.html :: ../lasermade-tools/target/release/md2html README.md $OUT
+
+# --- the STEP files: the 3D view's parts as solids for a CAD program, one
+# file per design, written from the page by lasermade-tools' step-export ---
+step/four-hole-ocarinas-cube.step :: ../lasermade-tools/target/release/step-export viewer.js --name=four-hole-ocarinas --out=$(dirname $OUT)
+step/four-hole-ocarinas-octagon.step :: ../lasermade-tools/target/release/step-export viewer.js --name=four-hole-ocarinas --out=$(dirname $OUT)
+step/four-hole-ocarinas-square-antiprism.step :: ../lasermade-tools/target/release/step-export viewer.js --name=four-hole-ocarinas --out=$(dirname $OUT)
+step/four-hole-ocarinas-octahedron.step :: ../lasermade-tools/target/release/step-export viewer.js --name=four-hole-ocarinas --out=$(dirname $OUT)
+step/four-hole-ocarinas-dodecahedron.step :: ../lasermade-tools/target/release/step-export viewer.js --name=four-hole-ocarinas --out=$(dirname $OUT)
+step/four-hole-ocarinas-truncated-octahedron.step :: ../lasermade-tools/target/release/step-export viewer.js --name=four-hole-ocarinas --out=$(dirname $OUT)
+step/four-hole-ocarinas-hexagonal-prism.step :: ../lasermade-tools/target/release/step-export viewer.js --name=four-hole-ocarinas --out=$(dirname $OUT)
+step/four-hole-ocarinas-icosahedron.step :: ../lasermade-tools/target/release/step-export viewer.js --name=four-hole-ocarinas --out=$(dirname $OUT)
+step/four-hole-ocarinas-cuboctahedron.step :: ../lasermade-tools/target/release/step-export viewer.js --name=four-hole-ocarinas --out=$(dirname $OUT)
+step/four-hole-ocarinas-rhombic-dodecahedron.step :: ../lasermade-tools/target/release/step-export viewer.js --name=four-hole-ocarinas --out=$(dirname $OUT)
+step/four-hole-ocarinas-elongated-square-pyramid.step :: ../lasermade-tools/target/release/step-export viewer.js --name=four-hole-ocarinas --out=$(dirname $OUT)
+step/four-hole-ocarinas-elongated-square-bipyramid.step :: ../lasermade-tools/target/release/step-export viewer.js --name=four-hole-ocarinas --out=$(dirname $OUT)
