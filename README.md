@@ -247,7 +247,7 @@ simulate the jet, so which voices best is for a test cut to show.
 
 ## Other solids
 
-**Do zonohedra or Johnson solids reach the hands better?** `solid_survey.py` tried
+**Do zonohedra or Johnson solids reach the hands better?** `solid_survey` tried
 23 more solids with equal edges, every one sized to the cube's 280cm³ and run through
 the generator's own build and checks twice: once with the holes on the top's grid,
 and once with each hand's holes on the faces at its side. Five were skipped before
@@ -390,7 +390,7 @@ and G5, a little softer for C5, D5 and F♯5.
 **The fingering is found, not copied, and it is not the tightest.** John Taylor's
 English system of 1964 is the standard four-hole fingering, and no published source
 found for this gives its hole sizes, so the pattern comes from a search over all four
-conductances. Of the 53 patterns `ocarina_model.py --search` finds, the tightest holds
+conductances. Of the 53 patterns `ocarina_model --search` finds, the tightest holds
 every note within 12.3 cents, and it was the fingering here until 2026-10-18. It needs
 one hole 1.72 times the window's conductance, though, and that caps the window: at the
 14 × 7 mm one the bigger solids want, that hole would be 17 mm, past a fingertip. This
@@ -410,7 +410,7 @@ sized to the window, and every hole is sized against it. With every hole closed,
 blow the cut ocarina and read its pitch. Then
 
 ```sh
-python3 ocarina_model.py --heard=290 --cavity=280   # the pitch you heard, in Hz, and the build's cavity in cm³
+target/release/ocarina_model --heard=290 --cavity=280   # the pitch you heard, in Hz, and the build's cavity in cm³
 ```
 
 prints the `--mouth` that explains it, and the command to redraw every build with
@@ -493,25 +493,30 @@ of the duct and the bevel guide.
 ## Regenerating it
 
 ```sh
-python3 ocarina_model.py                       # the design and all sixteen fingerings
-python3 ocarina_model.py --mouth=1.2           # with a different window correction
-python3 ocarina_model.py --heard=290 --cavity=280   # the correction a cut ocarina implies
-python3 ocarina_model.py --search              # the fingering patterns, ranked
-python3 four_hole_ocarinas.py --no-write              # the generator's checks, writing nothing
-python3 four_hole_ocarinas.py --out=cut-files         # all twelve builds
-python3 four_hole_ocarinas.py --kerf=0.18 --out=mine   # for a laser with a 0.18mm kerf
-python3 page_assets.py                         # viewer.js, turn.html and the two plans
-python3 solid_survey.py                        # other solids, and how each reaches the hands
+cargo build --release                                     # once, and after any change
+target/release/ocarina_model                              # the design and all sixteen fingerings
+target/release/ocarina_model --mouth=1.2                  # with a different window correction
+target/release/ocarina_model --heard=290 --cavity=280     # the correction a cut ocarina implies
+target/release/ocarina_model --search                     # the fingering patterns, ranked
+target/release/four_hole_ocarinas --no-write              # the generator's checks, writing nothing
+target/release/four_hole_ocarinas --out=cut-files         # all twelve builds
+target/release/four_hole_ocarinas --kerf=0.18 --out=mine  # for a laser with a 0.18mm kerf
+target/release/page_assets                                # viewer.js, turn.html and the two plans
+target/release/solid_survey                               # other solids, and how each reaches the hands
 ```
 
-`ocarina_model.py` is the Helmholtz model above. For a fingering pattern it finds the
+The programs are Rust since 2026-11-07, Python until then; the move changed no byte of
+any cut file, plan or page, and the survey's report came out the same, in a second
+instead of ten minutes.
+
+`ocarina_model.rs` is the Helmholtz model above. For a fingering pattern it finds the
 four conductances by a pattern search that minimises the worst note's error in cents.
 `--search` asks which pattern, from 400 random starts: it found 53 that give eight
 different fingerings. The tightest heads the list, at 12.3 cents and 11 finger moves
 up the scale; the one used here is at 19.2 cents and 10 moves, chosen for its holes.
 
-`four_hole_ocarinas.py` builds all twelve with what the model asks for and checks them
-before writing anything. The solids are built by `polyhedron.py`, which takes any
+`four_hole_ocarinas.rs` builds all twelve with what the model asks for and checks them
+before writing anything. The solids are built by `polyhedron.rs`, which takes any
 convex solid as its faces' planes and joints every edge at its own angle. It checks:
 
 - the model holds the scale within 20 cents
@@ -546,11 +551,15 @@ corner cuts the corner scan finds 229 points in two plates on the square antipri
 93 on the octahedron, 1401 on the cuboctahedron, 361 on the icosahedron, 420 on the
 rhombic dodecahedron, 43 on the elongated square pyramid and 46 on the bipyramid.
 
-It borrows the finger size, the plate class and the sheet packer from
-[`square_flute.py`](https://github.com/Gernreich/square-flute/blob/main/square_flute.py),
-and the SVG path writer from
-[`ribbon_bore.py`](https://github.com/Gernreich/swept-curve/blob/main/ribbon_bore.py)
-in swept-curve, so it expects both repositories cloned beside this one.
+The crate borrows the finger size, the kerf and the sheet packer from the square flute's
+[`square_flute.rs`](https://github.com/Gernreich/square-flute/blob/main/square_flute.rs),
+with the viewer's page from its `page_assets.rs`, and the SVG path writer from
+[`ribbon_bore.rs`](https://github.com/Gernreich/swept-curve/blob/main/ribbon_bore.rs)
+in swept-curve, so it expects
+[square-flute](https://github.com/Gernreich/square-flute),
+[swept-curve](https://github.com/Gernreich/swept-curve),
+[bore-tmm](https://github.com/Gernreich/bore-tmm) (which the square flute's crate needs) and
+[lasermade-tools](https://github.com/Gernreich/lasermade-tools) cloned beside this one.
 
 `.repro` holds the exact command for every generated file here.
 
@@ -630,12 +639,12 @@ Each picture is a display rendering; click it for the cut file.
 | `plans/four-hole-ocarina-top-plate.svg` · `plans/four-hole-ocarina-fingering.svg` | the cube's top plate to scale, and the fingering chart — display drawings, **not** cut files |
 | `viewer.js` | the 3D view of every build, loaded by the published page |
 | `turn.html` | the same 3D view on a page of its own, for framing elsewhere |
-| `ocarina_model.py` | the acoustic model |
-| `four_hole_ocarinas.py` | the generator, its checks and every cut file |
-| `polyhedron.py` | the solids, and their joints at any angle |
-| `four_hole_ocarinas.rs` · `polyhedron.rs` · `Cargo.toml` · `Cargo.lock` | the mitred offset and the solids' joints in Rust, for the Rust generators that borrow them (the panpipes' tube sets and the chanters); the same numbers as the Python, which their `.repro` gates prove |
-| `solid_survey.py` | other solids tried against the generator's checks, and how each reaches the hands |
-| `page_assets.py` | builds `viewer.js`, `turn.html` and the plans |
+| `ocarina_model.rs` | the acoustic model |
+| `four_hole_ocarinas.rs` | the generator, its checks and every cut file; the mitred offset that the octagonal flute, the panpipes and the chanters borrow |
+| `polyhedron.rs` | the solids, and their joints at any angle, which the octagonal flute and the panpipes' tube sets borrow |
+| `solid_survey.rs` | other solids tried against the generator's checks, and how each reaches the hands |
+| `page_assets.rs` | builds `viewer.js`, `turn.html` and the plans |
+| `bin/` · `Cargo.toml` · `Cargo.lock` | the crate: one small file per program, and the pinned build |
 | `README.md` · `index.html` | this writeup and its published page; the markdown is the source |
 | `.repro` | the command that draws each generated file |
 

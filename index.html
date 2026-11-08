@@ -302,7 +302,7 @@ pre,.tw{break-inside:avoid}h1{break-after:avoid}}
 </div>
 <p>The three put the airstream at different heights against the splitting edge: just above the top plate's surface from a bird flue, just below it from a nest flue, and level with it from a savanna flue, a shift of about one duct depth. The model does not simulate the jet, so which voices best is for a test cut to show.</p>
 <h2 id="other-solids">Other solids</h2>
-<p><strong>Do zonohedra or Johnson solids reach the hands better?</strong> <code>solid_survey.py</code> tried 23 more solids with equal edges, every one sized to the cube's 280cm³ and run through the generator's own build and checks twice: once with the holes on the top's grid, and once with each hand's holes on the faces at its side. Five were skipped before building: a joint under 90 degrees, as on any pyramid on a triangle or on a cupola's wide base, would put a finger out through the outside. Seven more fail, all with many small faces: at 280cm³ the rhombic triacontahedron's edge is 30.5 mm and the truncated cuboctahedron's 20.3 mm, too small for a hole and its ply, or for a corner number. The rhombic icosahedron and the elongated square and pentagonal cupolas and orthobicupolas fail too, on room for the holes, the corner numbers or, at the corner cuts their corners need, joints left open too far from a corner. Eleven pass.</p>
+<p><strong>Do zonohedra or Johnson solids reach the hands better?</strong> <code>solid_survey</code> tried 23 more solids with equal edges, every one sized to the cube's 280cm³ and run through the generator's own build and checks twice: once with the holes on the top's grid, and once with each hand's holes on the faces at its side. Five were skipped before building: a joint under 90 degrees, as on any pyramid on a triangle or on a cupola's wide base, would put a finger out through the outside. Seven more fail, all with many small faces: at 280cm³ the rhombic triacontahedron's edge is 30.5 mm and the truncated cuboctahedron's 20.3 mm, too small for a hole and its ply, or for a corner number. The rhombic icosahedron and the elongated square and pentagonal cupolas and orthobicupolas fail too, on room for the holes, the corner numbers or, at the corner cuts their corners need, joints left open too far from a corner. Eleven pass.</p>
 <p>The hands' distances, hole centre to hole centre, are the measure: index to middle finger, left index to right index, how far a hole's face tilts from the top, and the window to the furthest hole.</p>
 <div class="tw">
 <table>
@@ -607,10 +607,10 @@ pre,.tw{break-inside:avoid}h1{break-after:avoid}}
 <p>The window is 14 × 7 mm, with a conductance of 7.85 mm. G4 from that window would ask for a cavity of 155.1cm³; the builds hold 1.8 to 2.3 times that, and play lower.</p>
 <p><strong>The window is as big as the holes allow.</strong> The top note, an octave over the closed one, needs the open holes to pass three times the window's conductance, so the holes grow with the window. At 14 × 7 mm the biggest hole is 11.8 mm, a millimetre under the 12 mm that leaves room to file it up before it outgrows the 13 mm a fingertip covers. Big ocarinas are given big windows: a low note through a small window asks for a slow, weak jet. Every build shares this one, so every build shares the holes. It was 10 × 5 mm until 2026-10-18, with a cavity of 101cm³, and the tightest fingering, below, kept it there.</p>
 <p><strong>No four holes play a perfect scale.</strong> Two holes opened together always add their conductances, and the scale's steps do not add that way. Here C5 opens the A4 hole and the B4 hole together, and the two give more than C5 wants. So the model shares the error out: B4 and G5 sit 19.2 cents flat, C5 and F♯5 19.2 sharp, D5 15.4 sharp, and A4 and E5 within 7. Breath bends an ocarina by that much: blow a little harder for B4 and G5, a little softer for C5, D5 and F♯5.</p>
-<p><strong>The fingering is found, not copied, and it is not the tightest.</strong> John Taylor's English system of 1964 is the standard four-hole fingering, and no published source found for this gives its hole sizes, so the pattern comes from a search over all four conductances. Of the 53 patterns <code>ocarina_model.py --search</code> finds, the tightest holds every note within 12.3 cents, and it was the fingering here until 2026-10-18. It needs one hole 1.72 times the window's conductance, though, and that caps the window: at the 14 × 7 mm one the bigger solids want, that hole would be 17 mm, past a fingertip. This pattern opens all four holes for the top note, which shares the conductance out, so its biggest hole is 1.07 times the window's. It starts the scale as the tightest one does, ends with every hole open, and takes ten finger moves up the scale to its eleven. It costs 7 cents of tuning. It may not match a commercial English pendant's chart note for note.</p>
+<p><strong>The fingering is found, not copied, and it is not the tightest.</strong> John Taylor's English system of 1964 is the standard four-hole fingering, and no published source found for this gives its hole sizes, so the pattern comes from a search over all four conductances. Of the 53 patterns <code>ocarina_model --search</code> finds, the tightest holds every note within 12.3 cents, and it was the fingering here until 2026-10-18. It needs one hole 1.72 times the window's conductance, though, and that caps the window: at the 14 × 7 mm one the bigger solids want, that hole would be 17 mm, past a fingertip. This pattern opens all four holes for the top note, which shares the conductance out, so its biggest hole is 1.07 times the window's. It starts the scale as the tightest one does, ends with every hole open, and takes ten finger moves up the scale to its eleven. It costs 7 cents of tuning. It may not match a commercial English pendant's chart note for note.</p>
 <h2 id="before-you-cut">Before you cut</h2>
 <p><strong>The window's end correction is not measured.</strong> The jet blowing across the window lengthens it, by an amount found only in simulation so far: a 2009 simulation of an ocarina (<a href="https://arxiv.org/abs/0911.3567" target="_blank" rel="noopener">Kobayashi and others</a>) put it well above the textbook figure. It is the one term every other number rests on: the cavity is sized to the window, and every hole is sized against it. With every hole closed, blow the cut ocarina and read its pitch. Then</p>
-<pre class="sh"><code>python3 ocarina_model.py --heard=290 --cavity=280   # the pitch you heard, in Hz, and the build&#39;s cavity in cm³</code></pre>
+<pre class="sh"><code>target/release/ocarina_model --heard=290 --cavity=280   # the pitch you heard, in Hz, and the build&#39;s cavity in cm³</code></pre>
 <p>prints the <code>--mouth</code> that explains it, and the command to redraw every build with it. The cavity is the one in the table of builds, or as the generator prints it; any build's closed note will do, since the window is the same on all twelve. A first build that sounds 50 cents flat is not a failure; it is the measurement.</p>
 <p><strong>Cut the cube first.</strong> It is the simplest, every joint at 90 degrees, and its closed note measures the window as well as any. All twelve are a step from anything measured: their 14 × 7 mm window is sized to the holes, and the cavities it speaks into play a fourth or a fifth below the G4 it would suit. Whether it is big enough for them to speak strongly is for a test to show.</p>
 <p><strong>The holes can only go up.</strong> A hole that plays flat can be opened with a file. A hole that plays sharp cannot be closed up, so file in small steps.</p>
@@ -628,17 +628,19 @@ pre,.tw{break-inside:avoid}h1{break-after:avoid}}
 <li>Once it plays in tune, shellac the filed holes and the splitting edge.</li>
 </ol>
 <h2 id="regenerating-it">Regenerating it</h2>
-<pre class="sh"><code>python3 ocarina_model.py                       # the design and all sixteen fingerings
-python3 ocarina_model.py --mouth=1.2           # with a different window correction
-python3 ocarina_model.py --heard=290 --cavity=280   # the correction a cut ocarina implies
-python3 ocarina_model.py --search              # the fingering patterns, ranked
-python3 four_hole_ocarinas.py --no-write              # the generator&#39;s checks, writing nothing
-python3 four_hole_ocarinas.py --out=cut-files         # all twelve builds
-python3 four_hole_ocarinas.py --kerf=0.18 --out=mine   # for a laser with a 0.18mm kerf
-python3 page_assets.py                         # viewer.js, turn.html and the two plans
-python3 solid_survey.py                        # other solids, and how each reaches the hands</code></pre>
-<p><code>ocarina_model.py</code> is the Helmholtz model above. For a fingering pattern it finds the four conductances by a pattern search that minimises the worst note's error in cents. <code>--search</code> asks which pattern, from 400 random starts: it found 53 that give eight different fingerings. The tightest heads the list, at 12.3 cents and 11 finger moves up the scale; the one used here is at 19.2 cents and 10 moves, chosen for its holes.</p>
-<p><code>four_hole_ocarinas.py</code> builds all twelve with what the model asks for and checks them before writing anything. The solids are built by <code>polyhedron.py</code>, which takes any convex solid as its faces' planes and joints every edge at its own angle. It checks:</p>
+<pre class="sh"><code>cargo build --release                                     # once, and after any change
+target/release/ocarina_model                              # the design and all sixteen fingerings
+target/release/ocarina_model --mouth=1.2                  # with a different window correction
+target/release/ocarina_model --heard=290 --cavity=280     # the correction a cut ocarina implies
+target/release/ocarina_model --search                     # the fingering patterns, ranked
+target/release/four_hole_ocarinas --no-write              # the generator&#39;s checks, writing nothing
+target/release/four_hole_ocarinas --out=cut-files         # all twelve builds
+target/release/four_hole_ocarinas --kerf=0.18 --out=mine  # for a laser with a 0.18mm kerf
+target/release/page_assets                                # viewer.js, turn.html and the two plans
+target/release/solid_survey                               # other solids, and how each reaches the hands</code></pre>
+<p>The programs are Rust since 2026-11-07, Python until then; the move changed no byte of any cut file, plan or page, and the survey's report came out the same, in a second instead of ten minutes.</p>
+<p><code>ocarina_model.rs</code> is the Helmholtz model above. For a fingering pattern it finds the four conductances by a pattern search that minimises the worst note's error in cents. <code>--search</code> asks which pattern, from 400 random starts: it found 53 that give eight different fingerings. The tightest heads the list, at 12.3 cents and 11 finger moves up the scale; the one used here is at 19.2 cents and 10 moves, chosen for its holes.</p>
+<p><code>four_hole_ocarinas.rs</code> builds all twelve with what the model asks for and checks them before writing anything. The solids are built by <code>polyhedron.rs</code>, which takes any convex solid as its faces' planes and joints every edge at its own angle. It checks:</p>
 <ul>
 <li>the model holds the scale within 20 cents</li>
 <li>the cube's cavity is the 280cm³ asked for</li>
@@ -657,7 +659,7 @@ python3 solid_survey.py                        # other solids, and how each reac
 <li>every sheet fits the bed, and every part is on a sheet</li>
 </ul>
 <p>The joint checks were proved by breaking them: with no step back every sampled point lies in two plates, and with three times the step the joints open. Without the corner cuts the corner scan finds 229 points in two plates on the square antiprism, 93 on the octahedron, 1401 on the cuboctahedron, 361 on the icosahedron, 420 on the rhombic dodecahedron, 43 on the elongated square pyramid and 46 on the bipyramid.</p>
-<p>It borrows the finger size, the plate class and the sheet packer from <a href="https://github.com/Gernreich/square-flute/blob/main/square_flute.py" target="_blank" rel="noopener"><code>square_flute.py</code></a>, and the SVG path writer from <a href="https://github.com/Gernreich/swept-curve/blob/main/ribbon_bore.py" target="_blank" rel="noopener"><code>ribbon_bore.py</code></a> in swept-curve, so it expects both repositories cloned beside this one.</p>
+<p>The crate borrows the finger size, the kerf and the sheet packer from the square flute's <a href="https://github.com/Gernreich/square-flute/blob/main/square_flute.rs" target="_blank" rel="noopener"><code>square_flute.rs</code></a>, with the viewer's page from its <code>page_assets.rs</code>, and the SVG path writer from <a href="https://github.com/Gernreich/swept-curve/blob/main/ribbon_bore.rs" target="_blank" rel="noopener"><code>ribbon_bore.rs</code></a> in swept-curve, so it expects <a href="https://github.com/Gernreich/square-flute" target="_blank" rel="noopener">square-flute</a>, <a href="https://github.com/Gernreich/swept-curve" target="_blank" rel="noopener">swept-curve</a>, <a href="https://github.com/Gernreich/bore-tmm" target="_blank" rel="noopener">bore-tmm</a> (which the square flute's crate needs) and <a href="https://github.com/Gernreich/lasermade-tools" target="_blank" rel="noopener">lasermade-tools</a> cloned beside this one.</p>
 <p><code>.repro</code> holds the exact command for every generated file here.</p>
 <p>The cube's top plate, from outside and to scale, beak on the left:</p>
 <figure><svg aria-label="The cube&#x27;s top plate from outside, to scale, its edges cut into fingers: the beak on the left with the bird&#x27;s footprint dashed over it and the duct in magenta, the rectangular window at the start of the cavity with a short blue line across the plate just past it, where the bevel filed on its far edge should reach, whose walls are dotted beneath the plate, and the four round holes, L1 of 11.8 mm and L2 of 11.3 mm on the upper side, R1 of 7.0 mm and R2 of 4.2 mm on the lower" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 101 83">
@@ -774,28 +776,28 @@ python3 solid_survey.py                        # other solids, and how each reac
 <td>the same 3D view on a page of its own, for framing elsewhere</td>
 </tr>
 <tr>
-<td><code>ocarina_model.py</code></td>
+<td><code>ocarina_model.rs</code></td>
 <td>the acoustic model</td>
 </tr>
 <tr>
-<td><code>four_hole_ocarinas.py</code></td>
-<td>the generator, its checks and every cut file</td>
+<td><code>four_hole_ocarinas.rs</code></td>
+<td>the generator, its checks and every cut file; the mitred offset that the octagonal flute, the panpipes and the chanters borrow</td>
 </tr>
 <tr>
-<td><code>polyhedron.py</code></td>
-<td>the solids, and their joints at any angle</td>
+<td><code>polyhedron.rs</code></td>
+<td>the solids, and their joints at any angle, which the octagonal flute and the panpipes' tube sets borrow</td>
 </tr>
 <tr>
-<td><code>four_hole_ocarinas.rs</code> · <code>polyhedron.rs</code> · <code>Cargo.toml</code> · <code>Cargo.lock</code></td>
-<td>the mitred offset and the solids' joints in Rust, for the Rust generators that borrow them (the panpipes' tube sets and the chanters); the same numbers as the Python, which their <code>.repro</code> gates prove</td>
-</tr>
-<tr>
-<td><code>solid_survey.py</code></td>
+<td><code>solid_survey.rs</code></td>
 <td>other solids tried against the generator's checks, and how each reaches the hands</td>
 </tr>
 <tr>
-<td><code>page_assets.py</code></td>
+<td><code>page_assets.rs</code></td>
 <td>builds <code>viewer.js</code>, <code>turn.html</code> and the plans</td>
+</tr>
+<tr>
+<td><code>bin/</code> · <code>Cargo.toml</code> · <code>Cargo.lock</code></td>
+<td>the crate: one small file per program, and the pinned build</td>
 </tr>
 <tr>
 <td><code>README.md</code> · <code>index.html</code></td>

@@ -1,25 +1,25 @@
 # How every shipped SVG and page in this repository is drawn. Checked by
 # lasermade-tools' repro-svg; $OUT is where the file must be written.
 #
-# four_hole_ocarinas.py names its own sheets, so each command writes one build into
-# $OUT's directory with --flat and the tool compares the file it asked for. It
-# imports square_flute.py from the square-flute checkout beside this one, and
-# that imports ribbon_bore.py from swept-curve, so all three are expected side
-# by side.
+# four_hole_ocarinas names its own sheets, so each command writes one build
+# into $OUT's directory with --flat and the tool compares the file it asked
+# for. The programs are Rust since 2026-11-07, built by repro-svg before these
+# run; the crate borrows from square-flute, swept-curve and, through the square
+# flute, bore-tmm, so those checkouts are expected beside this one.
 
 # --- the cut files ---
-cut-files/cube/four-hole-ocarina-cube-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=cube --flat --out=$(dirname $OUT)
-cut-files/octagon/four-hole-ocarina-octagon-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=octagon --flat --out=$(dirname $OUT)
-cut-files/square-antiprism/four-hole-ocarina-square-antiprism-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=square-antiprism --flat --out=$(dirname $OUT)
-cut-files/octahedron/four-hole-ocarina-octahedron-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=octahedron --flat --out=$(dirname $OUT)
-cut-files/dodecahedron/four-hole-ocarina-dodecahedron-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=dodecahedron --flat --out=$(dirname $OUT)
-cut-files/truncated-octahedron/four-hole-ocarina-truncated-octahedron-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=truncated-octahedron --flat --out=$(dirname $OUT)
-cut-files/hexagonal-prism/four-hole-ocarina-hexagonal-prism-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=hexagonal-prism --flat --out=$(dirname $OUT)
-cut-files/icosahedron/four-hole-ocarina-icosahedron-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=icosahedron --flat --out=$(dirname $OUT)
-cut-files/cuboctahedron/four-hole-ocarina-cuboctahedron-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=cuboctahedron --flat --out=$(dirname $OUT)
-cut-files/rhombic-dodecahedron/four-hole-ocarina-rhombic-dodecahedron-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=rhombic-dodecahedron --flat --out=$(dirname $OUT)
-cut-files/elongated-square-pyramid/four-hole-ocarina-elongated-square-pyramid-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=elongated-square-pyramid --flat --out=$(dirname $OUT)
-cut-files/elongated-square-bipyramid/four-hole-ocarina-elongated-square-bipyramid-sheet1-cut-files.svg :: python3 four_hole_ocarinas.py --only=elongated-square-bipyramid --flat --out=$(dirname $OUT)
+cut-files/cube/four-hole-ocarina-cube-sheet1-cut-files.svg :: target/release/four_hole_ocarinas --only=cube --flat --out=$(dirname $OUT)
+cut-files/octagon/four-hole-ocarina-octagon-sheet1-cut-files.svg :: target/release/four_hole_ocarinas --only=octagon --flat --out=$(dirname $OUT)
+cut-files/square-antiprism/four-hole-ocarina-square-antiprism-sheet1-cut-files.svg :: target/release/four_hole_ocarinas --only=square-antiprism --flat --out=$(dirname $OUT)
+cut-files/octahedron/four-hole-ocarina-octahedron-sheet1-cut-files.svg :: target/release/four_hole_ocarinas --only=octahedron --flat --out=$(dirname $OUT)
+cut-files/dodecahedron/four-hole-ocarina-dodecahedron-sheet1-cut-files.svg :: target/release/four_hole_ocarinas --only=dodecahedron --flat --out=$(dirname $OUT)
+cut-files/truncated-octahedron/four-hole-ocarina-truncated-octahedron-sheet1-cut-files.svg :: target/release/four_hole_ocarinas --only=truncated-octahedron --flat --out=$(dirname $OUT)
+cut-files/hexagonal-prism/four-hole-ocarina-hexagonal-prism-sheet1-cut-files.svg :: target/release/four_hole_ocarinas --only=hexagonal-prism --flat --out=$(dirname $OUT)
+cut-files/icosahedron/four-hole-ocarina-icosahedron-sheet1-cut-files.svg :: target/release/four_hole_ocarinas --only=icosahedron --flat --out=$(dirname $OUT)
+cut-files/cuboctahedron/four-hole-ocarina-cuboctahedron-sheet1-cut-files.svg :: target/release/four_hole_ocarinas --only=cuboctahedron --flat --out=$(dirname $OUT)
+cut-files/rhombic-dodecahedron/four-hole-ocarina-rhombic-dodecahedron-sheet1-cut-files.svg :: target/release/four_hole_ocarinas --only=rhombic-dodecahedron --flat --out=$(dirname $OUT)
+cut-files/elongated-square-pyramid/four-hole-ocarina-elongated-square-pyramid-sheet1-cut-files.svg :: target/release/four_hole_ocarinas --only=elongated-square-pyramid --flat --out=$(dirname $OUT)
+cut-files/elongated-square-bipyramid/four-hole-ocarina-elongated-square-bipyramid-sheet1-cut-files.svg :: target/release/four_hole_ocarinas --only=elongated-square-bipyramid --flat --out=$(dirname $OUT)
 
 # --- the previews, from the cut files ---
 previews/cube/four-hole-ocarina-cube-sheet1-cut-files.svg :: ../lasermade-tools/target/release/make-preview cut-files/cube/four-hole-ocarina-cube-sheet1-cut-files.svg $OUT
@@ -36,8 +36,8 @@ previews/elongated-square-pyramid/four-hole-ocarina-elongated-square-pyramid-she
 previews/elongated-square-bipyramid/four-hole-ocarina-elongated-square-bipyramid-sheet1-cut-files.svg :: ../lasermade-tools/target/release/make-preview cut-files/elongated-square-bipyramid/four-hole-ocarina-elongated-square-bipyramid-sheet1-cut-files.svg $OUT
 
 # --- the page ---
-viewer.js :: python3 page_assets.py --viewer-to=$OUT
-turn.html :: python3 page_assets.py --turn-to=$OUT
-plans/four-hole-ocarina-top-plate.svg :: python3 page_assets.py --plans-to=$(dirname $OUT)
-plans/four-hole-ocarina-fingering.svg :: python3 page_assets.py --plans-to=$(dirname $OUT)
+viewer.js :: target/release/page_assets --viewer-to=$OUT
+turn.html :: target/release/page_assets --turn-to=$OUT
+plans/four-hole-ocarina-top-plate.svg :: target/release/page_assets --plans-to=$(dirname $OUT)
+plans/four-hole-ocarina-fingering.svg :: target/release/page_assets --plans-to=$(dirname $OUT)
 index.html :: ../lasermade-tools/target/release/md2html README.md $OUT
