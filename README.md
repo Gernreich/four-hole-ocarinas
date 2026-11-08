@@ -686,20 +686,25 @@ The generator also writes every build as a parametric SolidCraft design, in
 one number rebuilds the rest: type a note and the ocarina resizes to sound it, its
 joints re-counted and its holes re-sized.
 
-The designs, each built with `solidcraft-cli run FILE --save NAME.sc` and the `.sc` opened in SolidCraft:
+Open a `.sc` in SolidCraft. The parameters are under the **SOLID** tab, **MODIFY**
+panel, **Change Parameters**; the Browser lists the parts and the timeline every step.
+The `.solidcraft.json` beside it is the script it was built from (`solidcraft-cli run
+FILE --save NAME.sc`). The `.sc` holds the design without SolidCraft's build cache,
+which it rebuilds on opening, so it is the same file every time. A STEP file in
+`step/` is the built parts only, with no parameters:
 
-- `solidcraft/four-hole-ocarina-cube.solidcraft.json`
-- `solidcraft/four-hole-ocarina-cuboctahedron.solidcraft.json`
-- `solidcraft/four-hole-ocarina-dodecahedron.solidcraft.json`
-- `solidcraft/four-hole-ocarina-elongated-square-bipyramid.solidcraft.json`
-- `solidcraft/four-hole-ocarina-elongated-square-pyramid.solidcraft.json`
-- `solidcraft/four-hole-ocarina-hexagonal-prism.solidcraft.json`
-- `solidcraft/four-hole-ocarina-icosahedron.solidcraft.json`
-- `solidcraft/four-hole-ocarina-octagon.solidcraft.json`
-- `solidcraft/four-hole-ocarina-octahedron.solidcraft.json`
-- `solidcraft/four-hole-ocarina-rhombic-dodecahedron.solidcraft.json`
-- `solidcraft/four-hole-ocarina-square-antiprism.solidcraft.json`
-- `solidcraft/four-hole-ocarina-truncated-octahedron.solidcraft.json`
+- `solidcraft/four-hole-ocarina-cube.sc` · `solidcraft/four-hole-ocarina-cube.solidcraft.json`
+- `solidcraft/four-hole-ocarina-cuboctahedron.sc` · `solidcraft/four-hole-ocarina-cuboctahedron.solidcraft.json`
+- `solidcraft/four-hole-ocarina-dodecahedron.sc` · `solidcraft/four-hole-ocarina-dodecahedron.solidcraft.json`
+- `solidcraft/four-hole-ocarina-elongated-square-bipyramid.sc` · `solidcraft/four-hole-ocarina-elongated-square-bipyramid.solidcraft.json`
+- `solidcraft/four-hole-ocarina-elongated-square-pyramid.sc` · `solidcraft/four-hole-ocarina-elongated-square-pyramid.solidcraft.json`
+- `solidcraft/four-hole-ocarina-hexagonal-prism.sc` · `solidcraft/four-hole-ocarina-hexagonal-prism.solidcraft.json`
+- `solidcraft/four-hole-ocarina-icosahedron.sc` · `solidcraft/four-hole-ocarina-icosahedron.solidcraft.json`
+- `solidcraft/four-hole-ocarina-octagon.sc` · `solidcraft/four-hole-ocarina-octagon.solidcraft.json`
+- `solidcraft/four-hole-ocarina-octahedron.sc` · `solidcraft/four-hole-ocarina-octahedron.solidcraft.json`
+- `solidcraft/four-hole-ocarina-rhombic-dodecahedron.sc` · `solidcraft/four-hole-ocarina-rhombic-dodecahedron.solidcraft.json`
+- `solidcraft/four-hole-ocarina-square-antiprism.sc` · `solidcraft/four-hole-ocarina-square-antiprism.solidcraft.json`
+- `solidcraft/four-hole-ocarina-truncated-octahedron.sc` · `solidcraft/four-hole-ocarina-truncated-octahedron.solidcraft.json`
 - `solidcraft/four-hole-ocarina-cube.cavity.json`, the cube's cavity check
 
 ### The cube
@@ -803,8 +808,7 @@ solidcraft-cli run solidcraft/four-hole-ocarina-cube.solidcraft.json --save cube
 solidcraft-cli run solidcraft/four-hole-ocarina-cube.cavity.json --in cube.sc --results
 ```
 
-The `.sc` design is not shipped: SolidCraft writes it differently each time, so
-`.repro` checks the script and the STEP file built from it instead. The cavity
+`.repro` checks the script, the `.sc` and the STEP file built from it. The cavity
 check boxes the cube's outside, cuts every face plate from it and measures what is
 left: 281.21 cm³. Less the four holes' and the window's plugs through the top
 (1.08 cm³), the bevel (0.11 cm³) and the duct over the mouth wall (0.02 cm³), that

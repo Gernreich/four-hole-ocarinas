@@ -836,20 +836,20 @@ solidcraft-cli run solidcraft/four-hole-ocarina-octagon.solidcraft.json --out st
 </ul>
 <h2 id="solidcraft-design">SolidCraft design</h2>
 <p>The generator also writes every build as a parametric SolidCraft design, in <code>solidcraft/</code>. Every rule the generator follows is an expression in it, so changing one number rebuilds the rest: type a note and the ocarina resizes to sound it, its joints re-counted and its holes re-sized.</p>
-<p>The designs, each built with <code>solidcraft-cli run FILE --save NAME.sc</code> and the <code>.sc</code> opened in SolidCraft:</p>
+<p>Open a <code>.sc</code> in SolidCraft. The parameters are under the <strong>SOLID</strong> tab, <strong>MODIFY</strong> panel, <strong>Change Parameters</strong>; the Browser lists the parts and the timeline every step. The <code>.solidcraft.json</code> beside it is the script it was built from (<code>solidcraft-cli run FILE --save NAME.sc</code>). The <code>.sc</code> holds the design without SolidCraft's build cache, which it rebuilds on opening, so it is the same file every time. A STEP file in <code>step/</code> is the built parts only, with no parameters:</p>
 <ul>
-<li><code>solidcraft/four-hole-ocarina-cube.solidcraft.json</code></li>
-<li><code>solidcraft/four-hole-ocarina-cuboctahedron.solidcraft.json</code></li>
-<li><code>solidcraft/four-hole-ocarina-dodecahedron.solidcraft.json</code></li>
-<li><code>solidcraft/four-hole-ocarina-elongated-square-bipyramid.solidcraft.json</code></li>
-<li><code>solidcraft/four-hole-ocarina-elongated-square-pyramid.solidcraft.json</code></li>
-<li><code>solidcraft/four-hole-ocarina-hexagonal-prism.solidcraft.json</code></li>
-<li><code>solidcraft/four-hole-ocarina-icosahedron.solidcraft.json</code></li>
-<li><code>solidcraft/four-hole-ocarina-octagon.solidcraft.json</code></li>
-<li><code>solidcraft/four-hole-ocarina-octahedron.solidcraft.json</code></li>
-<li><code>solidcraft/four-hole-ocarina-rhombic-dodecahedron.solidcraft.json</code></li>
-<li><code>solidcraft/four-hole-ocarina-square-antiprism.solidcraft.json</code></li>
-<li><code>solidcraft/four-hole-ocarina-truncated-octahedron.solidcraft.json</code></li>
+<li><code>solidcraft/four-hole-ocarina-cube.sc</code> · <code>solidcraft/four-hole-ocarina-cube.solidcraft.json</code></li>
+<li><code>solidcraft/four-hole-ocarina-cuboctahedron.sc</code> · <code>solidcraft/four-hole-ocarina-cuboctahedron.solidcraft.json</code></li>
+<li><code>solidcraft/four-hole-ocarina-dodecahedron.sc</code> · <code>solidcraft/four-hole-ocarina-dodecahedron.solidcraft.json</code></li>
+<li><code>solidcraft/four-hole-ocarina-elongated-square-bipyramid.sc</code> · <code>solidcraft/four-hole-ocarina-elongated-square-bipyramid.solidcraft.json</code></li>
+<li><code>solidcraft/four-hole-ocarina-elongated-square-pyramid.sc</code> · <code>solidcraft/four-hole-ocarina-elongated-square-pyramid.solidcraft.json</code></li>
+<li><code>solidcraft/four-hole-ocarina-hexagonal-prism.sc</code> · <code>solidcraft/four-hole-ocarina-hexagonal-prism.solidcraft.json</code></li>
+<li><code>solidcraft/four-hole-ocarina-icosahedron.sc</code> · <code>solidcraft/four-hole-ocarina-icosahedron.solidcraft.json</code></li>
+<li><code>solidcraft/four-hole-ocarina-octagon.sc</code> · <code>solidcraft/four-hole-ocarina-octagon.solidcraft.json</code></li>
+<li><code>solidcraft/four-hole-ocarina-octahedron.sc</code> · <code>solidcraft/four-hole-ocarina-octahedron.solidcraft.json</code></li>
+<li><code>solidcraft/four-hole-ocarina-rhombic-dodecahedron.sc</code> · <code>solidcraft/four-hole-ocarina-rhombic-dodecahedron.solidcraft.json</code></li>
+<li><code>solidcraft/four-hole-ocarina-square-antiprism.sc</code> · <code>solidcraft/four-hole-ocarina-square-antiprism.solidcraft.json</code></li>
+<li><code>solidcraft/four-hole-ocarina-truncated-octahedron.sc</code> · <code>solidcraft/four-hole-ocarina-truncated-octahedron.solidcraft.json</code></li>
 <li><code>solidcraft/four-hole-ocarina-cube.cavity.json</code>, the cube's cavity check</li>
 </ul>
 <h3 id="the-cube">The cube</h3>
@@ -941,7 +941,7 @@ solidcraft-cli run solidcraft/four-hole-ocarina-octagon.solidcraft.json --out st
 <pre><code>target/release/four_hole_ocarinas --only=cube --no-write --solidcraft=solidcraft
 solidcraft-cli run solidcraft/four-hole-ocarina-cube.solidcraft.json --save cube.sc
 solidcraft-cli run solidcraft/four-hole-ocarina-cube.cavity.json --in cube.sc --results</code></pre>
-<p>The <code>.sc</code> design is not shipped: SolidCraft writes it differently each time, so <code>.repro</code> checks the script and the STEP file built from it instead. The cavity check boxes the cube's outside, cuts every face plate from it and measures what is left: 281.21 cm³. Less the four holes' and the window's plugs through the top (1.08 cm³), the bevel (0.11 cm³) and the duct over the mouth wall (0.02 cm³), that is the 280.00 cm³ the generator builds. SolidCraft's interference check finds no two plates overlapping.</p>
+<p><code>.repro</code> checks the script, the <code>.sc</code> and the STEP file built from it. The cavity check boxes the cube's outside, cuts every face plate from it and measures what is left: 281.21 cm³. Less the four holes' and the window's plugs through the top (1.08 cm³), the bevel (0.11 cm³) and the duct over the mouth wall (0.02 cm³), that is the 280.00 cm³ the generator builds. SolidCraft's interference check finds no two plates overlapping.</p>
 <h2 id="credits">Credits</h2>
 <p>Made by Michael Gernreich with <a href="https://www.anthropic.com/claude" target="_blank" rel="noopener">Claude</a> (Anthropic), working in Claude Code, which co-wrote the code and the documentation. Commits Claude made carry a <code>Co-Authored-By: Claude</code> line.</p>
 </main>
