@@ -685,34 +685,55 @@ The files:
 
 ## SolidCraft design
 
-The generator also writes the cube as a parametric SolidCraft design, from the same
-rules as its cut file. Its size is live: change a wall and the finger joints follow.
+The generator also writes the cube as a parametric SolidCraft design. Every rule
+the generator follows is an expression in it, so changing one number rebuilds the
+rest: type a note and the cube resizes to sound it, its joints re-counted and its
+holes re-sized.
 
 | Parameter | Default | What it is |
 |---|---|---|
-| `L` · `W` · `H` | 71.42 mm, `W` and `H` = `L` | outside, mouth face to back, across, bottom to top |
-| `ply` | 3 mm | sheet thickness |
+| `key_hz` | 291.71 | the note with every hole closed; by default what the 280 cm³ cube sounds (D4, 11.5 cents flat). Type a frequency to resize |
+| `L` · `W` · `H` | the cube for `key_hz` | outside, mouth face to back, across, bottom to top; give `W` or `H` a value of its own for a box |
+| `ply` | 3 mm | sheet thickness; the holes and the window's end correction follow it |
 | `finger` | 6 mm | the shortest cell along an edge |
-| `d_R2` · `d_R1` · `d_L1` · `d_L2` | from the model | the finger holes |
-| `window_w` · `window_l` | 14 · 7 mm | the window |
+| `window_w` · `window_l` | 14 · 7 mm | the window; the holes follow it |
+| `mouth` · `temp_c` · `a4` | 1 · 25 · 440 | the window's end-correction scale (`--mouth`), the breath's temperature, concert pitch |
+| `ratio_R2` … `ratio_L2` | from the model | each hole's conductance over the window's: the fingering search's result |
+| `beak` · `beak_w` · `tip` | 18 · 24 · 8 mm | the beak's length, width and tip rounding |
+| `duct_depth` · `bevel` | 0.5 mm · 30° | each half of the duct, engraved in the top and the bird; the window's filed far edge |
 | `row_1` · `row_2` · `columns` | 20 · 42 · 34 mm | where the holes sit, from the mouth wall |
 
-The generator's joint rules are expressions in the design. Each edge has as many
-cells as fit with none under `finger`. An edge of the top or the bottom has an odd
-count, since that plate owns both its ends. An upright edge has an even count. Under
-the beak the top keeps every cell of its mouth edge. Read-only parameters show the
-result: `cellsX`, `cellsY`, `cellsZ`, `keep` (the mouth side's cells each side of
-the beak) and `cavity_cm3`. The holes, the window, the beak, the bird and the chin
-layer are placed from the mouth face, as the generator places them.
+Read-only parameters show the result: `d_R2` … `d_L2` (the holes), `cavity_mm3`,
+`pitch_hz` and `semitones_a4` (what the box sounds), `cellsX`, `cellsY`, `cellsZ`
+and `keep` (the joints), and `room_far` and `room_side`, the room left past the
+holes to the back and side walls. Below 0 the holes run into a wall: from about
+B4 up the cube is too small for the hand.
 
-The design was checked against the generator's own parts, body by body, at four
-sizes: the default cube, a 90 mm cube, 100 × 80 × 66 mm and 120 × 75 × 50 mm. Every body
-matched within 0.001 mm.
+**The tune** is ocarina_model.rs's, in closed form. The window's conductance is
+its area over `ply` plus its end correction. Each hole's conductance is its ratio
+times the window's, and its diameter solves π d²/4 = k (`ply` + 0.849 d). The
+closed note is c/2π √(k_w / V). The holes follow the window and `ply`, not the
+size: the scale is ratios of the window, so a bigger cube with the same holes plays
+the same scale lower. At the defaults the design gives the generator's four holes
+and its 291.7 Hz.
 
-What does not follow: the holes' sizes and the pitch. The acoustic model sets them
-from the cavity, so a new size plays a new note until the generator is rerun for it.
-The design's `cavity_cm3` gives the volume to aim for. The finger joints follow
-`ply`, but the 3 mm cut files do not, so cut new files for a different sheet.
+**The joints** follow the generator's rules. Each edge has as many cells as fit
+with none under `finger`. An edge of the top or the bottom has an odd count, since
+that plate owns both its ends. An upright edge has an even count. Under the beak
+the top keeps every cell of its mouth edge. When the cube is narrow enough to leave
+the mouth side no cell beside the beak (`keep` = 0), the top takes the whole edge.
+
+**Checked** against the generator's own parts, body by body, at six sizes: the
+default cube, a 90 mm cube, 100 × 80 × 66 mm, 120 × 75 × 50 mm, 52 mm, and
+100 × 52 × 60 mm, where `keep` = 0. Every wall, the bottom and the chin layer
+matched within 0.001 mm. The top and the bird differ by the duct and the bevel,
+which the generator only engraves: 143.6 mm³ for each half of the duct and
+109.1 mm³ for the bevel. At 52 mm the far holes run into the back wall, as
+`room_far` says. Driven by `key_hz` from C4 to C5, the design rebuilds with no two
+plates overlapping, and `pitch_hz` reads back the note asked for.
+
+Left out: the corner numbers, single engraved lines. Only the cube is parametric;
+the other eleven solids are STEP files from `step-export`.
 
 ```
 target/release/four_hole_ocarinas --only=cube --no-write --solidcraft=solidcraft
@@ -723,9 +744,10 @@ solidcraft-cli run solidcraft/four-hole-ocarina-cube.cavity.json --in cube.sc --
 The `.sc` design is not shipped: SolidCraft writes it differently each time, so
 `.repro` checks the script and the STEP file built from it instead. The cavity
 check boxes the cube's outside, cuts every face plate from it and measures what is
-left: 281.08 cm³. Less the four holes' and the window's plugs through the top
-(1.08 cm³), that is the 280.00 cm³ the generator builds. SolidCraft's interference
-check finds no two plates overlapping.
+left: 281.21 cm³. Less the four holes' and the window's plugs through the top
+(1.08 cm³), the bevel (0.11 cm³) and the duct over the mouth wall (0.02 cm³), that
+is the 280.00 cm³ the generator builds. SolidCraft's interference check finds no
+two plates overlapping.
 
 ## Credits
 
