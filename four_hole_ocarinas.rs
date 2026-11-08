@@ -6,6 +6,7 @@
 //!     target/release/four_hole_ocarinas --only=cube --flat --out=DIR   # no subfolder
 //!     target/release/four_hole_ocarinas --mouth=1.2 ...     # the window correction, as the model
 //!     target/release/four_hole_ocarinas --kerf=0.18 ...     # for a laser with that kerf
+//!     target/release/four_hole_ocarinas --only=cube --no-write --solidcraft=DIR  # SolidCraft script
 //!
 //! Rust since 2026-11-07 (four_hole_ocarinas.py until then; the move changed
 //! no byte of any cut file or page). The panpipes and the chanters borrow
@@ -63,6 +64,7 @@ pub mod ocarina_model;
 pub mod page_assets;
 pub mod polyhedron;
 pub mod solid_survey;
+pub mod solidcraft;
 
 use lasermade_tools::py;
 
@@ -1210,12 +1212,15 @@ pub fn svg_sheet(name: &str, k: usize, n: usize, s: &Sheet, drawn: &[OPart], wha
 
 pub fn main() -> i32 {
     let (mut out, mut only, mut write, mut flat): (Option<String>, Option<String>, bool, bool) = (None, None, true, false);
+    let mut sc: Option<String> = None;
     let names: Vec<&str> = BUILDS.iter().map(|b| b.0).collect();
     for x in std::env::args().skip(1) {
         if x == "--no-write" {
             write = false;
         } else if x == "--flat" {
             flat = true;
+        } else if let Some(v) = x.strip_prefix("--solidcraft=") {
+            sc = Some(v.to_string());
         } else if let Some(v) = x.strip_prefix("--out=") {
             out = Some(v.to_string());
         } else if let Some(v) = x.strip_prefix("--mouth=") {
@@ -1228,7 +1233,7 @@ pub fn main() -> i32 {
             }
             only = Some(v.to_string());
         } else {
-            lasermade_tools::die(format!("error: {x} is not a flag this generator reads. It takes --out=, --only=, --flat, --mouth=, --kerf= and --no-write."));
+            lasermade_tools::die(format!("error: {x} is not a flag this generator reads. It takes --out=, --only=, --flat, --mouth=, --kerf=, --solidcraft= and --no-write."));
         }
     }
     if write && out.is_none() {
@@ -1244,6 +1249,15 @@ pub fn main() -> i32 {
             continue;
         }
         let (parts, info) = build_solid(name, &diams).unwrap_or_else(|e| lasermade_tools::die(e));
+        if let Some(d) = &sc {
+            std::fs::create_dir_all(d).unwrap_or_else(|e| lasermade_tools::die(format!("{d}: {e}")));
+            let f = format!("{}/four-hole-ocarina-{name}.solidcraft.json", d.trim_end_matches('/'));
+            std::fs::write(&f, solidcraft::script(name, &parts, &info, &diams)).unwrap_or_else(|e| lasermade_tools::die(format!("{f}: {e}")));
+            if name == "cube" {
+                let f = format!("{}/four-hole-ocarina-{name}.cavity.json", d.trim_end_matches('/'));
+                std::fs::write(&f, solidcraft::cavity_script(&parts, &info)).unwrap_or_else(|e| lasermade_tools::die(format!("{f}: {e}")));
+            }
+        }
         let (res, sheets, drawn, f0) = solid_checks(name, &parts, &info, kw, &diams, worst);
         let key = note_name(f0);
         println!(

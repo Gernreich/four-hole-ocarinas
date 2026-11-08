@@ -642,6 +642,7 @@ Each picture is a display rendering; click it for the cut file.
 | `ocarina_model.rs` | the acoustic model |
 | `four_hole_ocarinas.rs` | the generator, its checks and every cut file; the mitred offset that the octagonal flute, the panpipes and the chanters borrow |
 | `polyhedron.rs` | the solids, and their joints at any angle, which the octagonal flute and the panpipes' tube sets borrow |
+| `solidcraft.rs` · `solidcraft/` | the cube as a SolidCraft script, and its cavity check |
 | `solid_survey.rs` | other solids tried against the generator's checks, and how each reaches the hands |
 | `page_assets.rs` | builds `viewer.js`, `turn.html` and the plans |
 | `bin/` · `Cargo.toml` · `Cargo.lock` | the crate: one small file per program, and the pinned build |
@@ -654,10 +655,14 @@ Released under [CC0 1.0](LICENSE).
 
 `step/` holds the 3D view as STEP files, one per design, to open or import in a
 CAD program such as SolidCraft, Fusion or FreeCAD: one solid body per part, in
-millimetres, assembled as the view shows it. Every face is flat, so a curve comes
-in as short straight runs; round holes come in with 64 sides, and the flue marks, which have
-no depth, are left out. They are written from `viewer.js` by
-lasermade-tools' `step-export`, and `.repro` checks them:
+millimetres, assembled as the view shows it. The flue marks, which have no depth,
+are left out, and `.repro` checks every file.
+
+The cube's is written by SolidCraft from the generator's own script (see
+[SolidCraft design](#solidcraft-design)), so its finger holes are true cylinders.
+The other eleven are still written from `viewer.js` by lasermade-tools'
+`step-export`: every face flat, a curve as short straight runs, a round hole with
+64 sides.
 
 ```
 ../lasermade-tools/target/release/step-export viewer.js --name=four-hole-ocarinas
@@ -677,6 +682,31 @@ The files:
 - `step/four-hole-ocarinas-rhombic-dodecahedron.step`
 - `step/four-hole-ocarinas-square-antiprism.step`
 - `step/four-hole-ocarinas-truncated-octahedron.step`
+
+## SolidCraft design
+
+The generator also writes the cube as a SolidCraft
+command script, from the same parts as its cut file: each plate sketched in its own
+frame and extruded inward. Building the script gives a design with its parameters
+live:
+
+- `ply`, the sheet's thickness, 3 mm. The joints are drawn for 3 mm and do not
+  follow it, so set it to a measured sheet to see where the plates would collide.
+- `d_R2`, `d_R1`, `d_L1`, `d_L2`, the four finger holes, which the plates follow.
+
+```
+target/release/four_hole_ocarinas --only=cube --no-write --solidcraft=solidcraft
+solidcraft-cli run solidcraft/four-hole-ocarina-cube.solidcraft.json --save cube.sc
+solidcraft-cli run solidcraft/four-hole-ocarina-cube.cavity.json --in cube.sc --results
+```
+
+The `.sc` design is not shipped: SolidCraft writes it differently each time, so
+`.repro` checks the script and the STEP file built from it instead. The cavity
+check boxes the cube's outside, cuts every face plate from it and measures what is
+left: 281.08 cm³, which less the four holes' and the window's plugs through the top
+(1.08 cm³) is the 280.00 cm³ the generator builds. The box is exactly the plates
+plus the air, and SolidCraft's interference check finds no two plates overlapping
+at 3 mm; at `ply = 3.2 mm` thirteen pairs collide.
 
 ## Credits
 
