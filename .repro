@@ -42,26 +42,35 @@ plans/four-hole-ocarina-top-plate.svg :: target/release/page_assets --plans-to=$
 plans/four-hole-ocarina-fingering.svg :: target/release/page_assets --plans-to=$(dirname $OUT)
 index.html :: ../lasermade-tools/target/release/md2html README.md $OUT
 
-# --- the SolidCraft scripts: the cube as a parametric SolidCraft design
-# (its size, ply and holes live, the joints following), written by the generator from the
-# same rules as the cut files, and the cavity check run on top of it ---
+# --- the SolidCraft scripts: every build as a parametric SolidCraft design
+# (its note, size, ply and holes live, the joints following), written by the
+# generator from the same rules as the cut files, and the cube's cavity check ---
 solidcraft/four-hole-ocarina-cube.solidcraft.json :: target/release/four_hole_ocarinas --only=cube --no-write --solidcraft=$(dirname $OUT)
 solidcraft/four-hole-ocarina-cube.cavity.json :: target/release/four_hole_ocarinas --only=cube --no-write --solidcraft=$(dirname $OUT)
+solidcraft/four-hole-ocarina-octagon.solidcraft.json :: target/release/four_hole_ocarinas --only=octagon --no-write --solidcraft=$(dirname $OUT)
+solidcraft/four-hole-ocarina-square-antiprism.solidcraft.json :: target/release/four_hole_ocarinas --only=square-antiprism --no-write --solidcraft=$(dirname $OUT)
+solidcraft/four-hole-ocarina-octahedron.solidcraft.json :: target/release/four_hole_ocarinas --only=octahedron --no-write --solidcraft=$(dirname $OUT)
+solidcraft/four-hole-ocarina-dodecahedron.solidcraft.json :: target/release/four_hole_ocarinas --only=dodecahedron --no-write --solidcraft=$(dirname $OUT)
+solidcraft/four-hole-ocarina-truncated-octahedron.solidcraft.json :: target/release/four_hole_ocarinas --only=truncated-octahedron --no-write --solidcraft=$(dirname $OUT)
+solidcraft/four-hole-ocarina-hexagonal-prism.solidcraft.json :: target/release/four_hole_ocarinas --only=hexagonal-prism --no-write --solidcraft=$(dirname $OUT)
+solidcraft/four-hole-ocarina-icosahedron.solidcraft.json :: target/release/four_hole_ocarinas --only=icosahedron --no-write --solidcraft=$(dirname $OUT)
+solidcraft/four-hole-ocarina-cuboctahedron.solidcraft.json :: target/release/four_hole_ocarinas --only=cuboctahedron --no-write --solidcraft=$(dirname $OUT)
+solidcraft/four-hole-ocarina-rhombic-dodecahedron.solidcraft.json :: target/release/four_hole_ocarinas --only=rhombic-dodecahedron --no-write --solidcraft=$(dirname $OUT)
+solidcraft/four-hole-ocarina-elongated-square-pyramid.solidcraft.json :: target/release/four_hole_ocarinas --only=elongated-square-pyramid --no-write --solidcraft=$(dirname $OUT)
+solidcraft/four-hole-ocarina-elongated-square-bipyramid.solidcraft.json :: target/release/four_hole_ocarinas --only=elongated-square-bipyramid --no-write --solidcraft=$(dirname $OUT)
 
-# --- the cube's STEP file, written by SolidCraft (solidcraft-cli, on PATH)
-# from that script: true circles for the holes ---
+# --- the STEP files, written by SolidCraft (solidcraft-cli, on PATH) from
+# those scripts: true circles for the holes ---
 step/four-hole-ocarinas-cube.step :: target/release/four_hole_ocarinas --only=cube --no-write --solidcraft=$(dirname $OUT) && solidcraft-cli run $(dirname $OUT)/four-hole-ocarina-cube.solidcraft.json --out $OUT --quiet
+step/four-hole-ocarinas-octagon.step :: target/release/four_hole_ocarinas --only=octagon --no-write --solidcraft=$(dirname $OUT) && solidcraft-cli run $(dirname $OUT)/four-hole-ocarina-octagon.solidcraft.json --out $OUT --quiet
+step/four-hole-ocarinas-square-antiprism.step :: target/release/four_hole_ocarinas --only=square-antiprism --no-write --solidcraft=$(dirname $OUT) && solidcraft-cli run $(dirname $OUT)/four-hole-ocarina-square-antiprism.solidcraft.json --out $OUT --quiet
+step/four-hole-ocarinas-octahedron.step :: target/release/four_hole_ocarinas --only=octahedron --no-write --solidcraft=$(dirname $OUT) && solidcraft-cli run $(dirname $OUT)/four-hole-ocarina-octahedron.solidcraft.json --out $OUT --quiet
+step/four-hole-ocarinas-dodecahedron.step :: target/release/four_hole_ocarinas --only=dodecahedron --no-write --solidcraft=$(dirname $OUT) && solidcraft-cli run $(dirname $OUT)/four-hole-ocarina-dodecahedron.solidcraft.json --out $OUT --quiet
+step/four-hole-ocarinas-truncated-octahedron.step :: target/release/four_hole_ocarinas --only=truncated-octahedron --no-write --solidcraft=$(dirname $OUT) && solidcraft-cli run $(dirname $OUT)/four-hole-ocarina-truncated-octahedron.solidcraft.json --out $OUT --quiet
+step/four-hole-ocarinas-hexagonal-prism.step :: target/release/four_hole_ocarinas --only=hexagonal-prism --no-write --solidcraft=$(dirname $OUT) && solidcraft-cli run $(dirname $OUT)/four-hole-ocarina-hexagonal-prism.solidcraft.json --out $OUT --quiet
+step/four-hole-ocarinas-icosahedron.step :: target/release/four_hole_ocarinas --only=icosahedron --no-write --solidcraft=$(dirname $OUT) && solidcraft-cli run $(dirname $OUT)/four-hole-ocarina-icosahedron.solidcraft.json --out $OUT --quiet
+step/four-hole-ocarinas-cuboctahedron.step :: target/release/four_hole_ocarinas --only=cuboctahedron --no-write --solidcraft=$(dirname $OUT) && solidcraft-cli run $(dirname $OUT)/four-hole-ocarina-cuboctahedron.solidcraft.json --out $OUT --quiet
+step/four-hole-ocarinas-rhombic-dodecahedron.step :: target/release/four_hole_ocarinas --only=rhombic-dodecahedron --no-write --solidcraft=$(dirname $OUT) && solidcraft-cli run $(dirname $OUT)/four-hole-ocarina-rhombic-dodecahedron.solidcraft.json --out $OUT --quiet
+step/four-hole-ocarinas-elongated-square-pyramid.step :: target/release/four_hole_ocarinas --only=elongated-square-pyramid --no-write --solidcraft=$(dirname $OUT) && solidcraft-cli run $(dirname $OUT)/four-hole-ocarina-elongated-square-pyramid.solidcraft.json --out $OUT --quiet
+step/four-hole-ocarinas-elongated-square-bipyramid.step :: target/release/four_hole_ocarinas --only=elongated-square-bipyramid --no-write --solidcraft=$(dirname $OUT) && solidcraft-cli run $(dirname $OUT)/four-hole-ocarina-elongated-square-bipyramid.solidcraft.json --out $OUT --quiet
 
-# --- the other STEP files: the 3D view's parts as solids for a CAD program, one
-# file per design, written from the page by lasermade-tools' step-export ---
-step/four-hole-ocarinas-octagon.step :: ../lasermade-tools/target/release/step-export viewer.js --name=four-hole-ocarinas --out=$(dirname $OUT)
-step/four-hole-ocarinas-square-antiprism.step :: ../lasermade-tools/target/release/step-export viewer.js --name=four-hole-ocarinas --out=$(dirname $OUT)
-step/four-hole-ocarinas-octahedron.step :: ../lasermade-tools/target/release/step-export viewer.js --name=four-hole-ocarinas --out=$(dirname $OUT)
-step/four-hole-ocarinas-dodecahedron.step :: ../lasermade-tools/target/release/step-export viewer.js --name=four-hole-ocarinas --out=$(dirname $OUT)
-step/four-hole-ocarinas-truncated-octahedron.step :: ../lasermade-tools/target/release/step-export viewer.js --name=four-hole-ocarinas --out=$(dirname $OUT)
-step/four-hole-ocarinas-hexagonal-prism.step :: ../lasermade-tools/target/release/step-export viewer.js --name=four-hole-ocarinas --out=$(dirname $OUT)
-step/four-hole-ocarinas-icosahedron.step :: ../lasermade-tools/target/release/step-export viewer.js --name=four-hole-ocarinas --out=$(dirname $OUT)
-step/four-hole-ocarinas-cuboctahedron.step :: ../lasermade-tools/target/release/step-export viewer.js --name=four-hole-ocarinas --out=$(dirname $OUT)
-step/four-hole-ocarinas-rhombic-dodecahedron.step :: ../lasermade-tools/target/release/step-export viewer.js --name=four-hole-ocarinas --out=$(dirname $OUT)
-step/four-hole-ocarinas-elongated-square-pyramid.step :: ../lasermade-tools/target/release/step-export viewer.js --name=four-hole-ocarinas --out=$(dirname $OUT)
-step/four-hole-ocarinas-elongated-square-bipyramid.step :: ../lasermade-tools/target/release/step-export viewer.js --name=four-hole-ocarinas --out=$(dirname $OUT)

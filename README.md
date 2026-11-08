@@ -642,7 +642,7 @@ Each picture is a display rendering; click it for the cut file.
 | `ocarina_model.rs` | the acoustic model |
 | `four_hole_ocarinas.rs` | the generator, its checks and every cut file; the mitred offset that the octagonal flute, the panpipes and the chanters borrow |
 | `polyhedron.rs` | the solids, and their joints at any angle, which the octagonal flute and the panpipes' tube sets borrow |
-| `solidcraft.rs` · `solidcraft/` | the cube as a parametric SolidCraft design, and its cavity check |
+| `solidcraft.rs` · `solidcraft/` | every build as a parametric SolidCraft design, and the cube's cavity check |
 | `solid_survey.rs` | other solids tried against the generator's checks, and how each reaches the hands |
 | `page_assets.rs` | builds `viewer.js`, `turn.html` and the plans |
 | `bin/` · `Cargo.toml` · `Cargo.lock` | the crate: one small file per program, and the pinned build |
@@ -653,19 +653,15 @@ Released under [CC0 1.0](LICENSE).
 
 ## STEP files
 
-`step/` holds the 3D view as STEP files, one per design, to open or import in a
-CAD program such as SolidCraft, Fusion or FreeCAD: one solid body per part, in
-millimetres, assembled as the view shows it. The flue marks, which have no depth,
-are left out, and `.repro` checks every file.
-
-The cube's is written by SolidCraft from the generator's own script (see
-[SolidCraft design](#solidcraft-design)), so its finger holes are true cylinders.
-The other eleven are still written from `viewer.js` by lasermade-tools'
-`step-export`: every face flat, a curve as short straight runs, a round hole with
-64 sides.
+`step/` holds every build as a STEP file, to open or import in a CAD program such
+as SolidCraft, Fusion or FreeCAD: one solid body per part, in millimetres,
+assembled as the 3D view shows it, the holes true cylinders and the duct and bevel
+cut. SolidCraft writes each from the build's parametric design (see
+[SolidCraft design](#solidcraft-design)), and `.repro` checks them:
 
 ```
-../lasermade-tools/target/release/step-export viewer.js --name=four-hole-ocarinas
+target/release/four_hole_ocarinas --only=octagon --no-write --solidcraft=solidcraft
+solidcraft-cli run solidcraft/four-hole-ocarina-octagon.solidcraft.json --out step/four-hole-ocarinas-octagon.step
 ```
 
 The files:
@@ -685,10 +681,12 @@ The files:
 
 ## SolidCraft design
 
-The generator also writes the cube as a parametric SolidCraft design. Every rule
-the generator follows is an expression in it, so changing one number rebuilds the
-rest: type a note and the cube resizes to sound it, its joints re-counted and its
-holes re-sized.
+The generator also writes every build as a parametric SolidCraft design, in
+`solidcraft/`. Every rule the generator follows is an expression in it, so changing
+one number rebuilds the rest: type a note and the ocarina resizes to sound it, its
+joints re-counted and its holes re-sized.
+
+### The cube
 
 | Parameter | Default | What it is |
 |---|---|---|
@@ -709,6 +707,37 @@ and `keep` (the joints), and `room_far` and `room_side`, the room left past the
 holes to the back and side walls. Below 0 the holes run into a wall: from about
 B4 up the cube is too small for the hand.
 
+### The other eleven
+
+Each is sized by one measure, `edge`, or `flats` for the octagon, which `key_hz`
+sets as it sets the cube's edge. Every point of the solid scales with it. They take
+the cube's parameters but `L`, `W`, `H`, `row_1`/`row_2`/`columns` where the holes
+are on side faces, and the cube's joint read-outs, and add:
+
+- `nip`: where more than three plates meet, each corner cut back this far, square
+  to its bisector.
+- `s`: the scale against the generator's build.
+- `room`: the least web from a hole to a wall's inside face, or half the web between
+  two holes on one face. Below 0 the build is too small for the hand.
+
+The plates are the face polygons extruded `ply` inward. Along each edge the cells
+alternate between its two plates, as many as fit with none under `finger`, odd or
+even as the corners' owners ask, and each plate loses its neighbour's cells as a
+strip `ply` × sin(the joint's angle) deep. Where an end cell is the neighbour's,
+the strip runs on past the corner. Where the parity of the count decides which
+plate owns an end, an expression decides whether that cut is made.
+
+The holes on a side face sit where the generator's search puts them: as far as
+they can be from every wall of the face's inside, or, for two on one face, with the
+narrowest web as wide as it can be. Each is a small linear programme, solved
+exactly, so the hole's place is a linear expression in the size, `ply` and the
+holes' diameters. On the rhombic dodecahedron the best place for a pair is a run of
+points, not one. The design keeps the point as far along the run as the generator's
+search stopped, so the default build is the cut file's.
+
+The cavity is a cubic in the scale and `ply`, fitted exactly to the generator's
+inside, and `key_hz` sets the scale by four Newton steps; `pitch_hz` reads it back.
+
 **The tune** is ocarina_model.rs's, in closed form. The window's conductance is
 its area over `ply` plus its end correction. Each hole's conductance is its ratio
 times the window's, and its diameter solves π d²/4 = k (`ply` + 0.849 d). The
@@ -723,7 +752,7 @@ that plate owns both its ends. An upright edge has an even count. Under the beak
 the top keeps every cell of its mouth edge. When the cube is narrow enough to leave
 the mouth side no cell beside the beak (`keep` = 0), the top takes the whole edge.
 
-**Checked** against the generator's own parts, body by body, at six sizes: the
+**Checked**, the cube against the generator's own parts, body by body, at six sizes: the
 default cube, a 90 mm cube, 100 × 80 × 66 mm, 120 × 75 × 50 mm, 52 mm, and
 100 × 52 × 60 mm, where `keep` = 0. Every wall, the bottom and the chin layer
 matched within 0.001 mm. The top and the bird differ by the duct and the bevel,
@@ -732,8 +761,25 @@ which the generator only engraves: 143.6 mm³ for each half of the duct and
 `room_far` says. Driven by `key_hz` from C4 to C5, the design rebuilds with no two
 plates overlapping, and `pitch_hz` reads back the note asked for.
 
-Left out: the corner numbers, single engraved lines. Only the cube is parametric;
-the other eleven solids are STEP files from `step-export`.
+The other eleven were checked the same way at their own size and at two others
+each (0.8 and 1.25 times, or 0.85 and 1.2 where the holes are on side faces).
+Every plate matched within 0.005 mm, but for these differences:
+
+- The top and the bird differ by the duct and the bevel, as on the cube.
+- At 0.8 times the cuboctahedron's and the elongated square pyramid's holes run
+  off the top or into a wall, where `room` reads below 0. The design still
+  rebuilds; the cut file at that size would fail the generator's own checks.
+- On the rhombic dodecahedron the generator's corner clip, where the beak meets a
+  nipped corner, keeps 3.6 mm³ of the top that the nip rule cuts. Neither version
+  has two plates overlapping. At other sizes the generator's search stops at a
+  different point along the pair's run, so one plate's holes sit elsewhere on
+  equally good ground.
+
+Driven by `key_hz` to C4 and F4, the octagon, icosahedron, dodecahedron and rhombic
+dodecahedron rebuild with no two plates overlapping, and `pitch_hz` reads back the
+note asked for. At their defaults each design's pitch is the generator's.
+
+Left out: the corner numbers, single engraved lines.
 
 ```
 target/release/four_hole_ocarinas --only=cube --no-write --solidcraft=solidcraft

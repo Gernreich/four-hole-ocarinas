@@ -225,6 +225,25 @@ pub fn nip_of(kind: &str) -> f64 {
         _ => 0.0,
     }
 }
+/// The measure a build is sized by, and its value: an edge, or the
+/// octagon's flats.
+pub fn size_of(kind: &str) -> (&'static str, f64) {
+    match kind {
+        "octagon" => ("flats", OCT_FLATS),
+        "cube" => ("edge", cube_edge(CUBE_VOLUME)),
+        "square-antiprism" => ("edge", SAP_EDGE),
+        "octahedron" => ("edge", OCTA_EDGE),
+        "dodecahedron" => ("edge", DODECA_EDGE),
+        "truncated-octahedron" => ("edge", TRUNC_OCTA_EDGE),
+        "hexagonal-prism" => ("edge", HEX_EDGE),
+        "icosahedron" => ("edge", ICOSA_EDGE),
+        "cuboctahedron" => ("edge", CUBOCTA_EDGE),
+        "rhombic-dodecahedron" => ("edge", RHOMBIC_EDGE),
+        "elongated-square-pyramid" => ("edge", ESP_EDGE),
+        "elongated-square-bipyramid" => ("edge", ESB_EDGE),
+        _ => lasermade_tools::die(format!("KeyError: '{kind}'")),
+    }
+}
 pub const FACE_HOLES: [&str; 6] =
     ["octahedron", "dodecahedron", "icosahedron", "truncated-octahedron", "rhombic-dodecahedron", "elongated-square-bipyramid"];
 
@@ -1254,7 +1273,7 @@ pub fn main() -> i32 {
             // as its fixed parts
             std::fs::create_dir_all(d).unwrap_or_else(|e| lasermade_tools::die(format!("{d}: {e}")));
             let f = format!("{}/four-hole-ocarina-{name}.solidcraft.json", d.trim_end_matches('/'));
-            let text = if name == "cube" { solidcraft::parametric_cube(&parts, &info, &diams) } else { solidcraft::script(name, &parts, &info, &diams) };
+            let text = if name == "cube" { solidcraft::parametric_cube(&parts, &info, &diams) } else { let (sn, s0) = size_of(name); solidcraft::parametric_solid(name, sn, s0, &parts, &info, &diams) };
             std::fs::write(&f, text).unwrap_or_else(|e| lasermade_tools::die(format!("{f}: {e}")));
             if name == "cube" {
                 let f = format!("{}/four-hole-ocarina-{name}.cavity.json", d.trim_end_matches('/'));
