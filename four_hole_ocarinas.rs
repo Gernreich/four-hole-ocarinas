@@ -1250,12 +1250,15 @@ pub fn main() -> i32 {
         }
         let (parts, info) = build_solid(name, &diams).unwrap_or_else(|e| lasermade_tools::die(e));
         if let Some(d) = &sc {
+            // the cube as a parametric design, its size live; any other build
+            // as its fixed parts
             std::fs::create_dir_all(d).unwrap_or_else(|e| lasermade_tools::die(format!("{d}: {e}")));
             let f = format!("{}/four-hole-ocarina-{name}.solidcraft.json", d.trim_end_matches('/'));
-            std::fs::write(&f, solidcraft::script(name, &parts, &info, &diams)).unwrap_or_else(|e| lasermade_tools::die(format!("{f}: {e}")));
+            let text = if name == "cube" { solidcraft::parametric_cube(&parts, &info, &diams) } else { solidcraft::script(name, &parts, &info, &diams) };
+            std::fs::write(&f, text).unwrap_or_else(|e| lasermade_tools::die(format!("{f}: {e}")));
             if name == "cube" {
                 let f = format!("{}/four-hole-ocarina-{name}.cavity.json", d.trim_end_matches('/'));
-                std::fs::write(&f, solidcraft::cavity_script(&parts, &info)).unwrap_or_else(|e| lasermade_tools::die(format!("{f}: {e}")));
+                std::fs::write(&f, solidcraft::cavity_script(&parts)).unwrap_or_else(|e| lasermade_tools::die(format!("{f}: {e}")));
             }
         }
         let (res, sheets, drawn, f0) = solid_checks(name, &parts, &info, kw, &diams, worst);

@@ -42,9 +42,9 @@ plans/four-hole-ocarina-top-plate.svg :: target/release/page_assets --plans-to=$
 plans/four-hole-ocarina-fingering.svg :: target/release/page_assets --plans-to=$(dirname $OUT)
 index.html :: ../lasermade-tools/target/release/md2html README.md $OUT
 
-# --- the SolidCraft scripts: the cube's parts as a parametric SolidCraft
-# design (ply and the four holes live), written by the generator from the
-# same parts as the cut files, and the cavity check run on top of it ---
+# --- the SolidCraft scripts: the cube as a parametric SolidCraft design
+# (its size, ply and holes live, the joints following), written by the generator from the
+# same rules as the cut files, and the cavity check run on top of it ---
 solidcraft/four-hole-ocarina-cube.solidcraft.json :: target/release/four_hole_ocarinas --only=cube --no-write --solidcraft=$(dirname $OUT)
 solidcraft/four-hole-ocarina-cube.cavity.json :: target/release/four_hole_ocarinas --only=cube --no-write --solidcraft=$(dirname $OUT)
 

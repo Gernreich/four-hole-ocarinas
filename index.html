@@ -789,7 +789,7 @@ target/release/solid_survey                               # other solids, and ho
 </tr>
 <tr>
 <td><code>solidcraft.rs</code> · <code>solidcraft/</code></td>
-<td>the cube as a SolidCraft script, and its cavity check</td>
+<td>the cube as a parametric SolidCraft design, and its cavity check</td>
 </tr>
 <tr>
 <td><code>solid_survey.rs</code></td>
@@ -835,15 +835,57 @@ target/release/solid_survey                               # other solids, and ho
 <li><code>step/four-hole-ocarinas-truncated-octahedron.step</code></li>
 </ul>
 <h2 id="solidcraft-design">SolidCraft design</h2>
-<p>The generator also writes the cube as a SolidCraft command script, from the same parts as its cut file: each plate sketched in its own frame and extruded inward. Building the script gives a design with its parameters live:</p>
-<ul>
-<li><code>ply</code>, the sheet's thickness, 3 mm. The joints are drawn for 3 mm and do not follow it, so set it to a measured sheet to see where the plates would collide.</li>
-<li><code>d_R2</code>, <code>d_R1</code>, <code>d_L1</code>, <code>d_L2</code>, the four finger holes, which the plates follow.</li>
-</ul>
+<p>The generator also writes the cube as a parametric SolidCraft design, from the same rules as its cut file. Its size is live: change a wall and the finger joints follow.</p>
+<div class="tw">
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>L</code> · <code>W</code> · <code>H</code></td>
+<td>71.42 mm, <code>W</code> and <code>H</code> = <code>L</code></td>
+<td>outside, mouth face to back, across, bottom to top</td>
+</tr>
+<tr>
+<td><code>ply</code></td>
+<td>3 mm</td>
+<td>sheet thickness</td>
+</tr>
+<tr>
+<td><code>finger</code></td>
+<td>6 mm</td>
+<td>the shortest cell along an edge</td>
+</tr>
+<tr>
+<td><code>d_R2</code> · <code>d_R1</code> · <code>d_L1</code> · <code>d_L2</code></td>
+<td>from the model</td>
+<td>the finger holes</td>
+</tr>
+<tr>
+<td><code>window_w</code> · <code>window_l</code></td>
+<td>14 · 7 mm</td>
+<td>the window</td>
+</tr>
+<tr>
+<td><code>row_1</code> · <code>row_2</code> · <code>columns</code></td>
+<td>20 · 42 · 34 mm</td>
+<td>where the holes sit, from the mouth wall</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The generator's joint rules are expressions in the design. Each edge has as many cells as fit with none under <code>finger</code>. An edge of the top or the bottom has an odd count, since that plate owns both its ends. An upright edge has an even count. Under the beak the top keeps every cell of its mouth edge. Read-only parameters show the result: <code>cellsX</code>, <code>cellsY</code>, <code>cellsZ</code>, <code>keep</code> (the mouth side's cells each side of the beak) and <code>cavity_cm3</code>. The holes, the window, the beak, the bird and the chin layer are placed from the mouth face, as the generator places them.</p>
+<p>The design was checked against the generator's own parts, body by body, at four sizes: the default cube, a 90 mm cube, 100 × 80 × 66 mm and 120 × 75 × 50 mm. Every body matched within 0.001 mm.</p>
+<p>What does not follow: the holes' sizes and the pitch. The acoustic model sets them from the cavity, so a new size plays a new note until the generator is rerun for it. The design's <code>cavity_cm3</code> gives the volume to aim for. The finger joints follow <code>ply</code>, but the 3 mm cut files do not, so cut new files for a different sheet.</p>
 <pre><code>target/release/four_hole_ocarinas --only=cube --no-write --solidcraft=solidcraft
 solidcraft-cli run solidcraft/four-hole-ocarina-cube.solidcraft.json --save cube.sc
 solidcraft-cli run solidcraft/four-hole-ocarina-cube.cavity.json --in cube.sc --results</code></pre>
-<p>The <code>.sc</code> design is not shipped: SolidCraft writes it differently each time, so <code>.repro</code> checks the script and the STEP file built from it instead. The cavity check boxes the cube's outside, cuts every face plate from it and measures what is left: 281.08 cm³, which less the four holes' and the window's plugs through the top (1.08 cm³) is the 280.00 cm³ the generator builds. The box is exactly the plates plus the air, and SolidCraft's interference check finds no two plates overlapping at 3 mm; at <code>ply = 3.2 mm</code> thirteen pairs collide.</p>
+<p>The <code>.sc</code> design is not shipped: SolidCraft writes it differently each time, so <code>.repro</code> checks the script and the STEP file built from it instead. The cavity check boxes the cube's outside, cuts every face plate from it and measures what is left: 281.08 cm³. Less the four holes' and the window's plugs through the top (1.08 cm³), that is the 280.00 cm³ the generator builds. SolidCraft's interference check finds no two plates overlapping.</p>
 <h2 id="credits">Credits</h2>
 <p>Made by Michael Gernreich with <a href="https://www.anthropic.com/claude" target="_blank" rel="noopener">Claude</a> (Anthropic), working in Claude Code, which co-wrote the code and the documentation. Commits Claude made carry a <code>Co-Authored-By: Claude</code> line.</p>
 </main>

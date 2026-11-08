@@ -642,7 +642,7 @@ Each picture is a display rendering; click it for the cut file.
 | `ocarina_model.rs` | the acoustic model |
 | `four_hole_ocarinas.rs` | the generator, its checks and every cut file; the mitred offset that the octagonal flute, the panpipes and the chanters borrow |
 | `polyhedron.rs` | the solids, and their joints at any angle, which the octagonal flute and the panpipes' tube sets borrow |
-| `solidcraft.rs` · `solidcraft/` | the cube as a SolidCraft script, and its cavity check |
+| `solidcraft.rs` · `solidcraft/` | the cube as a parametric SolidCraft design, and its cavity check |
 | `solid_survey.rs` | other solids tried against the generator's checks, and how each reaches the hands |
 | `page_assets.rs` | builds `viewer.js`, `turn.html` and the plans |
 | `bin/` · `Cargo.toml` · `Cargo.lock` | the crate: one small file per program, and the pinned build |
@@ -685,14 +685,34 @@ The files:
 
 ## SolidCraft design
 
-The generator also writes the cube as a SolidCraft
-command script, from the same parts as its cut file: each plate sketched in its own
-frame and extruded inward. Building the script gives a design with its parameters
-live:
+The generator also writes the cube as a parametric SolidCraft design, from the same
+rules as its cut file. Its size is live: change a wall and the finger joints follow.
 
-- `ply`, the sheet's thickness, 3 mm. The joints are drawn for 3 mm and do not
-  follow it, so set it to a measured sheet to see where the plates would collide.
-- `d_R2`, `d_R1`, `d_L1`, `d_L2`, the four finger holes, which the plates follow.
+| Parameter | Default | What it is |
+|---|---|---|
+| `L` · `W` · `H` | 71.42 mm, `W` and `H` = `L` | outside, mouth face to back, across, bottom to top |
+| `ply` | 3 mm | sheet thickness |
+| `finger` | 6 mm | the shortest cell along an edge |
+| `d_R2` · `d_R1` · `d_L1` · `d_L2` | from the model | the finger holes |
+| `window_w` · `window_l` | 14 · 7 mm | the window |
+| `row_1` · `row_2` · `columns` | 20 · 42 · 34 mm | where the holes sit, from the mouth wall |
+
+The generator's joint rules are expressions in the design. Each edge has as many
+cells as fit with none under `finger`. An edge of the top or the bottom has an odd
+count, since that plate owns both its ends. An upright edge has an even count. Under
+the beak the top keeps every cell of its mouth edge. Read-only parameters show the
+result: `cellsX`, `cellsY`, `cellsZ`, `keep` (the mouth side's cells each side of
+the beak) and `cavity_cm3`. The holes, the window, the beak, the bird and the chin
+layer are placed from the mouth face, as the generator places them.
+
+The design was checked against the generator's own parts, body by body, at four
+sizes: the default cube, a 90 mm cube, 100 × 80 × 66 mm and 120 × 75 × 50 mm. Every body
+matched within 0.001 mm.
+
+What does not follow: the holes' sizes and the pitch. The acoustic model sets them
+from the cavity, so a new size plays a new note until the generator is rerun for it.
+The design's `cavity_cm3` gives the volume to aim for. The finger joints follow
+`ply`, but the 3 mm cut files do not, so cut new files for a different sheet.
 
 ```
 target/release/four_hole_ocarinas --only=cube --no-write --solidcraft=solidcraft
@@ -703,10 +723,9 @@ solidcraft-cli run solidcraft/four-hole-ocarina-cube.cavity.json --in cube.sc --
 The `.sc` design is not shipped: SolidCraft writes it differently each time, so
 `.repro` checks the script and the STEP file built from it instead. The cavity
 check boxes the cube's outside, cuts every face plate from it and measures what is
-left: 281.08 cm³, which less the four holes' and the window's plugs through the top
-(1.08 cm³) is the 280.00 cm³ the generator builds. The box is exactly the plates
-plus the air, and SolidCraft's interference check finds no two plates overlapping
-at 3 mm; at `ply = 3.2 mm` thirteen pairs collide.
+left: 281.08 cm³. Less the four holes' and the window's plugs through the top
+(1.08 cm³), that is the 280.00 cm³ the generator builds. SolidCraft's interference
+check finds no two plates overlapping.
 
 ## Credits
 
