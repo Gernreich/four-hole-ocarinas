@@ -193,7 +193,7 @@ pub fn parametric_cube(parts: &[OPart], info: &Info, diams: &[f64]) -> String {
     }
     // the note, the cavity, the size
     par(&mut c, "key_hz", format!("c_mm_s/(2*pi)*sqrt((kw/(1 mm))/{})", n(crate::CUBE_VOLUME)), nu, "the closed note; by default what a 280 cm3 cavity sounds. Type a frequency to resize");
-    par(&mut c, "cavity_mm3", "(kw/(1 mm))*(c_mm_s/(2*pi*key_hz))^2".into(), nu, "the cavity key_hz needs, mm3");
+    par(&mut c, "cavity_mm3", "(kw/(1 mm))*(c_mm_s/(2*pi*key_hz))^2".into(), nu, "the cavity key_hz needs, mm3 (the generator's --cavity-mm3)");
     par(&mut c, "L", "pow(cavity_mm3, 1/3)*(1 mm) + 2*ply".into(), None, "outside, mouth face to back (x): the cube that holds cavity_mm3");
     par(&mut c, "W", "L".into(), None, "outside, across (y)");
     par(&mut c, "H", "L".into(), None, "outside, bottom to top (z)");
@@ -506,7 +506,7 @@ pub fn parametric_solid(kind: &str, size_name: &str, size0: f64, parts: &[OPart]
         par(&mut c, &format!("s{i}"), format!("{p} - ({} - cavity_mm3)/{}", vexpr(&p), dvexpr(&p)), nu, "Newton step");
     }
     par(&mut c, size_name, format!("s4*{} mm", n(size0)), None, &format!("the build's {size_name}: the size that holds cavity_mm3; type a length to set it outright"));
-    par(&mut c, "s", format!("{size_name}/({} mm)", n(size0)), nu, "the scale, against the generator's build");
+    par(&mut c, "s", format!("{size_name}/({} mm)", n(size0)), nu, "the scale, against the generator's build (the generator's --scale)");
     par(&mut c, "pitch_hz", format!("c_mm_s/(2*pi)*sqrt((kw/(1 mm))/{})", vexpr("s")), nu, "read only: what this build sounds closed");
     par(&mut c, "semitones_a4", "12*ln(pitch_hz/a4)/ln(2)".into(), nu, "read only: pitch_hz in semitones from A4");
     par(&mut c, "beak", format!("{} mm", n(BEAK)), None, "the beak, out from the mouth face");

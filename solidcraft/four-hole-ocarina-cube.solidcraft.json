@@ -18,7 +18,7 @@
 {"command":"parameters.add","params":{"name":"d_L1","expression":"((ratio_L1*kw)*rayleigh + sqrt(((ratio_L1*kw)*rayleigh)^2 + pi*(ratio_L1*kw)*ply))/(pi/2)","comment":"finger hole L1: pi d^2/4 = k (ply + rayleigh d)"}},
 {"command":"parameters.add","params":{"name":"d_L2","expression":"((ratio_L2*kw)*rayleigh + sqrt(((ratio_L2*kw)*rayleigh)^2 + pi*(ratio_L2*kw)*ply))/(pi/2)","comment":"finger hole L2: pi d^2/4 = k (ply + rayleigh d)"}},
 {"command":"parameters.add","params":{"name":"key_hz","expression":"c_mm_s/(2*pi)*sqrt((kw/(1 mm))/280000)","unit":"","comment":"the closed note; by default what a 280 cm3 cavity sounds. Type a frequency to resize"}},
-{"command":"parameters.add","params":{"name":"cavity_mm3","expression":"(kw/(1 mm))*(c_mm_s/(2*pi*key_hz))^2","unit":"","comment":"the cavity key_hz needs, mm3"}},
+{"command":"parameters.add","params":{"name":"cavity_mm3","expression":"(kw/(1 mm))*(c_mm_s/(2*pi*key_hz))^2","unit":"","comment":"the cavity key_hz needs, mm3 (the generator's --cavity-mm3)"}},
 {"command":"parameters.add","params":{"name":"L","expression":"pow(cavity_mm3, 1/3)*(1 mm) + 2*ply","comment":"outside, mouth face to back (x): the cube that holds cavity_mm3"}},
 {"command":"parameters.add","params":{"name":"W","expression":"L","comment":"outside, across (y)"}},
 {"command":"parameters.add","params":{"name":"H","expression":"L","comment":"outside, bottom to top (z)"}},

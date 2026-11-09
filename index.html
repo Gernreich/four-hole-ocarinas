@@ -636,8 +636,11 @@ target/release/ocarina_model --search                     # the fingering patter
 target/release/four_hole_ocarinas --no-write              # the generator&#39;s checks, writing nothing
 target/release/four_hole_ocarinas --out=cut-files         # all twelve builds
 target/release/four_hole_ocarinas --kerf=0.18 --out=mine  # for a laser with a 0.18mm kerf
+target/release/four_hole_ocarinas --only=octahedron --scale=1.1 --out=mine  # every edge 1.1 times as long
+target/release/four_hole_ocarinas --only=cube --cavity-mm3=320000 --out=mine # the cube sized for 320 cm³
 target/release/page_assets                                # viewer.js, turn.html and the two plans
 target/release/solid_survey                               # other solids, and how each reaches the hands</code></pre>
+<p><code>--scale</code> and <code>--cavity-mm3</code> (2026-11-08) draw a build at another size, as the SolidCraft designs' <code>s</code> and the cube's <code>cavity_mm3</code> do: every edge grows, the fingers are recounted, and the window, the holes, the bird and the chin layer stay as they are. The design parameters say which flag they are in their comments, which is how lasermade-tools' <code>sc-replay</code> redraws a design someone resized in SolidCraft. Without them every build is the committed one, byte for byte.</p>
 <p>The programs are Rust since 2026-11-07, Python until then; the move changed no byte of any cut file, plan or page, and the survey's report came out the same, in a second instead of ten minutes.</p>
 <p><code>ocarina_model.rs</code> is the Helmholtz model above. For a fingering pattern it finds the four conductances by a pattern search that minimises the worst note's error in cents. <code>--search</code> asks which pattern, from 400 random starts: it found 53 that give eight different fingerings. The tightest heads the list, at 12.3 cents and 11 finger moves up the scale; the one used here is at 19.2 cents and 10 moves, chosen for its holes.</p>
 <p><code>four_hole_ocarinas.rs</code> builds all twelve with what the model asks for and checks them before writing anything. The solids are built by <code>polyhedron.rs</code>, which takes any convex solid as its faces' planes and joints every edge at its own angle. It checks:</p>

@@ -160,6 +160,25 @@ pub const OCT_FLATS: f64 = 110.0;
 pub fn oct_height() -> f64 {
     OCT_FLATS * py::mtan(PI / 8.0)
 }
+
+// A build at another size (2026-11-08), for lasermade-tools' sc-replay,
+// which redraws a SolidCraft design someone has resized: --scale=S grows
+// every solid but the cube S times (the design's `s`), and --cavity-mm3=V
+// sizes the cube for V (the cube design's `cavity_mm3`). The window, the
+// holes, the bird and the chin layer stay as they are, as in the designs;
+// the fingers are recounted for the new edges. Without them every build is
+// the committed one.
+static SCALE: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0x3FF0_0000_0000_0000); // 1.0
+static CUBE_V: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0); // 0: CUBE_VOLUME
+pub fn scale() -> f64 {
+    f64::from_bits(SCALE.load(std::sync::atomic::Ordering::Relaxed))
+}
+pub fn cube_volume() -> f64 {
+    match CUBE_V.load(std::sync::atomic::Ordering::Relaxed) {
+        0 => CUBE_VOLUME,
+        b => f64::from_bits(b),
+    }
+}
 // The other solids, the antiprism's and the dodecahedron's edges a whole
 // number of 6mm fingers:
 //   square-antiprism  72mm, so the top square takes the window and the four
@@ -390,18 +409,18 @@ pub fn owners(parts: &[OPart], q: V3) -> usize {
 
 pub fn faces_of(kind: &str) -> Vec<Face> {
     match kind {
-        "octagon" => p3::octagonal_prism(OCT_FLATS, oct_height()),
-        "cube" => p3::cube(cube_edge(CUBE_VOLUME)),
-        "square-antiprism" => p3::square_antiprism(SAP_EDGE),
-        "octahedron" => p3::octahedron(OCTA_EDGE),
-        "dodecahedron" => p3::dodecahedron(DODECA_EDGE),
-        "truncated-octahedron" => p3::truncated_octahedron(TRUNC_OCTA_EDGE),
-        "hexagonal-prism" => p3::hexagonal_prism(HEX_EDGE),
-        "icosahedron" => p3::icosahedron(ICOSA_EDGE),
-        "cuboctahedron" => p3::cuboctahedron(CUBOCTA_EDGE),
-        "rhombic-dodecahedron" => p3::rhombic_dodecahedron(RHOMBIC_EDGE),
-        "elongated-square-pyramid" => p3::elongated_square_pyramid(ESP_EDGE),
-        "elongated-square-bipyramid" => p3::elongated_square_bipyramid(ESB_EDGE),
+        "octagon" => p3::octagonal_prism(OCT_FLATS * scale(), oct_height() * scale()),
+        "cube" => p3::cube(cube_edge(cube_volume())),
+        "square-antiprism" => p3::square_antiprism(SAP_EDGE * scale()),
+        "octahedron" => p3::octahedron(OCTA_EDGE * scale()),
+        "dodecahedron" => p3::dodecahedron(DODECA_EDGE * scale()),
+        "truncated-octahedron" => p3::truncated_octahedron(TRUNC_OCTA_EDGE * scale()),
+        "hexagonal-prism" => p3::hexagonal_prism(HEX_EDGE * scale()),
+        "icosahedron" => p3::icosahedron(ICOSA_EDGE * scale()),
+        "cuboctahedron" => p3::cuboctahedron(CUBOCTA_EDGE * scale()),
+        "rhombic-dodecahedron" => p3::rhombic_dodecahedron(RHOMBIC_EDGE * scale()),
+        "elongated-square-pyramid" => p3::elongated_square_pyramid(ESP_EDGE * scale()),
+        "elongated-square-bipyramid" => p3::elongated_square_bipyramid(ESB_EDGE * scale()),
         _ => lasermade_tools::die(format!("KeyError: '{kind}'")),
     }
 }
@@ -914,9 +933,9 @@ pub fn solid_checks(kind: &str, parts: &[OPart], info: &Info, kw: f64, diams: &[
     note(worst < 20.0, "the model holds the scale", format!("worst {worst:.1} cents of eight notes"));
     let v = info.v;
     if kind == "cube" {
-        let e = cube_edge(CUBE_VOLUME);
+        let e = cube_edge(cube_volume());
         note(
-            (v / CUBE_VOLUME - 1.0).abs() < 1e-6,
+            (v / cube_volume() - 1.0).abs() < 1e-6,
             "the cavity is the volume asked for",
             format!("{e:.2}mm edge, {:.2}mm inside, {:.2}cm^3", e - 2.0 * T, v / 1000.0),
         );
@@ -1246,13 +1265,19 @@ pub fn main() -> i32 {
             m::set_mouth(py::float(v).unwrap_or_else(|| lasermade_tools::die(format!("ValueError: could not convert string to float: {}", py::str_repr(v)))));
         } else if x.starts_with("--kerf=") {
             square_flute::set_kerf(&x);
+        } else if let Some(v) = x.strip_prefix("--scale=") {
+            let f = py::float(v).filter(|f| *f > 0.0).unwrap_or_else(|| lasermade_tools::die(format!("error: --scale={v}: a scale is a number above 0.")));
+            SCALE.store(f.to_bits(), std::sync::atomic::Ordering::Relaxed);
+        } else if let Some(v) = x.strip_prefix("--cavity-mm3=") {
+            let f = py::float(v).filter(|f| *f > 0.0).unwrap_or_else(|| lasermade_tools::die(format!("error: --cavity-mm3={v}: a volume is a number above 0.")));
+            CUBE_V.store(f.to_bits(), std::sync::atomic::Ordering::Relaxed);
         } else if let Some(v) = x.strip_prefix("--only=") {
             if !names.contains(&v) {
                 lasermade_tools::die(format!("error: {v} is not a build. They are {}.", names.join(", ")));
             }
             only = Some(v.to_string());
         } else {
-            lasermade_tools::die(format!("error: {x} is not a flag this generator reads. It takes --out=, --only=, --flat, --mouth=, --kerf=, --solidcraft= and --no-write."));
+            lasermade_tools::die(format!("error: {x} is not a flag this generator reads. It takes --out=, --only=, --flat, --mouth=, --kerf=, --scale=, --cavity-mm3=, --solidcraft= and --no-write."));
         }
     }
     if write && out.is_none() {

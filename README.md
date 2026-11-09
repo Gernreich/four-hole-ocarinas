@@ -501,9 +501,18 @@ target/release/ocarina_model --search                     # the fingering patter
 target/release/four_hole_ocarinas --no-write              # the generator's checks, writing nothing
 target/release/four_hole_ocarinas --out=cut-files         # all twelve builds
 target/release/four_hole_ocarinas --kerf=0.18 --out=mine  # for a laser with a 0.18mm kerf
+target/release/four_hole_ocarinas --only=octahedron --scale=1.1 --out=mine  # every edge 1.1 times as long
+target/release/four_hole_ocarinas --only=cube --cavity-mm3=320000 --out=mine # the cube sized for 320 cm³
 target/release/page_assets                                # viewer.js, turn.html and the two plans
 target/release/solid_survey                               # other solids, and how each reaches the hands
 ```
+
+`--scale` and `--cavity-mm3` (2026-11-08) draw a build at another size, as the
+SolidCraft designs' `s` and the cube's `cavity_mm3` do: every edge grows, the fingers
+are recounted, and the window, the holes, the bird and the chin layer stay as they
+are. The design parameters say which flag they are in their comments, which is how
+lasermade-tools' `sc-replay` redraws a design someone resized in SolidCraft. Without
+them every build is the committed one, byte for byte.
 
 The programs are Rust since 2026-11-07, Python until then; the move changed no byte of
 any cut file, plan or page, and the survey's report came out the same, in a second
