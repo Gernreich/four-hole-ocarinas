@@ -787,7 +787,7 @@
 {"command":"sketch.finish","params":{}},
 {"command":"solid.extrude","params":{"sketch":"sk175","distance":"ply","operation":"cut","targets":["top plate #10"],"name":"nip 163"}},
 {"command":"sketch.create","params":{"plane":{"origin":[0,0,0],"x_dir":[1,0,0],"y_dir":[0,-1,0]},"offset":"-s*39.681733833087 mm","name":"sk176"}},
-{"command":"sketch.line","params":{"points":[["s*-22.910259710444 mm","s*16.2 mm"],["s*-22.910259710444 mm + nip*0","s*16.2 mm + nip*-1.7320508075688703"],["s*-22.910259710444 mm + nip*1.632993161855462","s*16.2 mm + nip*0.5773502691896328"]],"closed":true}},
+{"command":"sketch.line","params":{"points":[["s*-22.910259710444 mm","s*16.2 mm"],["s*-22.910259710444 mm","beak_w/2"],["s*-22.910259710444 mm + (nip - (beak_w/2 - s*16.2 mm)*-0.5773502691896281)/0.8164965809277243","beak_w/2"],["s*-22.910259710444 mm + nip*1.632993161855462","s*16.2 mm + nip*0.5773502691896328"]],"closed":true}},
 {"command":"sketch.finish","params":{}},
 {"command":"solid.extrude","params":{"sketch":"sk176","distance":"ply","operation":"cut","targets":["top plate #10"],"name":"nip 164"}},
 {"command":"sketch.create","params":{"plane":{"origin":[0,0,0],"x_dir":[0.47140452079103323,0.33333333333333653,-0.8164965809277238],"y_dir":[0.6666666666666635,0.47140452079103234,0.5773502691896288]},"offset":"-s*39.68173383308741 mm","name":"sk177"}},

@@ -713,7 +713,29 @@ pub fn parametric_solid(kind: &str, size_name: &str, size0: f64, parts: &[OPart]
                 let p_at = |e: (f64, f64), kk: f64| pt(format!("s*{} mm + nip*{}", n(vv.0), n(kk * e.0)), format!("s*{} mm + nip*{}", n(vv.1), n(kk * e.1)));
                 // the cut is the wedge inside the corner's two edges, nearer
                 // the corner than nip along its bisector
-                let tri = vec![pt(format!("s*{} mm", n(vv.0)), format!("s*{} mm", n(vv.1))), p_at(e1, ka), p_at(e2, kb)];
+                let mut tri = vec![pt(format!("s*{} mm", n(vv.0)), format!("s*{} mm", n(vv.1))), p_at(e1, ka), p_at(e2, kb)];
+                // but on the top, where the beak runs out of the mouth edge
+                // across the cut, the cut stops at the beak's side line: the
+                // generator's clip leaves alone what lies outside the corner's
+                // edges, so the beak's side runs on into the plate to the cut
+                // (the rhombic dodecahedron's top kept a 1.2 mm² sliver there)
+                if fi == info.ft {
+                    // the mouth edge: the two corners the top shares with the mouth face
+                    let on_mouth = |q: V3| faces[info.fm].verts.iter().any(|&w| p3::dist(q, w) < 1e-6);
+                    for (side, e, kk) in [(0, e1, ka), (1, e2, kb)] {
+                        let far = if side == 0 { f.verts[(j + k - 1) % k] } else { f.verts[(j + 1) % k] };
+                        let ky = vv.1 + info.nip * kk * e.1;
+                        let half = crate::BEAK_W / 2.0;
+                        if on_mouth(f.verts[j]) && on_mouth(far) && ky.abs() < half && half < vv.1.abs() {
+                            let sg = if vv.1 > 0.0 { "" } else { "-" };
+                            let edge = pt(format!("s*{} mm", n(vv.0)), format!("{sg}beak_w/2"));
+                            let on_cut = pt(format!("s*{} mm + (nip - ({sg}beak_w/2 - s*{} mm)*{})/{}", n(vv.0), n(vv.1), n(uc.1), n(uc.0)), format!("{sg}beak_w/2"));
+                            let (a, b) = if side == 0 { (edge, on_cut) } else { (on_cut, edge) };
+                            tri.splice(1 + side..2 + side, [a, b]);
+                            break;
+                        }
+                    }
+                }
                 let sk = sketch(&mut c, fi, &tri);
                 nfeat += 1;
                 c.push(cmd("solid.extrude", format!("{{\"sketch\":\"{sk}\",\"distance\":\"ply\",\"operation\":\"cut\",\"targets\":[\"{}\"],\"name\":\"nip {nfeat}\"}}", plate_of[fi])));

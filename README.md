@@ -799,11 +799,12 @@ Every plate matched within 0.005 mm, but for these differences:
 - At 0.8 times the cuboctahedron's and the elongated square pyramid's holes run
   off the top or into a wall, where `room` reads below 0. The design still
   rebuilds; the cut file at that size would fail the generator's own checks.
-- On the rhombic dodecahedron the generator's corner clip, where the beak meets a
-  nipped corner, keeps 3.6 mm³ of the top that the nip rule cuts. Neither version
-  has two plates overlapping. At other sizes the generator's search stops at a
-  different point along the pair's run, so one plate's holes sit elsewhere on
-  equally good ground.
+- On the rhombic dodecahedron the beak runs out of the mouth edge across a nipped
+  corner. The generator's clip leaves the beak alone, so its side runs on into the
+  plate to the nip line, and since 2026-11-12 the design's nip there stops at the
+  beak's side line too (before, it cut a 1.2 mm² sliver the cut file keeps). At
+  other sizes the generator's search stops at a different point along the pair's
+  run, so one plate's holes sit elsewhere on equally good ground.
 
 Driven by `key_hz` to C4 and F4, the octagon, icosahedron, dodecahedron and rhombic
 dodecahedron rebuild with no two plates overlapping, and `pitch_hz` reads back the
